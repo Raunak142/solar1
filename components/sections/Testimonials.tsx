@@ -74,8 +74,8 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-slate-50 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-24 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}

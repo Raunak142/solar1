@@ -54,8 +54,8 @@ const Blog = () => {
   const visiblePosts = showAll ? allPosts : allPosts.slice(0, 3);
 
   return (
-    <section className="py-24 lg:py-32 bg-white px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-8">
         {/* Header Section */}
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           <motion.div
@@ -64,7 +64,7 @@ const Blog = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tighter">
               Our newest posts on renewable energy for living.
             </h2>
           </motion.div>
@@ -76,10 +76,6 @@ const Blog = () => {
             viewport={{ once: true }}
             className="flex flex-col justify-end items-start lg:items-end gap-4"
           >
-            <p className="text-slate-600 text-right max-w-md">
-              Discover the positive effects of choosing sustainable energy and
-              tips for building a more eco-friendly lifestyle.
-            </p>
             <div className="flex items-center gap-2">
               {/* Slide Button */}
               <button className="group px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full transition-colors overflow-hidden">

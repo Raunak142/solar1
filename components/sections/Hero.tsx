@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
 
 const Hero = () => {
   const [isPaused, setIsPaused] = useState(false);
@@ -20,7 +21,7 @@ const Hero = () => {
   return (
     <section className="bg-[#EDF7ED] min-h-[90vh]">
       {/* Main Hero Content */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 lg:py-32">
+      <div className="max-w-7xl mx-auto px-6 sm:px-6 py-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
           <motion.div
@@ -36,7 +37,7 @@ const Hero = () => {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tighter">
               Best Solar Energy Solutions
             </h1>
 
@@ -102,23 +103,16 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl">
-              <div className="w-full h-full bg-linear-to-br from-blue-400 via-blue-600 to-blue-800 flex items-center justify-center relative">
-                {/* Solar Panel Visual */}
-                <div className="absolute inset-0 bg-linear-to-t from-green-800/40 to-transparent" />
-                <div className="grid grid-cols-6 gap-1 p-8 transform -skew-y-3">
-                  {[...Array(24)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-8 h-12 sm:w-10 sm:h-14 bg-linear-to-b from-blue-900 to-blue-700 rounded-sm border border-blue-500/30"
-                    />
-                  ))}
-                </div>
-                {/* Sky gradient overlay */}
-                <div className="absolute top-0 left-0 right-0 h-1/3 bg-linear-to-b from-sky-400 to-transparent" />
-                {/* Green landscape */}
-                <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-linear-to-t from-green-700 to-green-600/50" />
-              </div>
+            <div className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl relative">
+              <Image
+                src="/images/hero-house.png"
+                alt="Modern solar energy home"
+                fill
+                className="object-cover"
+                priority
+              />
+              {/* Overlay for depth */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
             </div>
           </motion.div>
         </div>

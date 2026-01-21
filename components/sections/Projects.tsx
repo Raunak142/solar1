@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 const Projects = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,8 +31,7 @@ const Projects = () => {
         { label: "ROI", value: "6 Years" },
         { label: "CO₂ SAVED/YR", value: "6 tons of CO₂" },
       ],
-      gradient: "from-amber-400 via-yellow-500 to-amber-600",
-      emoji: "👷‍♂️👷",
+      image: "/images/feature-wind.png",
     },
     {
       title: "Green Horizons Realty Group",
@@ -46,8 +46,7 @@ const Projects = () => {
         { label: "ROI", value: "5 Years" },
         { label: "CO₂ SAVED/YR", value: "3 tons of CO₂" },
       ],
-      gradient: "from-blue-400 via-sky-500 to-blue-600",
-      emoji: "🧑‍🔧",
+      image: "/images/hero-farm.png",
     },
     {
       title: "The Martinez Family Home",
@@ -62,16 +61,15 @@ const Projects = () => {
         { label: "ROI", value: "6 Years" },
         { label: "CO₂ SAVED/YR", value: "6 tons of CO₂" },
       ],
-      gradient: "from-sky-400 via-blue-500 to-sky-600",
-      emoji: "👷👷‍♂️",
+      image: "/images/hero-house.png",
     },
   ];
 
   return (
-    <section className="bg-white">
+    <section>
       {/* Header Section */}
       <div className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto px-8">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -85,7 +83,7 @@ const Projects = () => {
                   PROJECTS
                 </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tighter">
                 We bring renewable
                 <br />
                 energy to every space
@@ -121,36 +119,24 @@ const Projects = () => {
       {/* Scroll Pin Section */}
       <div ref={containerRef} className="relative h-[400vh]">
         <div className="sticky top-0 h-screen flex items-center overflow-hidden py-8">
-          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6">
             <div className="relative h-[600px]">
               {projects.map((project, index) => (
                 <motion.div
                   key={index}
-                  className="absolute inset-0 bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden"
+                  className="absolute inset-0 bg-white rounded-3xl border border-slate-100 overflow-hidden"
                   style={{
-                    opacity: useTransform(
-                      scrollYProgress,
-                      index === 0
-                        ? [0, 0.33 - 0.05, 0.33]
-                        : index === 1
-                          ? [0.33, 0.33 + 0.05, 0.66 - 0.05, 0.66]
-                          : [0.66, 0.66 + 0.05, 1],
-                      index === 0
-                        ? [1, 1, 0]
-                        : index === 1
-                          ? [0, 1, 1, 0]
-                          : [0, 1, 1],
-                    ),
+                    zIndex: index,
                     y: useTransform(
                       scrollYProgress,
+                      // Index 0 stays static.
+                      // Index 1 enters 0.1->0.4
+                      // Index 2 enters 0.5->0.8
                       index === 0
-                        ? [0, 0.1]
-                        : index === 1
-                          ? [0.33, 0.33 + 0.05]
-                          : [0.66, 0.66 + 0.05],
-                      index === 0 ? [0, 0] : [40, 0],
+                        ? [0, 1]
+                        : [(index - 1) * 0.4 + 0.1, (index - 1) * 0.4 + 0.4],
+                      index === 0 ? ["0%", "0%"] : ["110%", "0%"],
                     ),
-                    zIndex: index,
                   }}
                 >
                   <div className="grid lg:grid-cols-2 h-full">
@@ -238,66 +224,13 @@ const Projects = () => {
                     </div>
 
                     {/* Right Image */}
-                    <div className="relative h-full min-h-[300px] lg:min-h-0">
-                      <div
-                        className={`absolute inset-0 bg-linear-to-br ${project.gradient}`}
-                      >
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-8xl lg:text-9xl">
-                            {project.emoji}
-                          </span>
-                        </div>
-
-                        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-slate-900/50 to-transparent" />
-                        <div className="absolute bottom-6 left-6 right-6 grid grid-cols-5 gap-1">
-                          {[...Array(10)].map((_, i) => (
-                            <div
-                              key={i}
-                              className="h-6 bg-blue-900/70 rounded-sm border border-blue-700/40"
-                            />
-                          ))}
-                        </div>
-
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                          {[0, 1, 2, 3, 4].map((dot) => (
-                            <div
-                              key={dot}
-                              className={`w-2 h-2 rounded-full ${dot === 0 ? "bg-white" : "bg-white/50"}`}
-                            />
-                          ))}
-                        </div>
-
-                        <button className="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white transition-colors">
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M15 19l-7-7 7-7"
-                            />
-                          </svg>
-                        </button>
-                        <button className="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white transition-colors">
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </button>
-                      </div>
+                    <div className="relative h-full min-h-[300px] overflow-hidden lg:min-h-0 bg-slate-100">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-700 hover:scale-105"
+                      />
                     </div>
                   </div>
                 </motion.div>
@@ -305,25 +238,6 @@ const Projects = () => {
             </div>
           </div>
         </div>
-
-        <motion.div
-          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex gap-2"
-          style={{ opacity: dotsOpacity }}
-        >
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 rounded-full bg-slate-300"
-              style={{
-                backgroundColor: useTransform(
-                  scrollYProgress,
-                  [i * 0.33, i * 0.33 + 0.1],
-                  ["#cbd5e1", "#22c55e"],
-                ),
-              }}
-            />
-          ))}
-        </motion.div>
       </div>
     </section>
   );

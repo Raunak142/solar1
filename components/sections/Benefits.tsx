@@ -127,7 +127,7 @@ const Benefits = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-slate-900 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section className="py-24 bg-slate-900 px-4 sm:px-6 lg:px-16 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute right-0 top-0 w-1/2 h-full bg-linear-to-l from-green-500/20 to-transparent" />
@@ -149,7 +149,7 @@ const Benefits = () => {
                 WHY US
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tighter">
               Why choose Solarax?
             </h2>
           </motion.div>
@@ -162,7 +162,7 @@ const Benefits = () => {
             viewport={{ once: true }}
             className="flex items-end"
           >
-            <p className="text-slate-300 text-lg leading-relaxed">
+            <p className="text-slate-300 text-lg tracking-tight">
               We take pride in delivering high-quality, future-proof renewable
               energy solutions. With years of experience and a team of certified
               experts.

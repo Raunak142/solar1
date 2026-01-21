@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const About = () => {
   const features = [
@@ -10,9 +11,9 @@ const About = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-white px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="flex w-full gap-12 items-center">
           {/* Left Image Side */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -22,26 +23,14 @@ const About = () => {
             className="relative"
           >
             {/* Main Image */}
-            <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-xl">
-              <div className="w-full h-full bg-linear-to-br from-orange-200 via-amber-300 to-orange-400 relative">
-                <div className="absolute inset-0 bg-linear-to-t from-amber-700/60 to-amber-400/30" />
-                <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-linear-to-t from-amber-800 to-amber-600 transform -skew-y-6 origin-bottom-left" />
-                <div className="absolute bottom-10 left-10 right-10 grid grid-cols-4 gap-2 transform -skew-y-6">
-                  {[...Array(12)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-10 sm:h-14 bg-linear-to-b from-blue-900 to-blue-700 rounded-sm border border-blue-500/30"
-                    />
-                  ))}
-                </div>
-                <div className="absolute top-1/4 left-1/3 text-6xl opacity-60">
-                  👷
-                </div>
-                <div className="absolute top-1/3 right-1/3 text-5xl opacity-60">
-                  👷‍♂️
-                </div>
-                <div className="absolute top-0 left-0 right-0 h-1/3 bg-linear-to-b from-sky-300 to-sky-100/50" />
-              </div>
+            <div className="h-[85vh] w-[40vw] rounded-2xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/about-team.png"
+                alt="Our expert solar team"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/10 to-transparent" />
             </div>
 
             {/* Experience Badge */}
@@ -50,7 +39,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
-              className="absolute -bottom-6 -left-6 lg:bottom-8 lg:-left-8 bg-slate-800 text-white rounded-2xl p-6 shadow-xl"
+              className="absolute -bottom-6 -left-2 lg:bottom-8 lg:-left-8 bg-slate-800 text-white rounded-2xl p-6 shadow-xl"
             >
               <div className="text-4xl font-bold">
                 25<span className="text-green-400">+</span>

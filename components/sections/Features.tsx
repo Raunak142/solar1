@@ -2,6 +2,19 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  Zap,
+  Settings,
+  Handshake,
+  HardHat,
+  Wrench,
+  Activity,
+  Home,
+  Wind,
+  Sun,
+  Battery,
+} from "lucide-react";
+import Image from "next/image";
 
 const Features = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,19 +32,19 @@ const Features = () => {
 
   const features = [
     {
-      icon: "🔋",
+      icon: <Zap className="w-8 h-8" />,
       title: "High Efficiency Panels",
       description:
         "We use only the highest efficiency solar panels from top brands like SunPower and LG to maximize energy production.",
     },
     {
-      icon: "⚙️",
+      icon: <Settings className="w-8 h-8" />,
       title: "Custom System Design",
       description:
         "Each solar system is uniquely designed to optimize solar production for your particular home and energy usage.",
     },
     {
-      icon: "🤝",
+      icon: <Handshake className="w-8 h-8" />,
       title: "Locally Owned and Operated",
       description:
         "As a local company, we pride ourselves on excellent customer service and supporting our community.",
@@ -40,54 +53,22 @@ const Features = () => {
 
   // Left side images - cycle through 4 images
   const leftImages = [
-    {
-      emoji: "👷",
-      gradient: "from-amber-400 via-orange-500 to-amber-600",
-      label: "Installation",
-    },
-    {
-      emoji: "🔧",
-      gradient: "from-slate-400 via-slate-500 to-slate-600",
-      label: "Maintenance",
-    },
-    {
-      emoji: "📊",
-      gradient: "from-blue-400 via-blue-500 to-blue-600",
-      label: "Monitoring",
-    },
-    {
-      emoji: "🏠",
-      gradient: "from-green-400 via-emerald-500 to-green-600",
-      label: "Residential",
-    },
+    { image: "/images/hero-house.png" },
+    { image: "/images/about-team.png" },
+    { image: "/images/hero-farm.png" },
+    { image: "/images/feature-wind.png" },
   ];
 
   // Right side images - cycle through 4 images
   const rightImages = [
-    {
-      emoji: "🌬️",
-      gradient: "from-sky-300 via-blue-400 to-sky-500",
-      label: "Wind Energy",
-    },
-    {
-      emoji: "☀️",
-      gradient: "from-amber-300 via-yellow-400 to-amber-500",
-      label: "Solar Power",
-    },
-    {
-      emoji: "🔋",
-      gradient: "from-emerald-300 via-green-400 to-emerald-500",
-      label: "Storage",
-    },
-    {
-      emoji: "⚡",
-      gradient: "from-purple-300 via-violet-400 to-purple-500",
-      label: "Grid Connect",
-    },
+    { image: "/images/feature-wind.png" },
+    { image: "/images/hero-farm.png" },
+    { image: "/images/hero-house.png" },
+    { image: "/images/feature-wind.png" },
   ];
 
   return (
-    <section className="bg-white">
+    <section>
       {/* Header Section */}
       <div className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
@@ -96,7 +77,7 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight mb-8"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tighter mb-8"
           >
             WE MAKE GOING SOLAR SIMPLE AND AFFORDABLE.
           </motion.h2>
@@ -105,7 +86,7 @@ const Features = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto"
+            className="text-lg sm:text-lg text-slate-600 max-w-3xl mx-auto"
           >
             If you're looking to take control of ever-increasing electricity
             bills while also doing your part for the environment, look no
@@ -117,54 +98,50 @@ const Features = () => {
       {/* Scroll Pin Section - 500vh height for slower transitions */}
       <div ref={containerRef} className="relative h-[500vh]">
         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6">
             <div className="grid lg:grid-cols-12 gap-8 items-center">
               {/* Left Image Stack - Positioned higher */}
               <div className="hidden lg:block lg:col-span-3 -mt-24">
-                <div className="relative aspect-3/4 rounded-3xl overflow-hidden shadow-2xl">
-                  {leftImages.map((img, index) => (
-                    <motion.div
-                      key={index}
-                      className={`absolute inset-0 bg-linear-to-br ${img.gradient}`}
-                      style={{
-                        opacity: useTransform(
-                          scrollYProgress,
-                          index === 0
-                            ? [0, 0.2 - 0.05, 0.2]
-                            : [
-                                index * 0.2,
-                                index * 0.2 + 0.1,
-                                (index + 1) * 0.2 - 0.05,
-                                (index + 1) * 0.2,
-                              ],
-                          index === 0
-                            ? [1, 1, 0]
-                            : [0, 1, 1, index === 3 ? 1 : 0],
-                        ),
-                        y: useTransform(
-                          scrollYProgress,
-                          index === 0
-                            ? [0, 0.1]
-                            : [index * 0.2, index * 0.2 + 0.1],
-                          index === 0 ? [0, 0] : [60, 0],
-                        ),
-                      }}
-                    >
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-8xl">{img.emoji}</span>
-                      </div>
-                      {/* Solar panels at bottom */}
-                      <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-slate-900/60 to-transparent" />
-                      <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 gap-1">
-                        {[...Array(6)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="h-8 bg-blue-900/80 rounded-sm border border-blue-700/50"
+                <div className="relative aspect-3/4 rounded-3xl overflow-hidden shadow-2xl bg-white">
+                  {leftImages.map((img, index) => {
+                    const START = index * 0.2;
+                    const FADE_IN_END = START + 0.1;
+                    const END = (index + 1) * 0.2;
+                    const FADE_OUT_END = END + 0.1;
+
+                    return (
+                      <motion.div
+                        key={index}
+                        className="absolute inset-0"
+                        style={{
+                          opacity:
+                            index === 0
+                              ? 1
+                              : useTransform(
+                                  scrollYProgress,
+                                  [START, FADE_IN_END],
+                                  [0, 1],
+                                ),
+                          y: useTransform(
+                            scrollYProgress,
+                            index === 0 ? [0, 0] : [START, FADE_IN_END],
+                            index === 0 ? ["0%", "0%"] : ["100%", "0%"],
+                          ),
+                          zIndex: index, // Ensure stacking order
+                        }}
+                      >
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={img.image}
+                            alt="Solar feature"
+                            fill
+                            className="object-cover"
                           />
-                        ))}
-                      </div>
-                    </motion.div>
-                  ))}
+                          {/* Overlay removed */}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -200,47 +177,46 @@ const Features = () => {
 
               {/* Right Image Stack - Positioned lower */}
               <div className="hidden lg:block lg:col-span-3 mt-24">
-                <div className="relative aspect-3/4 rounded-3xl overflow-hidden shadow-2xl">
-                  {rightImages.map((img, index) => (
-                    <motion.div
-                      key={index}
-                      className={`absolute inset-0 bg-linear-to-br ${img.gradient}`}
-                      style={{
-                        opacity: useTransform(
-                          scrollYProgress,
-                          index === 0
-                            ? [0, 0.2 - 0.05, 0.2]
-                            : [
-                                index * 0.2,
-                                index * 0.2 + 0.1,
-                                (index + 1) * 0.2 - 0.05,
-                                (index + 1) * 0.2,
-                              ],
-                          index === 0
-                            ? [1, 1, 0]
-                            : [0, 1, 1, index === 3 ? 1 : 0],
-                        ),
-                        y: useTransform(
-                          scrollYProgress,
-                          index === 0
-                            ? [0, 0.1]
-                            : [index * 0.2, index * 0.2 + 0.1],
-                          index === 0 ? [0, 0] : [60, 0],
-                        ),
-                      }}
-                    >
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-8xl">{img.emoji}</span>
-                      </div>
-                      {/* Decorative elements */}
-                      <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-white/30 to-transparent" />
-                      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-4">
-                        <div className="w-2 h-16 bg-white/60 rounded-full" />
-                        <div className="w-2 h-20 bg-white/60 rounded-full" />
-                        <div className="w-2 h-14 bg-white/60 rounded-full" />
-                      </div>
-                    </motion.div>
-                  ))}
+                <div className="relative aspect-3/4 rounded-3xl overflow-hidden shadow-2xl bg-white">
+                  {rightImages.map((img, index) => {
+                    const START = index * 0.2;
+                    const FADE_IN_END = START + 0.1;
+                    const END = (index + 1) * 0.2;
+                    const FADE_OUT_END = END + 0.1;
+
+                    return (
+                      <motion.div
+                        key={index}
+                        className="absolute inset-0"
+                        style={{
+                          opacity:
+                            index === 0
+                              ? 1
+                              : useTransform(
+                                  scrollYProgress,
+                                  [START, FADE_IN_END],
+                                  [0, 1],
+                                ),
+                          y: useTransform(
+                            scrollYProgress,
+                            index === 0 ? [0, 0] : [START, FADE_IN_END],
+                            index === 0 ? ["0%", "0%"] : ["100%", "0%"],
+                          ),
+                          zIndex: index,
+                        }}
+                      >
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={img.image}
+                            alt="Solar feature"
+                            fill
+                            className="object-cover"
+                          />
+                          {/* Overlay removed */}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
