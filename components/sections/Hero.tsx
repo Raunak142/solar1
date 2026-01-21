@@ -73,6 +73,7 @@ const Hero = () => {
                       {avatar}
                     </div>
                   ))}
+                  
                 </div>
                 {/* Rating */}
                 <div>
