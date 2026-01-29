@@ -68,8 +68,8 @@ const ContactForm = () => {
     {
       icon: <MapPin className="w-5 h-5" />,
       label: "Visit Us",
-      value: "123 Solar Street",
-      subtext: "New York, NY 10001",
+      value: "25/4, Rajpur Road",
+      subtext: "Dehradun, Uttarakhand 248001",
     },
     {
       icon: <Clock className="w-5 h-5" />,

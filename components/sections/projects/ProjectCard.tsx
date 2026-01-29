@@ -57,9 +57,16 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </div>
 
           {/* Arrow Icon - Appears on Hover */}
-          <div className="absolute top-4 right-4 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+          <div className="absolute top-4 right-4 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 z-10">
             <div className="w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg">
               <ArrowUpRight className="w-5 h-5 text-green-600" />
+            </div>
+          </div>
+
+          {/* Status Dot - Disappears on Hover */}
+          <div className="absolute top-4 right-4 transition-all duration-300 group-hover:opacity-0 group-hover:scale-90">
+            <div className="w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg text-green-600 border border-white/50">
+              <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
             </div>
           </div>
         </div>
@@ -98,13 +105,6 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   {project.installationTime}
                 </span>
               </div>
-            </div>
-          </div>
-
-          {/* Decorative Element */}
-          <div className="absolute -top-8 right-6">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg text-green-600 transition-all duration-300 group-hover:scale-110 group-hover:shadow-green-500/20">
-              <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
             </div>
           </div>
         </div>
