@@ -1,249 +1,331 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Zap,
   Settings,
   Handshake,
-  HardHat,
-  Wrench,
-  Activity,
-  Home,
-  Wind,
-  Sun,
+  ArrowRight,
+  ShieldCheck,
+  IndianRupee,
   Battery,
+  Eye,
+  Home,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+
+// Feature Data
+const features = [
+  {
+    id: 0,
+    icon: <Zap className="w-6 h-6" />,
+    title: "Designed for Indian Climate",
+    description:
+      "Built to handle high temperatures, dust, heavy rainfall, and power fluctuations—ensuring long life and stable performance for Indian homes.",
+    image: "/images/hero-house.png",
+    color: "from-green-500 to-emerald-600",
+  },
+  {
+    id: 1,
+    icon: <Settings className="w-6 h-6" />,
+    title: "Smart Energy Optimization",
+    description:
+      "We analyze your daily usage, peak hours, and seasonal variations to deliver maximum output without wasted capacity.",
+    image: "/images/about-team.png",
+    color: "from-blue-500 to-indigo-600",
+  },
+  {
+    id: 2,
+    icon: <Handshake className="w-6 h-6" />,
+    title: "Long-Term Support",
+    description:
+      "We don't disappear after installation. Regular checkups, fast service, easy warranty claims, and maintenance plans keep your system running smoothly.",
+    image: "/images/hero-farm.png",
+    color: "from-teal-500 to-cyan-600",
+  },
+  {
+    id: 3,
+    icon: <ShieldCheck className="w-6 h-6" />,
+    title: "Built for Long-Term Value",
+    description:
+      "High-quality components and expert installation ensure reliable performance for 25+ years—saving money while reducing your carbon footprint.",
+    image: "/images/feature-wind.png",
+    color: "from-slate-600 to-slate-800",
+  },
+  {
+    id: 4,
+    icon: <IndianRupee className="w-6 h-6" />,
+    title: "Budget-Friendly Solar Solutions",
+    description:
+      "Focused on middle-class affordability. Right-sized systems that deliver savings without breaking the bank.",
+    image: "/images/hero-house.png",
+    color: "from-emerald-500 to-green-600",
+  },
+  {
+    id: 5,
+    icon: <Battery className="w-6 h-6" />,
+    title: "Power Backup Options",
+    description:
+      "Battery support for uninterrupted power during outages—ideal for work-from-home, online classes, and essential appliances.",
+    image: "/images/about-team.png",
+    color: "from-indigo-500 to-violet-600",
+  },
+  {
+    id: 6,
+    icon: <Eye className="w-6 h-6" />,
+    title: "Smart Monitoring & Transparency",
+    description:
+      "Real-time tracking of daily generation, monthly savings, and system health through your mobile—complete trust and visibility.",
+    image: "/images/hero-farm.png",
+    color: "from-cyan-500 to-blue-600",
+  },
+  {
+    id: 7,
+    icon: <Home className="w-6 h-6" />,
+    title: "Designed for Real Indian Homes",
+    description:
+      "Perfect for flats, independent houses, and duplexes—not just large villas. Solar solutions that fit your home.",
+    image: "/images/feature-wind.png",
+    color: "from-green-600 to-teal-700",
+  },
+];
 
 const Features = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Hide dots when scroll is complete
-  const dotsOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.05, 0.9, 1],
-    [0, 1, 1, 0],
-  );
-
-  const features = [
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "High Efficiency Panels",
-      description:
-        "We use only the highest efficiency solar panels from top brands like SunPower and LG to maximize energy production.",
-    },
-    {
-      icon: <Settings className="w-8 h-8" />,
-      title: "Custom System Design",
-      description:
-        "Each solar system is uniquely designed to optimize solar production for your particular home and energy usage.",
-    },
-    {
-      icon: <Handshake className="w-8 h-8" />,
-      title: "Locally Owned and Operated",
-      description:
-        "As a local company, we pride ourselves on excellent customer service and supporting our community.",
-    },
-  ];
-
-  // Left side images - cycle through 4 images
-  const leftImages = [
-    { image: "/images/hero-house.png" },
-    { image: "/images/about-team.png" },
-    { image: "/images/hero-farm.png" },
-    { image: "/images/feature-wind.png" },
-  ];
-
-  // Right side images - cycle through 4 images
-  const rightImages = [
-    { image: "/images/feature-wind.png" },
-    { image: "/images/hero-farm.png" },
-    { image: "/images/hero-house.png" },
-    { image: "/images/feature-wind.png" },
-  ];
-
   return (
-    <section>
+    <section className="bg-slate-50 relative">
       {/* Header Section */}
-      <div className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto text-center">
+      <div className="pt-24 pb-12 lg:pt-32 lg:pb-0 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center mb-16 lg:mb-24">
           <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tighter mb-8"
-          >
-            WE MAKE GOING SOLAR SIMPLE AND AFFORDABLE.
-          </motion.h2>
-          <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
-            className="text-lg sm:text-lg text-slate-600 max-w-3xl mx-auto"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tighter mb-6"
           >
-            If you're looking to take control of ever-increasing electricity
-            bills while also doing your part for the environment, look no
-            further.
+            Why SolarX Panels Are Smarter
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true }}
+            className="text-lg sm:text-lg text-slate-600 max-w-2xl mx-auto"
+          >
+            Most solar companies sell panels. SolarX delivers complete energy
+            solutions designed for Indian homes, Indian weather, and Indian
+            budgets.
           </motion.p>
         </div>
       </div>
 
-      {/* Scroll Pin Section - 500vh height for slower transitions */}
-      <div ref={containerRef} className="relative h-[500vh]">
-        <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6">
-            <div className="grid lg:grid-cols-12 gap-8 items-center">
-              {/* Left Image Stack - Positioned higher */}
-              <div className="hidden lg:block lg:col-span-3 -mt-24">
-                <div className="relative aspect-3/4 rounded-3xl overflow-hidden shadow-2xl bg-white">
-                  {leftImages.map((img, index) => {
-                    const START = index * 0.2;
-                    const FADE_IN_END = START + 0.1;
-                    const END = (index + 1) * 0.2;
-                    const FADE_OUT_END = END + 0.1;
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-24 lg:pb-32">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+          {/* Left Column: Scrolling Content */}
+          <div className="order-2 lg:order-1 flex flex-col gap-0 py-8 lg:py-0">
+            {/* Spacer to align first item with sticky image */}
+            <div className="hidden lg:block h-[10vh]" />
 
-                    return (
-                      <motion.div
-                        key={index}
-                        className="absolute inset-0"
-                        style={{
-                          opacity:
-                            index === 0
-                              ? 1
-                              : useTransform(
-                                  scrollYProgress,
-                                  [START, FADE_IN_END],
-                                  [0, 1],
-                                ),
-                          y: useTransform(
-                            scrollYProgress,
-                            index === 0 ? [0, 0] : [START, FADE_IN_END],
-                            index === 0 ? ["0%", "0%"] : ["100%", "0%"],
-                          ),
-                          zIndex: index, // Ensure stacking order
-                        }}
-                      >
-                        <div className="relative w-full h-full">
-                          <Image
-                            src={img.image}
-                            alt="Solar feature"
-                            fill
-                            className="object-cover"
-                          />
-                          {/* Overlay removed */}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
+            {features.map((feature, index) => (
+              <FeatureBlock key={feature.id} feature={feature} index={index} />
+            ))}
 
-              {/* Center - Pinned Feature Content */}
-              <div className="lg:col-span-6 py-8">
-                <div className="space-y-8">
-                  {features.map((feature, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.15 }}
-                      viewport={{ once: true }}
-                      className="flex gap-5 pb-8 border-b border-slate-200 last:border-b-0"
-                    >
-                      {/* Icon */}
-                      <div className="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shrink-0 shadow-sm">
-                        {feature.icon}
-                      </div>
-                      {/* Content */}
-                      <div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-2">
-                          {feature.title}
-                        </h3>
-                        <p className="text-slate-600 leading-relaxed">
-                          {feature.description}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+            {/* Spacer for bottom */}
+            <div className="hidden lg:block h-[50vh]" />
+          </div>
 
-              {/* Right Image Stack - Positioned lower */}
-              <div className="hidden lg:block lg:col-span-3 mt-24">
-                <div className="relative aspect-3/4 rounded-3xl overflow-hidden shadow-2xl bg-white">
-                  {rightImages.map((img, index) => {
-                    const START = index * 0.2;
-                    const FADE_IN_END = START + 0.1;
-                    const END = (index + 1) * 0.2;
-                    const FADE_OUT_END = END + 0.1;
-
-                    return (
-                      <motion.div
-                        key={index}
-                        className="absolute inset-0"
-                        style={{
-                          opacity:
-                            index === 0
-                              ? 1
-                              : useTransform(
-                                  scrollYProgress,
-                                  [START, FADE_IN_END],
-                                  [0, 1],
-                                ),
-                          y: useTransform(
-                            scrollYProgress,
-                            index === 0 ? [0, 0] : [START, FADE_IN_END],
-                            index === 0 ? ["0%", "0%"] : ["100%", "0%"],
-                          ),
-                          zIndex: index,
-                        }}
-                      >
-                        <div className="relative w-full h-full">
-                          <Image
-                            src={img.image}
-                            alt="Solar feature"
-                            fill
-                            className="object-cover"
-                          />
-                          {/* Overlay removed */}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
+          {/* Right Column: Sticky Image Stack (Desktop) */}
+          <div className="hidden lg:block lg:order-2 h-[calc(100vh-100px)] sticky top-24 self-start">
+            <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 aspect-square lg:aspect-auto ring-1 ring-slate-900/5 bg-white">
+              {features.map((feature, index) => (
+                <ScrollLinkedImage
+                  key={feature.id}
+                  feature={feature}
+                  index={index}
+                  total={features.length}
+                />
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Scroll Progress Indicator - Hidden when scroll complete */}
-        <motion.div
-          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 hidden lg:flex gap-2"
-          style={{ opacity: dotsOpacity }}
-        >
-          {[0, 1, 2, 3].map((i) => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 rounded-full bg-slate-300"
-              style={{
-                backgroundColor: useTransform(
-                  scrollYProgress,
-                  [i * 0.2, i * 0.2 + 0.1],
-                  ["#cbd5e1", "#22c55e"],
-                ),
-              }}
-            />
-          ))}
-        </motion.div>
       </div>
     </section>
+  );
+};
+
+// Component for the Image that reacts to its specific text block's scroll position
+const ScrollLinkedImage = ({
+  feature,
+  index,
+  total,
+}: {
+  feature: (typeof features)[0];
+  index: number;
+  total: number;
+}) => {
+  const targetId = `feature-block-${index}`;
+  return (
+    <ScrollImageLogic targetId={targetId} feature={feature} index={index} />
+  );
+};
+
+// Separated to use hooks cleanly
+const ScrollImageLogic = ({
+  targetId,
+  feature,
+  index,
+}: {
+  targetId: string;
+  feature: (typeof features)[0];
+  index: number;
+}) => {
+  // State to store the element once it's available
+  const [element, setElement] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const el = document.getElementById(targetId);
+    if (el) setElement(el);
+  }, [targetId]);
+
+  // FIX: Pass `undefined` as target to useScroll if element is not ready.
+  // This defaults to window scroll temporarily, avoiding the "unhydrated ref" error.
+
+  const { scrollYProgress } = useScroll({
+    target: element ? { current: element } : undefined,
+    offset: ["start end", "start center"],
+  });
+
+  const clipPath = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["inset(100% 0 0 0)", "inset(0% 0 0 0)"],
+  );
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
+
+  const isFirst = index === 0;
+
+  // If element is null (initial render), we need a safe default.
+
+  return (
+    <motion.div
+      className="absolute inset-0 h-full w-full"
+      style={{
+        zIndex: index,
+        clipPath: isFirst ? "inset(0% 0 0 0)" : clipPath,
+      }}
+    >
+      <motion.div style={{ scale }} className="relative w-full h-full">
+        <Image
+          src={feature.image}
+          alt={feature.title}
+          fill
+          className="object-cover"
+          priority={index === 0}
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
+
+        {/* Overlays */}
+        <div
+          className={`absolute inset-0 bg-linear-to-t ${feature.color.replace("from-", "from-black/70 ").replace("to-", "to-transparent/0 ")} opacity-80 mix-blend-multiply`}
+        />
+
+        <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 text-white">
+          {/* Text fade in linked to scroll as well */}
+          <motion.div style={{ opacity: isFirst ? 1 : scrollYProgress }}>
+            <div
+              className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md mb-6 border border-white/20 shadow-lg`}
+            >
+              <div className="text-white">{feature.icon}</div>
+            </div>
+            <h3 className="text-3xl font-bold mb-2 tracking-tight">
+              {feature.title}
+            </h3>
+          </motion.div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Sub-component for individual text blocks
+const FeatureBlock = ({
+  feature,
+  index,
+}: {
+  feature: (typeof features)[0];
+  index: number;
+}) => {
+  const ref = useRef(null);
+
+  // Track scroll for THIS specific block to actuate the line width
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"],
+  });
+
+  const lineWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  return (
+    <div
+      id={`feature-block-${index}`}
+      ref={ref}
+      className="min-h-[80vh] flex flex-col justify-center py-12"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ margin: "-20% 0px -20% 0px" }}
+        transition={{ duration: 0.5 }}
+        className="relative"
+      >
+        {/* Mobile Image */}
+        <div className="lg:hidden mb-8 rounded-3xl overflow-hidden aspect-video relative shadow-xl ring-1 ring-slate-900/5">
+          <Image
+            src={feature.image}
+            alt={feature.title}
+            fill
+            className="object-cover"
+          />
+          <div
+            className={`absolute inset-0 bg-linear-to-t ${feature.color.replace("from-", "from-black/60 ").replace("to-", "to-transparent/0 ")} opacity-70 mix-blend-multiply`}
+          />
+          <div className="absolute bottom-4 left-4 p-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white">
+            {feature.icon}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 mb-6">
+          <span className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 text-slate-900 font-bold text-lg shadow-sm border border-slate-200">
+            0{index + 1}
+          </span>
+          <div className="h-[2px] flex-1 bg-slate-100 origin-left overflow-hidden rounded-full">
+            <motion.div
+              className="h-full bg-slate-900"
+              style={{ width: lineWidth }}
+            />
+          </div>
+        </div>
+
+        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight">
+          {feature.title}
+        </h3>
+
+        <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-md">
+          {feature.description}
+        </p>
+
+        <Link
+          href="/services"
+          className="group flex items-center gap-2 text-slate-900 font-semibold hover:text-amber-600 transition-colors"
+        >
+          Learn more{" "}
+          <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </motion.div>
+    </div>
   );
 };
 

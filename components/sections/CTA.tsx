@@ -13,8 +13,8 @@ const CTA = () => {
   };
 
   return (
-    <section className="py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto px-8">
+    <section id="contact" className="py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

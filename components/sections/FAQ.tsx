@@ -1,37 +1,114 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import SlideButton from "../ui/SlideButton";
+import Link from "next/link";
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [showAll, setShowAll] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const faqs = [
     {
-      question: "What types of solar services do you offer?",
+      question: "Is solar really worth it for Indian homes?",
       answer:
-        "We specialize in residential, commercial, and industrial solar installations, including rooftop systems, ground-mounted arrays, and solar carports.",
+        "Yes. With rising electricity prices, solar helps you save up to 70–90% on your monthly bills. It’s a one-time investment that gives you free power for 25+ years.",
     },
     {
-      question: "Where is your company located?",
+      question: "Will solar panels work during cloudy or rainy days?",
       answer:
-        "Our headquarters is based in California, US. We also offer installation services across multiple states depending on your needs.",
+        "Yes. Panels still generate electricity during cloudy days, though at a slightly reduced capacity. Uttarakhand’s climate is suitable for solar production.",
     },
     {
-      question: "Is my investment in solar safe?",
+      question: "What happens at night?",
       answer:
-        "All you need is a suitable roof or ground space with good sun exposure. Solar panels are designed to last 25-30 years with minimal maintenance.",
+        "At night, your home uses grid power. If you choose a battery system, you can use stored solar power even at night.",
     },
     {
-      question: "How long does a typical installation take?",
+      question: ". Can I run AC, fridge, TV, and washing machine on solar?",
       answer:
-        "The duration depends on the size of your system. Residential installations typically take 1-3 days, while commercial projects may take longer.",
+        "Yes. We design systems based on your appliance usage so that all essential devices run smoothly.",
     },
     {
-      question: "When will I see savings on my energy bills?",
+      question: "How much rooftop space do I need?",
       answer:
-        "Savings begin immediately after installation. Most customers see a 50-70% reduction in their electricity bills from the first month.",
+        "Approximate requirement:1kW = 80–100 sq. ft.   ,  3kW = 250–300 sq. ft.   , 5kW = 400–500 sq. ft.",
+    },
+    {
+      question: "What is the lifespan of solar panels?",
+      answer:
+        "High-quality solar panels last 25+ years. Inverters usually last 8–12 years.",
+    },
+    {
+      question: "How long does installation take?",
+      answer:
+        "Typically 2–4 days, depending on system size and roof condition.",
+    },
+    {
+      question: "Is maintenance expensive?",
+      answer:
+        "No. Solar systems require very little maintenance—mainly panel cleaning once or twice a month.",
+    },
+    {
+      question: "What if my roof is small or shaded?",
+      answer:
+        "We do a site inspection first. If solar is not suitable, we’ll honestly tell you. No false promises.",
+    },
+    {
+      question: "Can I get government subsidy?",
+      answer:
+        "Yes, for eligible residential systems. SolarX helps you with the full subsidy documentation process.",
+    },
+    {
+      question: "How much does a solar system cost in India?",
+      answer:
+        "Cost depends on system size and type. We offer customized plans that suit middle-class budgets with EMI options.",
+    },
+    {
+      question: "Will my electricity bill become zero?",
+      answer:
+        "In many cases, yes—or very close to zero. Small fixed charges from the electricity board may still apply.",
+    },
+    {
+      question: "What happens if there is a power cut?",
+      answer:
+        "On-grid systems stop during power cuts for safety. If you want power during outages, we recommend a battery backup system.",
+    },
+    {
+      question: "Is solar safe for my home?",
+      answer:
+        "Absolutely. Our systems include safety breakers, earthing, and surge protection.",
+    },
+    {
+      question: "Will solar damage my roof?",
+      answer:
+        "No. We use strong, non-invasive mounting structures that do not damage your roof.",
+    },
+    {
+      question: "What if I move to another house?",
+      answer:
+        "You can uninstall and reinstall the system at your new location.",
+    },
+    {
+      question: "Does solar work in winter?",
+      answer:
+        "Yes. In fact, panels often perform better in cooler temperatures.",
+    },
+    {
+      question: "What if something goes wrong?",
+      answer:
+        "SolarX provides long-term support, warranty handling, and quick service.",
+    },
+    {
+      question: "Can I monitor my solar power production?",
+      answer:
+        "Yes. You can track everything on your mobile—daily output, savings, and system health.",
+    },
+    {
+      question: "Why should I choose SolarX?",
+      answer:
+        "Because we offer: Honest pricing, Customized systems, Local support, 10+ years experience, After-sales service, Middle-class focused solutions.",
     },
   ];
 
@@ -39,11 +116,14 @@ const FAQ = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const visibleFaqs = showAll ? faqs : faqs.slice(0, 6);
+
   return (
     <section className="py-24 lg:py-32 bg-slate-50 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -61,60 +141,96 @@ const FAQ = () => {
 
         {/* FAQ Accordion */}
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-xl border-l-4 border-green-500 shadow-sm overflow-hidden"
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-slate-50 transition-colors"
+          <AnimatePresence mode="popLayout">
+            {visibleFaqs.map((faq, index) => (
+              <motion.div
+                layout
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-xl border-l-4 border-green-500 shadow-sm overflow-hidden"
               >
-                <span className="font-semibold text-slate-900 pr-4">
-                  {faq.question}
-                </span>
-                <motion.div
-                  animate={{ rotate: openIndex === index ? 45 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="shrink-0"
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-slate-50 transition-colors"
                 >
-                  <svg
-                    className="w-5 h-5 text-slate-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                </motion.div>
-              </button>
-
-              <AnimatePresence>
-                {openIndex === index && (
+                  <span className="font-semibold text-slate-900 pr-4">
+                    {faq.question}
+                  </span>
                   <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
+                    animate={{ rotate: openIndex === index ? 45 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="shrink-0"
                   >
-                    <p className="px-6 pb-5 text-slate-600 leading-relaxed">
-                      {faq.answer}
-                    </p>
+                    <svg
+                      className="w-5 h-5 text-slate-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
                   </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                </button>
+
+                <AnimatePresence>
+                  {openIndex === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-6 pb-5 text-slate-600 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* View More Button */}
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => {
+              if (showAll && headerRef.current) {
+                headerRef.current.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+              setShowAll(!showAll);
+            }}
+            className="inline-flex items-center gap-2 font-semibold text-green-600 hover:text-green-700 transition-colors"
+          >
+            {showAll ? "Show Less Questions" : "View More Questions"}
+            <svg
+              className={`w-4 h-4 transition-transform duration-300 ${
+                showAll ? "rotate-180" : ""
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
         </div>
 
         {/* Bottom CTA */}
@@ -123,46 +239,26 @@ const FAQ = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-6"
+          className="mt-12 flex flex-col items-center text-center gap-6"
         >
-          {/* Button with Fixed Slide Effect */}
-          {/* <SlideButton
-            className="rounded-full"
-            icon={
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            }
-          >
-            Start Project
-          </SlideButton> */}
-           <div className="hidden md:block ">
-            <button className="group relative px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full transition-colors overflow-hidden">
-              <span className="relative block h-5 overflow-hidden">
-                <span className="block transition-transform duration-300 ease-out group-hover:-translate-y-full">
-                  Start 
-                </span>
-                <span className="absolute top-0 left-0 block transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0">
-                  Start 
-                </span>
-              </span>
-            </button>
-          </div>
-          <p className="text-slate-600">
+          <p className="text-slate-600 max-w-2xl">
             Still have questions? We're here to help! Whether you're curious
             about installation, costs, or how solar works, our team is ready to
             guide.
           </p>
+          <Link
+            href="/contact"
+            className="group px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors overflow-hidden"
+          >
+            <span className="relative block h-5 overflow-hidden">
+              <span className="block transition-transform duration-300 ease-out group-hover:-translate-y-full">
+                Explore More
+              </span>
+              <span className="absolute top-0 left-0 w-full block transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0 text-center">
+                Explore More
+              </span>
+            </span>
+          </Link>
         </motion.div>
       </div>
     </section>

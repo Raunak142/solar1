@@ -13,110 +13,60 @@ import {
 
 const Footer = () => {
   const essentialPages = [
-    { label: "About company", href: "#about" },
-    { label: "FAQ Page", href: "#faq" },
-    { label: "Our Services", href: "#services" },
-    { label: "Get in touch", href: "#contact" },
+    { label: "About Us", href: "/about" },
+    { label: "Projects", href: "/projects" }, // Changed to real page
+    { label: "Services", href: "/#services" },
+    { label: "Contact", href: "/contact" },
   ];
 
   const quickLinks = [
-    { label: "Projects", href: "#projects" },
-    { label: "Our Team", href: "#team" },
-    { label: "Blogs", href: "#blog" },
-    { label: "404", href: "/404" },
+    { label: "Residential Solar", href: "/#services" },
+    { label: "Commercial Solar", href: "/#services" },
+    { label: "Our Blog", href: "/blog" },
+    { label: "Support", href: "/contact" },
   ];
 
   const socialLinks = [
     {
       name: "Facebook",
       icon: <Facebook className="w-4 h-4" />,
+      href: "https://www.facebook.com",
     },
     {
       name: "Twitter",
       icon: <Twitter className="w-4 h-4" />,
+      href: "https://twitter.com",
     },
     {
       name: "Instagram",
       icon: <Instagram className="w-4 h-4" />,
+      href: "https://www.instagram.com",
     },
     {
       name: "YouTube",
       icon: <Youtube className="w-4 h-4" />,
+      href: "https://www.youtube.com",
     },
   ];
 
   return (
-    <footer className="bg-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+    <footer className="bg-slate-950 text-slate-300 border-t border-slate-800">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           {/* Brand Column */}
-          <div>
+          <div className="space-y-6">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <svg
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle cx="20" cy="20" r="8" fill="#FBBF24" />
-                <path
-                  d="M20 4V8"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M20 32V36"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M4 20H8"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M32 20H36"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M8.5 8.5L11.5 11.5"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M28.5 28.5L31.5 31.5"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M8.5 31.5L11.5 28.5"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M28.5 11.5L31.5 8.5"
-                  stroke="#FBBF24"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <span className="text-2xl font-bold text-white">Solarax</span>
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-white tracking-tight">
+                SOLAR<span className="text-green-500">X</span>
+              </span>
             </Link>
 
             {/* Description */}
-            <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              Solarax Solar Solutions provides innovative and sustainable solar
-              energy systems for residential and commercial clients worldwide.
+            <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
+              Uttarakhand's most trusted solar partner. We are committed to
+              powering homes and businesses with clean, renewable energy
+              tailored to the Himalayan climate.
             </p>
 
             {/* Social Links */}
@@ -124,8 +74,10 @@ const Footer = () => {
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-colors"
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-green-600 hover:text-white hover:border-green-500 transition-all duration-300"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -136,15 +88,13 @@ const Footer = () => {
 
           {/* Essential Pages */}
           <div>
-            <h4 className="text-xl font-semibold text-white mb-6">
-              Essential Pages
-            </h4>
-            <ul className="space-y-4">
+            <h4 className="text-lg font-bold text-white mb-6">Menu</h4>
+            <ul className="space-y-3">
               {essentialPages.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-slate-400 hover:text-white transition-colors"
+                    className="text-slate-400 hover:text-green-400 transition-colors text-sm hover:translate-x-1 inline-block duration-200"
                   >
                     {link.label}
                   </Link>
@@ -155,15 +105,13 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xl font-semibold text-white mb-6">
-              Quick Links
-            </h4>
-            <ul className="space-y-4">
+            <h4 className="text-lg font-bold text-white mb-6">Solutions</h4>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-slate-400 hover:text-white transition-colors"
+                    className="text-slate-400 hover:text-green-400 transition-colors text-sm hover:translate-x-1 inline-block duration-200"
                   >
                     {link.label}
                   </Link>
@@ -174,32 +122,55 @@ const Footer = () => {
 
           {/* Contact Us */}
           <div>
-            <h4 className="text-xl font-semibold text-white mb-6">
-              Contact Us
-            </h4>
+            <h4 className="text-lg font-bold text-white mb-6">Get in Touch</h4>
             <ul className="space-y-4">
-              <li className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-green-500">
-                  <Mail className="w-5 h-5" />
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500 shrink-0 mt-1">
+                  <MapPin className="w-4 h-4" />
                 </div>
-                <span className="text-slate-300">info@solara.com</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-green-500">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <span className="text-slate-300">+1 987 654 3210</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-green-500 shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <span className="text-slate-300">
-                  9100 North Poor House Street Brooklyn, NY 11218
+                <span className="text-slate-400 text-sm leading-relaxed">
+                  25/4, Rajpur Road,
+                  <br />
+                  Dehradun, Uttarakhand
+                  <br />
+                  India - 248001
                 </span>
+              </li>
+              <li className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <a
+                  href="mailto:connect@solarx.in"
+                  className="text-slate-400 text-sm hover:text-white transition-colors"
+                >
+                  connect@solarx.in
+                </a>
+              </li>
+              <li className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
+                  <Phone className="w-4 h-4" />
+                </div>
+                <a
+                  href="tel:+919897012345"
+                  className="text-slate-400 text-sm hover:text-white transition-colors"
+                >
+                  +91 98970 12345
+                </a>
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-slate-500 text-xs">
+            &copy; {new Date().getFullYear()} SolarX Energy Solutions. All
+            rights reserved.
+          </p>
+          <p className="text-slate-600 text-xs flex items-center gap-1">
+            Made with <span className="text-green-500">💚</span> in Devbhoomi
+          </p>
         </div>
       </div>
     </footer>

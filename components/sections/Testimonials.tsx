@@ -1,213 +1,214 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { Star, MapPin, Zap, Play } from "lucide-react";
+
+// Testimonial Data
+const testimonials = [
+  {
+    id: 1,
+    name: "Ramesh Sharma",
+    location: "Rajpur Road, Dehradun",
+    systemSize: "5 kW",
+    rating: 5,
+    quote:
+      "SolarX made the entire process simple and affordable. My electricity bill is almost zero now.",
+    video: "/blog1.mp4",
+    poster: "/images/hero-house.png",
+  },
+  {
+    id: 2,
+    name: "Priya Gupta",
+    location: "Vasant Vihar, Dehradun",
+    systemSize: "3 kW",
+    rating: 5,
+    quote:
+      "The team explained everything clearly. Very professional installation.",
+    video: "/blog1.mp4",
+    poster: "/images/about-team.png",
+  },
+  {
+    id: 3,
+    name: "Anil Thakur",
+    location: "Selaqui, Dehradun",
+    systemSize: "10 kW",
+    rating: 5,
+    quote:
+      "My factory's power bill dropped by ₹40,000 per month. Best investment ever.",
+    video: "/blog1.mp4",
+    poster: "/images/hero-farm.png",
+  },
+  {
+    id: 4,
+    name: "Sunita Rawat",
+    location: "Mussoorie",
+    systemSize: "4 kW",
+    rating: 5,
+    quote: "Living off-grid in the hills was a dream. SolarX made it happen.",
+    video: "/blog1.mp4",
+    poster: "/images/feature-wind.png",
+  },
+  {
+    id: 5,
+    name: "Vikram Singh",
+    location: "Clement Town, Dehradun",
+    systemSize: "6 kW",
+    rating: 5,
+    quote:
+      "No more power cuts during summers. My family is very happy with SolarX.",
+    video: "/blog1.mp4",
+    poster: "/images/hero-house.png",
+  },
+];
 
 const Testimonials = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const testimonials = [
-    [
-      {
-        quote:
-          "Amazing Experience With Solar Solution Company. Their Team Is Knowledgeable And Supportive Throughout The Process.",
-        name: "Mary Parker",
-        role: "CEO, Digiboost",
-        avatar: "👩‍💼",
-        rating: 4,
-      },
-      {
-        quote:
-          "Incredible Service And Expertise! Our Solar Panels Are Performing Beyond Expectations. The Process Was Smooth, From Start To End.",
-        name: "James Tucker",
-        role: "CEO, CleanSweep",
-        avatar: "👨‍💼",
-        rating: 5,
-      },
-    ],
-    [
-      {
-        quote:
-          "The team was professional and efficient. Our energy bills have dropped significantly since installation. Highly recommend their services!",
-        name: "Sarah Johnson",
-        role: "Director, EcoTech",
-        avatar: "👩‍🦰",
-        rating: 5,
-      },
-      {
-        quote:
-          "Outstanding quality and customer service. They handled everything from permits to installation seamlessly. Very impressed with the results.",
-        name: "Michael Chen",
-        role: "CEO, GreenVentures",
-        avatar: "🧑‍💼",
-        rating: 5,
-      },
-    ],
-    [
-      {
-        quote:
-          "Best investment we've made for our business. The solar system pays for itself and the support team is always available when needed.",
-        name: "Emily Davis",
-        role: "Owner, SunCafe",
-        avatar: "👩",
-        rating: 4,
-      },
-      {
-        quote:
-          "From consultation to installation, everything was handled professionally. Our factory now runs on 80% solar power. Fantastic results!",
-        name: "Robert Wilson",
-        role: "COO, BuildRight Inc",
-        avatar: "👨‍🔧",
-        rating: 5,
-      },
-    ],
-  ];
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
-    );
-  };
-
   return (
-    <section className="py-24 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="text-green-600 font-semibold text-sm tracking-wider mb-4">
-            TESTIMONIALS
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">
-            Our Clients Review
-          </h2>
-        </motion.div>
+    <section className="py-24 lg:py-32 bg-slate-950 relative overflow-hidden">
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 opacity-80" />
 
-        {/* Testimonials Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="relative overflow-hidden"
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.4 }}
-              className="grid md:grid-cols-2 gap-6"
-            >
-              {testimonials[currentIndex].map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100"
-                >
-                  {/* Quote */}
-                  <p className="text-slate-700 text-lg leading-relaxed mb-8">
-                    {testimonial.quote}
-                  </p>
-
-                  {/* Author Info */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      {/* Avatar */}
-                      <div className="w-14 h-14 rounded-full bg-linear-to-br from-slate-200 to-slate-300 flex items-center justify-center text-2xl">
-                        {testimonial.avatar}
-                      </div>
-                      {/* Name & Role */}
-                      <div>
-                        <div className="font-bold text-slate-900 text-lg">
-                          {testimonial.name}
-                        </div>
-                        <div className="text-slate-500 text-sm">
-                          {testimonial.role}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Rating */}
-                    <div className="flex gap-1 bg-green-500 px-3 py-2 rounded-lg">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <svg
-                          key={i}
-                          className="w-4 h-4 text-white"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Navigation Arrows */}
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-16 lg:mb-20">
+        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true }}
-          className="flex justify-center gap-3 mt-10"
+          transition={{ duration: 0.6 }}
+          className="text-center"
         >
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={prevSlide}
-            className="w-12 h-12 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-lg shadow-green-500/30 transition-colors"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={nextSlide}
-            className="w-12 h-12 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-lg shadow-green-500/30 transition-colors"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </motion.button>
+          <span className="inline-block py-1.5 px-4 rounded-full bg-white/5 border border-white/10 text-green-400 font-medium text-sm tracking-wide mb-6 backdrop-blur-sm">
+            Testimonials
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6">
+            Real Stories,{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-500">
+              Real Savings
+            </span>
+          </h2>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Don't just take our word for it—see how SolarX is transforming homes
+            and businesses across Uttarakhand.
+          </p>
         </motion.div>
       </div>
+
+      {/* MARQUEE CONTAINER */}
+      <div className="relative w-full group">
+        {/* Gradient Fades */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 md:w-64 bg-linear-to-r from-slate-950 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 md:w-64 bg-linear-to-l from-slate-950 to-transparent z-10 pointer-events-none" />
+
+        {/* Marquee Track */}
+        <div className="flex gap-8 pl-8 w-max animate-marquee group-hover:paused">
+          {/* Triplicate for smoother infinite loop */}
+          {[...testimonials, ...testimonials, ...testimonials].map(
+            (testimonial, index) => (
+              <VideoCard
+                key={`${testimonial.id}-${index}`}
+                testimonial={testimonial}
+              />
+            ),
+          )}
+        </div>
+      </div>
+
+      {/* CSS Animation */}
+      <style jsx>{`
+        @keyframes marquee {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-33.33%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 60s linear infinite;
+        }
+        .group:hover .group-hover\\:paused {
+          animation-play-state: paused;
+        }
+      `}</style>
     </section>
+  );
+};
+
+// VideoCard Component
+const VideoCard = ({
+  testimonial,
+}: {
+  testimonial: (typeof testimonials)[0];
+}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.muted = false;
+      videoRef.current.play().catch(() => {
+        // Autoplay fallback
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.play();
+        }
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
+  return (
+    <div
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="shrink-0 w-[380px] group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-green-500/30 transition-all duration-500 cursor-pointer hover:shadow-2xl hover:shadow-black/50"
+    >
+      {/* Video Container */}
+      <div className="relative aspect-3/4 overflow-hidden bg-slate-900/50">
+        <video
+          ref={videoRef}
+          poster={testimonial.poster}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          playsInline
+          loop
+          preload="metadata"
+        >
+          <source src={testimonial.video} type="video/mp4" />
+        </video>
+
+        {/* Play Icon Removed */}
+
+        {/* Bottom Gradient overlay */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-slate-950 via-slate-950/80 to-transparent opacity-90" />
+      </div>
+
+      {/* Card Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+        {/* Quote */}
+        <p className="text-slate-100 text-base mb-6 leading-relaxed font-medium line-clamp-4 text-shadow-sm">
+          "{testimonial.quote}"
+        </p>
+
+        {/* Client Info */}
+        <div className="flex items-center justify-between pt-4 border-t border-white/10">
+          <div>
+            <p className="font-bold text-white text-sm tracking-wide">
+              {testimonial.name}
+            </p>
+            <p className="text-slate-400 text-xs flex items-center gap-1 mt-0.5">
+              <MapPin className="w-3 h-3" />
+              {testimonial.location}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
