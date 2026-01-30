@@ -13,6 +13,7 @@ const CTA = () => {
   };
 
   return (
+    
     <section id="contact" className="py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1400px] mx-auto px-8">
         <motion.div
