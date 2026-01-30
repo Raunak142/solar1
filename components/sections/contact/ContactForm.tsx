@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -11,45 +12,165 @@ import {
   MessageSquare,
   Clock,
   CheckCircle2,
+  MapPinned,
+  AlertCircle,
 } from "lucide-react";
 
+// Validation Regex Patterns (Must match backend)
+const PATTERNS = {
+  name: /^[a-zA-Z\s]{2,}$/, // Letters and spaces only
+  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Standard email
+  phone: /^\+?[0-9]{10,15}$/, // Digits only, 10-15 chars
+};
+
 const ContactForm = () => {
+  const router = useRouter(); // Initialize router;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    subject: "",
+    city: "",
+    message: "",
+    website: "", // Honeypot field - must be empty
+  });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
     message: "",
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const validateField = (name: string, value: string) => {
+    let error = "";
+    switch (name) {
+      case "name":
+        if (!value.trim()) error = "Name is required";
+        else if (!PATTERNS.name.test(value))
+          error = "Please enter a valid name (letters only)";
+        break;
+      case "email":
+        if (!value.trim()) error = "Email is required";
+        else if (!PATTERNS.email.test(value))
+          error = "Please enter a valid email address";
+        break;
+      case "phone":
+        if (!value.trim()) error = "Phone number is required";
+        else if (!PATTERNS.phone.test(value.replace(/\s/g, "")))
+          error = "Please enter a valid phone number (digits only)";
+        break;
+      case "city":
+        if (!value.trim()) error = "City is required";
+        break;
+      case "message":
+        if (!value.trim()) error = "Message is required";
+        else if (value.trim().length < 10)
+          error = "Message must be at least 10 characters";
+        break;
+    }
+    return error;
+  };
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Clear error when user types
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError("");
+
+    // Validate all fields
+    const newErrors = {
+      name: validateField("name", formData.name),
+      email: validateField("email", formData.email),
+      phone: validateField("phone", formData.phone),
+      city: validateField("city", formData.city),
+      message: validateField("message", formData.message),
+    };
+
+    setErrors(newErrors);
+
+    if (Object.values(newErrors).some((err) => err)) {
+      return; // Stop if errors exist
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      const data = await response.json();
 
-    // Reset after showing success
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    }, 3000);
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      setIsSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        city: "",
+        message: "",
+        website: "",
+      });
+
+      // Optional: Redirect to Calendly after 2 seconds
+      setTimeout(() => {
+        // router.push("https://calendly.com/YOUR_LINK"); // Uncomment and add your link
+        // For now, we just reset the form view after 5s as per previous logic,
+        // but let's keep the user's prompt requirement structure in mind.
+        // If the user provides a link, we would swap the logic below.
+
+        setIsSubmitted(false); // Reset view to form
+      }, 5000);
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -77,15 +198,6 @@ const ContactForm = () => {
       value: "Mon - Fri: 8am - 6pm",
       subtext: "Sat: 9am - 2pm",
     },
-  ];
-
-  const subjects = [
-    "General Inquiry",
-    "Request a Quote",
-    "Technical Support",
-    "Partnership Opportunities",
-    "Careers",
-    "Other",
   ];
 
   return (
@@ -189,7 +301,14 @@ const ContactForm = () => {
                   </p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  {submitError && (
+                    <div className="bg-red-50 text-red-600 p-4 rounded-xl flex items-start gap-3 text-sm">
+                      <AlertCircle className="w-5 h-5 shrink-0" />
+                      <p>{submitError}</p>
+                    </div>
+                  )}
+
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Name Input */}
                     <div className="relative">
@@ -203,11 +322,21 @@ const ContactForm = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           required
                           placeholder="John Doe"
-                          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none transition-all bg-slate-50 hover:bg-white"
+                          className={`w-full pl-12 pr-4 py-3.5 rounded-xl border ${
+                            errors.name
+                              ? "border-red-500 focus:ring-red-500/20"
+                              : "border-slate-200 focus:border-green-500 focus:ring-green-500/20"
+                          } focus:ring-2 outline-none transition-all bg-slate-50 hover:bg-white`}
                         />
                       </div>
+                      {errors.name && (
+                        <p className="text-red-500 text-xs mt-1 ml-1">
+                          {errors.name}
+                        </p>
+                      )}
                     </div>
 
                     {/* Email Input */}
@@ -222,11 +351,21 @@ const ContactForm = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           required
                           placeholder="john@example.com"
-                          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none transition-all bg-slate-50 hover:bg-white"
+                          className={`w-full pl-12 pr-4 py-3.5 rounded-xl border ${
+                            errors.email
+                              ? "border-red-500 focus:ring-red-500/20"
+                              : "border-slate-200 focus:border-green-500 focus:ring-green-500/20"
+                          } focus:ring-2 outline-none transition-all bg-slate-50 hover:bg-white`}
                         />
                       </div>
+                      {errors.email && (
+                        <p className="text-red-500 text-xs mt-1 ml-1">
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -234,7 +373,7 @@ const ContactForm = () => {
                     {/* Phone Input */}
                     <div className="relative">
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Phone Number
+                        Phone Number *
                       </label>
                       <div className="relative">
                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -243,31 +382,50 @@ const ContactForm = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
+                          onBlur={handleBlur}
+                          required
                           placeholder="+1 (555) 000-0000"
-                          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none transition-all bg-slate-50 hover:bg-white"
+                          className={`w-full pl-12 pr-4 py-3.5 rounded-xl border ${
+                            errors.phone
+                              ? "border-red-500 focus:ring-red-500/20"
+                              : "border-slate-200 focus:border-green-500 focus:ring-green-500/20"
+                          } focus:ring-2 outline-none transition-all bg-slate-50 hover:bg-white`}
                         />
                       </div>
+                      {errors.phone && (
+                        <p className="text-red-500 text-xs mt-1 ml-1">
+                          {errors.phone}
+                        </p>
+                      )}
                     </div>
 
-                    {/* Subject Select */}
+                    {/* City Input (Replaces Subject) */}
                     <div className="relative">
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Subject *
+                        City *
                       </label>
-                      <select
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none transition-all bg-slate-50 hover:bg-white appearance-none cursor-pointer"
-                      >
-                        <option value="">Select a subject</option>
-                        {subjects.map((subject) => (
-                          <option key={subject} value={subject}>
-                            {subject}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="relative">
+                        <MapPinned className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <input
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          required
+                          placeholder="New York"
+                          className={`w-full pl-12 pr-4 py-3.5 rounded-xl border ${
+                            errors.city
+                              ? "border-red-500 focus:ring-red-500/20"
+                              : "border-slate-200 focus:border-green-500 focus:ring-green-500/20"
+                          } focus:ring-2 outline-none transition-all bg-slate-50 hover:bg-white`}
+                        />
+                      </div>
+                      {errors.city && (
+                        <p className="text-red-500 text-xs mt-1 ml-1">
+                          {errors.city}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -282,19 +440,41 @@ const ContactForm = () => {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         required
                         rows={5}
                         placeholder="Tell us about your project or ask us a question..."
-                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none transition-all bg-slate-50 hover:bg-white resize-none"
+                        className={`w-full pl-12 pr-4 py-3.5 rounded-xl border ${
+                          errors.message
+                            ? "border-red-500 focus:ring-red-500/20"
+                            : "border-slate-200 focus:border-green-500 focus:ring-green-500/20"
+                        } focus:ring-2 outline-none transition-all bg-slate-50 hover:bg-white resize-none`}
                       />
                     </div>
+                    {errors.message && (
+                      <p className="text-red-500 text-xs mt-1 ml-1">
+                        {errors.message}
+                      </p>
+                    )}
                   </div>
+
+                  {/* Honeypot Field (Hidden) */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="absolute opacity-0 -z-10 w-0 h-0"
+                    aria-hidden="true"
+                  />
 
                   {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
+                    className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <>
