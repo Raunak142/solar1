@@ -137,21 +137,23 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-        throw new Error(`Google Script Error: ${response.statusText}`);
+        throw new Error(`Google Script Error ${response.status}: ${response.statusText}`);
     }
 
-    const result = await response.json();
+    const result = await response.json().catch(() => {
+        throw new Error('Failed to parse Google Script response (Check URL/Permissions)');
+    });
 
-    if (result.result !== 'success' && !result.success) { // Handle varied GAS response structures
-         throw new Error('Google Script reported failure');
+    if (result.result !== 'success' && !result.success) { 
+         throw new Error(`Google Script Logic Failure: ${JSON.stringify(result)}`);
     }
 
     return NextResponse.json({ success: true });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Contact API Error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to submit form. Please try again.' },
+      { success: false, error: `Submission Failed: ${error.message || String(error)}` },
       { status: 500 }
     );
   }
