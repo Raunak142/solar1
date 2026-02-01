@@ -11,6 +11,7 @@ export interface BlogPost {
   content: string; // HTML string or markdown for the full article
 }
 
+
 export const blogPosts: BlogPost[] = [
   {
     id: "education",
