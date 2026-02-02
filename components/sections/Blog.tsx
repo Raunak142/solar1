@@ -5,9 +5,94 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Calendar, User, Tag } from "lucide-react";
 import { blogPosts } from "./blogData";
+import { useEffect, useState } from "react";
+import { client, urlFor } from "@/lib/sanity";
+import { allPostsQuery } from "@/lib/queries";
+import type { SanityPost } from "@/lib/sanity-types";
+
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  date: string;
+  author: string;
+  color: string;
+}
 
 const Blog = ({ limit }: { limit?: number }) => {
-  const displayedPosts = limit ? blogPosts.slice(0, limit) : blogPosts;
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const sanityPosts: SanityPost[] = await client.fetch(allPostsQuery);
+
+        if (sanityPosts && sanityPosts.length > 0) {
+          // Transform Sanity posts to match the component's expected format
+          const transformedPosts: BlogPost[] = sanityPosts.map((post) => ({
+            id: post._id,
+            slug: post.slug.current,
+            title: post.title,
+            category: post.category,
+            description: post.description,
+            image: post.image
+              ? urlFor(post.image).width(800).height(600).url()
+              : "/images/feature-wind.png",
+            date: new Date(post.publishedAt).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }),
+            author: post.author,
+            color: post.color,
+          }));
+          setPosts(transformedPosts);
+        } else {
+          // Fallback to hardcoded data
+          setPosts(
+            blogPosts.map((post) => ({
+              ...post,
+              slug: post.slug,
+              image: post.image,
+            })),
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching posts from Sanity:", error);
+        // Fallback to hardcoded data
+        setPosts(
+          blogPosts.map((post) => ({
+            ...post,
+            slug: post.slug,
+            image: post.image,
+          })),
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPosts();
+  }, []);
+
+  const displayedPosts =
+    limit && posts.length > 0 ? posts.slice(0, limit) : posts;
+
+  if (loading) {
+    return (
+      <section className="py-24 lg:py-32 bg-slate-50">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-slate-600">Loading blog posts...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
