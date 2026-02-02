@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { sendContactEmail, sendUserConfirmationEmail } from '@/lib/email';
+import { appendToSheet } from '@/lib/sheets';
 
 // Validation Patterns
 // These must match the frontend regex exactly
@@ -110,42 +112,51 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Forward to Google Apps Script
-    const scriptUrl = process.env.GOOGLE_SCRIPT_URL;
+    // 3. Send emails and save to Google Sheet
+    const formData = {
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      city: city.trim(),
+      message: message.trim(),
+    };
 
-    if (!scriptUrl) {
-      console.error('GOOGLE_SCRIPT_URL is not defined');
+    // Run all three operations in parallel for better performance
+    const [adminEmailResult, userEmailResult, sheetResult] = await Promise.allSettled([
+      sendContactEmail(formData), // Admin notification
+      sendUserConfirmationEmail(formData), // User confirmation
+      appendToSheet(formData), // Save to sheet
+    ]);
+
+    // Check for failures
+    const failures: string[] = [];
+    
+    if (adminEmailResult.status === 'rejected') {
+      console.error('Admin email failed:', adminEmailResult.reason);
+      failures.push('admin notification');
+    }
+    
+    if (userEmailResult.status === 'rejected') {
+      console.error('User confirmation email failed:', userEmailResult.reason);
+      failures.push('user confirmation');
+    }
+    
+    if (sheetResult.status === 'rejected') {
+      console.error('Sheet append failed:', sheetResult.reason);
+      failures.push('data storage');
+    }
+
+    // If all failed, return error
+    if (failures.length === 3) {
       return NextResponse.json(
-        { success: false, error: 'Server configuration error' },
+        { success: false, error: 'Failed to process your submission. Please try again.' },
         { status: 500 }
       );
     }
 
-    const response = await fetch(scriptUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: name.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        city: city.trim(),
-        message: message.trim(),
-        timestamp: new Date().toISOString()
-      }),
-    });
-
-    if (!response.ok) {
-        throw new Error(`Google Script Error ${response.status}: ${response.statusText}`);
-    }
-
-    const result = await response.json().catch(() => {
-        throw new Error('Failed to parse Google Script response (Check URL/Permissions)');
-    });
-
-    if (result.result !== 'success' && !result.success) { 
-         throw new Error(`Google Script Logic Failure: ${JSON.stringify(result)}`);
+    // If some failed, log but still return success (partial success is acceptable)
+    if (failures.length > 0) {
+      console.warn(`Partial failure: ${failures.join(', ')} failed, but submission was partially processed.`);
     }
 
     return NextResponse.json({ success: true });
