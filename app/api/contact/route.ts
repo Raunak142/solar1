@@ -88,18 +88,21 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate Phone
-    if (!phone || !PATTERNS.phone.test(phone.replace(/\s/g, ''))) {
+    // Validate Phone (Optional - skip if not provided or placeholder)
+    const isPhoneProvided = phone && phone.trim() !== '' && phone.trim() !== 'Not provided';
+    if (isPhoneProvided && !PATTERNS.phone.test(phone.replace(/\s/g, ''))) {
       return NextResponse.json(
         { success: false, error: 'Invalid phone number. Digits only, 10-15 chars.' },
         { status: 400 }
       );
     }
 
-    // Validate City (Required)
-    if (!city || city.trim().length < 2) {
+    // Validate City (Optional - skip if not provided or placeholder)
+    const isCityProvided = city && city.trim() !== '' && city.trim() !== 'Not provided';
+    // No validation needed for city format, just check if it's a reasonable length when provided
+    if (isCityProvided && city.trim().length < 2) {
       return NextResponse.json(
-        { success: false, error: 'City is required.' },
+        { success: false, error: 'City name too short.' },
         { status: 400 }
       );
     }

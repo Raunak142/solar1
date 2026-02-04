@@ -11,7 +11,7 @@ const ContactHero = () => {
         <div
           className="w-full h-full bg-cover bg-center bg-no-repeat scale-105"
           style={{
-            backgroundImage: "url('/images/hero-house.png')", // Using existing asset
+            backgroundImage: "url('/images/Forest Panel.png')", // Using existing asset
           }}
         />
       </div>

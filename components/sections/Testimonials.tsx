@@ -15,7 +15,7 @@ const testimonials = [
     quote:
       "SolarX made the entire process simple and affordable. My electricity bill is almost zero now.",
     video: "/blog1.mp4",
-    poster: "/images/hero-house.png",
+    poster: "/images/Testimonial1.png",
   },
   {
     id: 2,
@@ -25,8 +25,8 @@ const testimonials = [
     rating: 5,
     quote:
       "The team explained everything clearly. Very professional installation.",
-    video: "/blog1.mp4",
-    poster: "/images/about-team.png",
+    video: "/blog2.mp4",
+    poster: "/images/Testimonial2.png",
   },
   {
     id: 3,
@@ -36,8 +36,8 @@ const testimonials = [
     rating: 5,
     quote:
       "My factory's power bill dropped by ₹40,000 per month. Best investment ever.",
-    video: "/blog1.mp4",
-    poster: "/images/hero-farm.png",
+    video: "/blog3.mp4",
+    poster: "/images/Testimonial3.png",
   },
   {
     id: 4,
@@ -46,8 +46,8 @@ const testimonials = [
     systemSize: "4 kW",
     rating: 5,
     quote: "Living off-grid in the hills was a dream. SolarX made it happen.",
-    video: "/blog1.mp4",
-    poster: "/images/feature-wind.png",
+    video: "/blog4.mp4",
+    poster: "/images/Testimonial4.png",
   },
   {
     id: 5,
@@ -58,7 +58,7 @@ const testimonials = [
     quote:
       "No more power cuts during summers. My family is very happy with SolarX.",
     video: "/blog1.mp4",
-    poster: "/images/hero-house.png",
+    poster: "/images/Testimonial1.png",
   },
 ];
 
@@ -160,6 +160,7 @@ const VideoCard = ({
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
+      videoRef.current.load(); // Restores the poster image
     }
   };
 

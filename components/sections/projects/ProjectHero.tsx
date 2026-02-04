@@ -9,7 +9,7 @@ const ProjectHero = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/project-residential.png" // Using one of the existing images
+          src="/images/RoofPanel.png" // Using one of the existing images
           alt="Solar Projects Background"
           fill
           className="object-cover"

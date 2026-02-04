@@ -70,7 +70,7 @@ const AboutFounder = () => {
           >
             <div className="relative aspect-square md:aspect-4/5 rounded-3xl overflow-hidden shadow-2xl skew-x-3 hover:skew-x-0 transition-transform duration-700 ease-out group">
               <Image
-                src="/images/about-team.png"
+                src="/images/House.png"
                 alt="Raunak - Founder of SolarX"
                 fill
                 className="object-cover scale-110 group-hover:scale-100 transition-transform duration-700"

@@ -37,7 +37,7 @@ export default function BlogPostPage() {
             description: sanityPost.description,
             image: sanityPost.image
               ? urlFor(sanityPost.image).width(1200).height(800).url()
-              : "/images/feature-wind.png",
+              : "/images/Panel.png",
             date: new Date(sanityPost.publishedAt).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",

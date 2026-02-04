@@ -120,38 +120,8 @@ const Services = () => {
           </motion.div>
         </div>
 
-        {/* PROBLEM STATEMENT */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-slate-900 rounded-3xl p-8 lg:p-12 text-white mb-16 lg:mb-20"
-        >
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-lg lg:text-xl leading-relaxed text-white/90">
-              Rising electricity bills, frequent power cuts, and increasing
-              living costs make daily life stressful for Indian households.{" "}
-              <span className="text-green-400 font-semibold">
-                Solar energy offers a smart, long-term solution
-              </span>{" "}
-              that lowers monthly expenses, ensures reliable power, and
-              increases home value—without changing your lifestyle.
-            </p>
-          </div>
-        </motion.div>
-
         {/* HOW SOLARX HELPS - 6 BENEFIT CARDS */}
         <div className="mb-20 lg:mb-24">
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl lg:text-3xl font-bold text-slate-900 text-center mb-12"
-          >
-            How SolarX Helps Your Family
-          </motion.h3>
-
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -178,42 +148,6 @@ const Services = () => {
                 <p className="text-slate-600 text-sm leading-relaxed">
                   {benefit.description}
                 </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* OUR SERVICES - COMPACT GRID */}
-        <div className="mb-20 lg:mb-24">
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl lg:text-3xl font-bold text-slate-900 text-center mb-12"
-          >
-            Our Services
-          </motion.h3>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
-          >
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ y: -3 }}
-                className="group bg-white/60 backdrop-blur-md rounded-xl p-4 lg:p-5 text-center shadow-sm border border-slate-100 hover:shadow-lg hover:border-green-200 transition-all duration-300"
-              >
-                <div className="w-10 h-10 rounded-lg bg-green-50 group-hover:bg-green-100 flex items-center justify-center text-green-600 mx-auto mb-3 transition-colors">
-                  {service.icon}
-                </div>
-                <h5 className="text-sm font-semibold text-slate-800 leading-tight">
-                  {service.title}
-                </h5>
               </motion.div>
             ))}
           </motion.div>

@@ -76,7 +76,7 @@ const AboutIntro = () => {
         >
           <div className="relative aspect-square md:aspect-4/3 rounded-3xl overflow-hidden shadow-2xl">
             <Image
-              src="/images/about-team.png" // Placeholder, assuming this exists
+              src="/images/Field Panel.png" // Placeholder, assuming this exists
               alt="SolarX Team Installation"
               fill
               className="object-cover"

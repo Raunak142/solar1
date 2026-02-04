@@ -20,7 +20,7 @@ export const blogPosts: BlogPost[] = [
     category: "Education",
     description:
       "Everything you need to know about how solar panels work and why they are the future of energy in India.",
-    image: "/images/feature-wind.png",
+    image: "/images/Panel.png",
     date: "Jan 15, 2026",
     author: "SolarX Team",
     color: "bg-blue-500",
@@ -50,7 +50,7 @@ export const blogPosts: BlogPost[] = [
     category: "Finance",
     description:
       "Detailed breakdown of solar costs, monthly savings, and how to calculate your Return on Investment.",
-    image: "/images/project-commercial.png",
+    image: "/images/Cost.png",
     date: "Jan 12, 2026",
     author: "Finance Expert",
     color: "bg-green-500",
@@ -80,7 +80,7 @@ export const blogPosts: BlogPost[] = [
     category: "Government",
     description:
       "Navigate the latest MNRE guidelines and learn how to claim government subsidies for your rooftop plant.",
-    image: "/images/hero-farm.png",
+    image: "/images/RoofPanel.png",
     date: "Jan 10, 2026",
     author: "Policy Desk",
     color: "bg-amber-500",
@@ -113,7 +113,7 @@ export const blogPosts: BlogPost[] = [
     category: "Lifestyle",
     description:
       "How switching to solar improves your quality of life, increases property value, and reduces carbon footprint.",
-    image: "/images/hero-house.png",
+    image: "/images/House.png",
     date: "Jan 08, 2026",
     author: "Green Living",
     color: "bg-purple-500",
@@ -138,7 +138,7 @@ export const blogPosts: BlogPost[] = [
     category: "Technical",
     description:
       "Simple maintenance routines to ensure your solar panels generate maximum power for 25+ years.",
-    image: "/images/about-team.png",
+    image: "/images/Field Panel.png",
     date: "Jan 05, 2026",
     author: "Tech Support",
     color: "bg-orange-500",
@@ -168,7 +168,7 @@ export const blogPosts: BlogPost[] = [
     category: "Case Studies",
     description:
       "Explore real-world installations across Uttarakhand and hear directly from homes powered by SolarX.",
-    image: "/images/project-residential.png",
+    image: "/images/House.png",
     date: "Jan 01, 2026",
     author: "Community Team",
     color: "bg-teal-500",
@@ -196,7 +196,7 @@ export const blogPosts: BlogPost[] = [
     category: "Business",
     description:
       "See how local factories in Uttarakhand are saving lakhs each month by switching to commercial solar plants.",
-    image: "/images/project-commercial.png",
+    image: "/images/Field Panel.png",
     date: "Dec 28, 2025",
     author: "Business Team",
     color: "bg-blue-600",
@@ -209,7 +209,7 @@ export const blogPosts: BlogPost[] = [
     category: "Tips",
     description:
       "Simple hacks to get the most out of your solar panels, from cleaning schedules to energy consumption habits.",
-    image: "/images/hero-farm.png",
+    image: "/images/RoofPanel.png",
     date: "Dec 25, 2025",
     author: "Solar Expert",
     color: "bg-amber-600",
@@ -222,7 +222,7 @@ export const blogPosts: BlogPost[] = [
     category: "Technology",
     description:
       "Exploring the latest advancements in battery technology and how they will revolutionize home energy storage.",
-    image: "/images/feature-wind.png",
+    image: "/images/Benifits4-Photoroom.png",
     date: "Dec 20, 2025",
     author: "Tech Team",
     color: "bg-purple-600",

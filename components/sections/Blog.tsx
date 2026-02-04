@@ -41,7 +41,7 @@ const Blog = ({ limit }: { limit?: number }) => {
             description: post.description,
             image: post.image
               ? urlFor(post.image).width(800).height(600).url()
-              : "/images/feature-wind.png",
+              : "/images/Panel.png",
             date: new Date(post.publishedAt).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",

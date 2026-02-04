@@ -111,7 +111,7 @@ const Hero = () => {
           >
             <div className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl relative border-4 border-white/50">
               <Image
-                src="/images/hero-house.png"
+                src="/images/House.png"
                 alt="Modern solar energy home in Uttarakhand"
                 fill
                 className="object-cover"

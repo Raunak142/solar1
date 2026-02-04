@@ -24,7 +24,7 @@ const features = [
     title: "Designed for Indian Climate",
     description:
       "Built to handle high temperatures, dust, heavy rainfall, and power fluctuations—ensuring long life and stable performance for Indian homes.",
-    image: "/images/hero-house.png",
+    image: "/images/House.png",
     color: "from-green-500 to-emerald-600",
   },
   {
@@ -33,7 +33,7 @@ const features = [
     title: "Smart Energy Optimization",
     description:
       "We analyze your daily usage, peak hours, and seasonal variations to deliver maximum output without wasted capacity.",
-    image: "/images/about-team.png",
+    image: "/images/Field Panel.png",
     color: "from-blue-500 to-indigo-600",
   },
   {
@@ -42,7 +42,7 @@ const features = [
     title: "Long-Term Support",
     description:
       "We don't disappear after installation. Regular checkups, fast service, easy warranty claims, and maintenance plans keep your system running smoothly.",
-    image: "/images/hero-farm.png",
+    image: "/images/GroundPanel.png",
     color: "from-teal-500 to-cyan-600",
   },
   {
@@ -51,44 +51,8 @@ const features = [
     title: "Built for Long-Term Value",
     description:
       "High-quality components and expert installation ensure reliable performance for 25+ years—saving money while reducing your carbon footprint.",
-    image: "/images/feature-wind.png",
+    image: "/images/Panel.png",
     color: "from-slate-600 to-slate-800",
-  },
-  {
-    id: 4,
-    icon: <IndianRupee className="w-6 h-6" />,
-    title: "Budget-Friendly Solar Solutions",
-    description:
-      "Focused on middle-class affordability. Right-sized systems that deliver savings without breaking the bank.",
-    image: "/images/hero-house.png",
-    color: "from-emerald-500 to-green-600",
-  },
-  {
-    id: 5,
-    icon: <Battery className="w-6 h-6" />,
-    title: "Power Backup Options",
-    description:
-      "Battery support for uninterrupted power during outages—ideal for work-from-home, online classes, and essential appliances.",
-    image: "/images/about-team.png",
-    color: "from-indigo-500 to-violet-600",
-  },
-  {
-    id: 6,
-    icon: <Eye className="w-6 h-6" />,
-    title: "Smart Monitoring & Transparency",
-    description:
-      "Real-time tracking of daily generation, monthly savings, and system health through your mobile—complete trust and visibility.",
-    image: "/images/hero-farm.png",
-    color: "from-cyan-500 to-blue-600",
-  },
-  {
-    id: 7,
-    icon: <Home className="w-6 h-6" />,
-    title: "Designed for Real Indian Homes",
-    description:
-      "Perfect for flats, independent houses, and duplexes—not just large villas. Solar solutions that fit your home.",
-    image: "/images/feature-wind.png",
-    color: "from-green-600 to-teal-700",
   },
 ];
 

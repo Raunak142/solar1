@@ -23,7 +23,7 @@ const AboutHero = () => {
       {/* Background Image with Parallax */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <Image
-          src="/images/hero-house.png"
+          src="/images/Forest Panel.png"
           alt="SolarX Installation"
           fill
           className="object-cover scale-105"
