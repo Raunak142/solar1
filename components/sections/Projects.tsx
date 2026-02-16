@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,71 +12,12 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import type { ProjectItem } from "@/lib/data";
 
-import { projects as fallbackProjects } from "./projects/projectData";
-import { client, urlFor } from "@/lib/sanity";
-import { allProjectsQuery } from "@/lib/queries";
-import type { SanityProject } from "@/lib/sanity-types";
-
-interface ProjectItem {
-  id: number | string;
-  slug: string;
-  title: string;
-  category: string;
-  location: string;
-  systemSize: string;
-  type: string;
-  image: string;
-  monthlySavings?: string;
-  yearlySavings?: string;
-  installationTime: string;
-  panelType: string;
-  inverter?: string;
-  battery: string;
-  content: string;
-}
-
-const Projects = () => {
+const Projects = ({ projects }: { projects: ProjectItem[] }) => {
   const [index, setIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [projectsList, setProjectsList] =
-    useState<ProjectItem[]>(fallbackProjects);
-
-  // Fetch projects from Sanity
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const sanityProjects: SanityProject[] =
-          await client.fetch(allProjectsQuery);
-        if (sanityProjects && sanityProjects.length > 0) {
-          const transformed: ProjectItem[] = sanityProjects.map((p, i) => ({
-            id: p._id || i,
-            slug: p.slug?.current || `project-${i}`,
-            title: p.title,
-            category: p.category,
-            location: p.location,
-            systemSize: p.systemSize,
-            type: p.type || p.category,
-            image: p.image
-              ? urlFor(p.image).width(1200).height(800).url()
-              : "/images/Panel.png",
-            monthlySavings: p.monthlySavings,
-            yearlySavings: p.yearlySavings,
-            installationTime: p.installationTime,
-            panelType: p.panelType,
-            inverter: p.inverter,
-            battery: p.battery,
-            content: "",
-          }));
-          setProjectsList(transformed);
-        }
-      } catch (error) {
-        console.error("Error fetching projects from Sanity:", error);
-      }
-    }
-    fetchProjects();
-  }, []);
 
   // Hydration fix for window width
   useEffect(() => {
@@ -150,10 +91,9 @@ const Projects = () => {
                 {[-2, -1, 0, 1, 2].map((offsetVal) => {
                   const effectiveIndex = index + offsetVal;
                   const dataIndex =
-                    ((effectiveIndex % projectsList.length) +
-                      projectsList.length) %
-                    projectsList.length;
-                  const project = projectsList[dataIndex];
+                    ((effectiveIndex % projects.length) + projects.length) %
+                    projects.length;
+                  const project = projects[dataIndex];
 
                   return (
                     <motion.div

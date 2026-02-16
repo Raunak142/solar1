@@ -1,112 +1,15 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { client, urlFor, getFileUrl } from "@/lib/sanity";
-import { allTestimonialsQuery } from "@/lib/queries";
-import type { SanityTestimonial } from "@/lib/sanity-types";
+import type { TestimonialItem } from "@/lib/data";
 
-// Hardcoded fallback data
-const fallbackTestimonials = [
-  {
-    id: 1,
-    name: "Ramesh Sharma",
-    location: "Rajpur Road, Dehradun",
-    systemSize: "5 kW",
-    rating: 5,
-    quote:
-      "SolarX made the entire process simple and affordable. My electricity bill is almost zero now.",
-    video: "/blog1.mp4",
-    poster: "/images/Testimonial1.png",
-  },
-  {
-    id: 2,
-    name: "Priya Gupta",
-    location: "Vasant Vihar, Dehradun",
-    systemSize: "3 kW",
-    rating: 5,
-    quote:
-      "The team explained everything clearly. Very professional installation.",
-    video: "/blog2.mp4",
-    poster: "/images/Testimonial2.png",
-  },
-  {
-    id: 3,
-    name: "Anil Thakur",
-    location: "Selaqui, Dehradun",
-    systemSize: "10 kW",
-    rating: 5,
-    quote:
-      "My factory's power bill dropped by ₹40,000 per month. Best investment ever.",
-    video: "/blog3.mp4",
-    poster: "/images/Testimonial3.png",
-  },
-  {
-    id: 4,
-    name: "Sunita Rawat",
-    location: "Mussoorie",
-    systemSize: "4 kW",
-    rating: 5,
-    quote: "Living off-grid in the hills was a dream. SolarX made it happen.",
-    video: "/blog4.mp4",
-    poster: "/images/Testimonial4.png",
-  },
-  {
-    id: 5,
-    name: "Vikram Singh",
-    location: "Clement Town, Dehradun",
-    systemSize: "6 kW",
-    rating: 5,
-    quote:
-      "No more power cuts during summers. My family is very happy with SolarX.",
-    video: "/blog1.mp4",
-    poster: "/images/Testimonial1.png",
-  },
-];
-
-interface Testimonial {
-  id: number | string;
-  name: string;
-  location: string;
-  systemSize: string;
-  rating: number;
-  quote: string;
-  video: string;
-  poster: string;
-}
-
-const Testimonials = () => {
-  const [testimonials, setTestimonials] =
-    useState<Testimonial[]>(fallbackTestimonials);
-
-  useEffect(() => {
-    async function fetchTestimonials() {
-      try {
-        const sanityTestimonials: SanityTestimonial[] =
-          await client.fetch(allTestimonialsQuery);
-        if (sanityTestimonials && sanityTestimonials.length > 0) {
-          const transformed: Testimonial[] = sanityTestimonials.map((t) => ({
-            id: t._id,
-            name: t.name,
-            location: t.location,
-            systemSize: t.systemSize,
-            rating: t.rating,
-            quote: t.quote,
-            video: t.video ? getFileUrl(t.video) : "/blog1.mp4",
-            poster: t.poster
-              ? urlFor(t.poster).width(760).height(1000).url()
-              : "/images/Testimonial1.png",
-          }));
-          setTestimonials(transformed);
-        }
-      } catch (error) {
-        console.error("Error fetching testimonials from Sanity:", error);
-      }
-    }
-    fetchTestimonials();
-  }, []);
-
+const Testimonials = ({
+  testimonials,
+}: {
+  testimonials: TestimonialItem[];
+}) => {
   return (
     <section className="py-24 lg:py-32 bg-slate-950 relative overflow-hidden">
       {/* Background Ambience */}
@@ -131,8 +34,8 @@ const Testimonials = () => {
             </span>
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Don't just take our word for it—see how SolarX is transforming homes
-            and businesses across Uttarakhand.
+            Don&apos;t just take our word for it—see how SolarX is transforming
+            homes and businesses across Uttarakhand.
           </p>
         </motion.div>
       </div>
@@ -145,7 +48,6 @@ const Testimonials = () => {
 
         {/* Marquee Track */}
         <div className="flex gap-8 pl-8 w-max animate-marquee group-hover:paused">
-          {/* Triplicate for smoother infinite loop */}
           {[...testimonials, ...testimonials, ...testimonials].map(
             (testimonial, index) => (
               <VideoCard
@@ -178,8 +80,7 @@ const Testimonials = () => {
   );
 };
 
-// VideoCard Component
-const VideoCard = ({ testimonial }: { testimonial: Testimonial }) => {
+const VideoCard = ({ testimonial }: { testimonial: TestimonialItem }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = () => {
@@ -187,7 +88,6 @@ const VideoCard = ({ testimonial }: { testimonial: Testimonial }) => {
       videoRef.current.currentTime = 0;
       videoRef.current.muted = false;
       videoRef.current.play().catch(() => {
-        // Autoplay fallback
         if (videoRef.current) {
           videoRef.current.muted = true;
           videoRef.current.play();
@@ -200,7 +100,7 @@ const VideoCard = ({ testimonial }: { testimonial: Testimonial }) => {
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
-      videoRef.current.load(); // Restores the poster image
+      videoRef.current.load();
     }
   };
 
@@ -210,7 +110,6 @@ const VideoCard = ({ testimonial }: { testimonial: Testimonial }) => {
       onMouseLeave={handleMouseLeave}
       className="shrink-0 w-[380px] group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-green-500/30 transition-all duration-500 cursor-pointer hover:shadow-2xl hover:shadow-black/50"
     >
-      {/* Video Container */}
       <div className="relative aspect-3/4 overflow-hidden bg-slate-900/50">
         <video
           ref={videoRef}
@@ -222,21 +121,13 @@ const VideoCard = ({ testimonial }: { testimonial: Testimonial }) => {
         >
           <source src={testimonial.video} type="video/mp4" />
         </video>
-
-        {/* Play Icon Removed */}
-
-        {/* Bottom Gradient overlay */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-slate-950 via-slate-950/80 to-transparent opacity-90" />
       </div>
 
-      {/* Card Content */}
       <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-        {/* Quote */}
         <p className="text-slate-100 text-base mb-6 leading-relaxed font-medium line-clamp-4 text-shadow-sm">
           &quot;{testimonial.quote}&quot;
         </p>
-
-        {/* Client Info */}
         <div className="flex items-center justify-between pt-4 border-t border-white/10">
           <div>
             <p className="font-bold text-white text-sm tracking-wide">

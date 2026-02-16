@@ -1,66 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
-import { client, urlFor } from "@/lib/sanity";
-import { homePageQuery } from "@/lib/queries";
+import type { HeroData } from "@/lib/data";
 
-// Fallback hero data
-const fallbackHero = {
-  badge: "#1 Solar Partner in Uttarakhand",
-  heading: "Power Your Home with Free Energy from the Sun",
-  subheading:
-    "Join 500+ happy families in Dehradun who cut their electricity bills by up to 90%. Reliable, affordable, and built for the hills.",
-  ctaText: "Explore Solutions",
-  ctaLink: "/#services",
-  image: "/images/House.png",
-  annualSavings: "₹60,000+",
-  totalClients: "500+",
-};
-
-interface HeroData {
-  badge: string;
-  heading: string;
-  subheading: string;
-  ctaText: string;
-  ctaLink: string;
-  image: string;
-  annualSavings: string;
-  totalClients: string;
-}
-
-const Hero = () => {
-  const [hero, setHero] = useState<HeroData>(fallbackHero);
-
-  useEffect(() => {
-    async function fetchHero() {
-      try {
-        const data = await client.fetch(homePageQuery);
-        if (data?.heroSection) {
-          const h = data.heroSection;
-          setHero({
-            badge: h.badge || fallbackHero.badge,
-            heading: h.heading || fallbackHero.heading,
-            subheading: h.subheading || fallbackHero.subheading,
-            ctaText: h.ctaText || fallbackHero.ctaText,
-            ctaLink: h.ctaLink || fallbackHero.ctaLink,
-            image: h.image
-              ? urlFor(h.image).width(1200).height(900).url()
-              : fallbackHero.image,
-            annualSavings: h.annualSavings || fallbackHero.annualSavings,
-            totalClients: h.totalClients || fallbackHero.totalClients,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching hero data from Sanity:", error);
-      }
-    }
-    fetchHero();
-  }, []);
-
+const Hero = ({ data }: { data: HeroData }) => {
   return (
     <section className="bg-[#EDF7ED] min-h-[90vh]">
       {/* Main Hero Content */}
@@ -76,39 +22,37 @@ const Hero = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 text-green-700 font-bold text-sm tracking-wide uppercase bg-green-100 px-4 py-1.5 rounded-full">
               <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
-              <span>{hero.badge}</span>
+              <span>{data.badge}</span>
             </div>
 
             {/* Main Heading */}
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 tracking-tighter leading-[1.1]">
-              {hero.heading}
+              {data.heading}
             </h1>
 
             {/* Description */}
             <p className="text-lg text-slate-600 max-w-lg leading-relaxed font-medium">
-              {hero.subheading}
+              {data.subheading}
             </p>
 
             {/* CTA and Reviews */}
             <div className="flex flex-wrap items-center gap-6 pt-4">
-              {/* CTA Button with Fixed Slide Effect */}
               <Link
-                href={hero.ctaLink}
+                href={data.ctaLink}
                 className="group px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-green-500/30 transition-all transform hover:scale-105 overflow-hidden"
               >
                 <span className="relative block h-6 overflow-hidden">
                   <span className="block transition-transform duration-300 ease-out group-hover:-translate-y-full">
-                    {hero.ctaText}
+                    {data.ctaText}
                   </span>
                   <span className="absolute top-0 left-0 block transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0">
-                    {hero.ctaText}
+                    {data.ctaText}
                   </span>
                 </span>
               </Link>
 
               {/* Reviews */}
               <div className="flex items-center gap-4">
-                {/* Avatar Stack */}
                 <div className="flex -space-x-3">
                   {[1, 2, 3, 4].map((i) => (
                     <div
@@ -121,7 +65,6 @@ const Hero = () => {
                     </div>
                   ))}
                 </div>
-                {/* Rating */}
                 <div>
                   <div className="flex gap-0.5 text-amber-400">
                     {[...Array(5)].map((_, i) => (
@@ -135,7 +78,7 @@ const Hero = () => {
                     ))}
                   </div>
                   <span className="text-sm text-slate-600 font-bold">
-                    Trusted by {hero.totalClients} locals
+                    Trusted by {data.totalClients} locals
                   </span>
                 </div>
               </div>
@@ -163,16 +106,14 @@ const Hero = () => {
           >
             <div className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl relative border-4 border-white/50">
               <Image
-                src={hero.image}
+                src={data.image}
                 alt="Modern solar energy home in Uttarakhand"
                 fill
                 className="object-cover"
                 priority
               />
-              {/* Overlay for depth */}
               <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent" />
 
-              {/* Animated Floating Card */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -185,7 +126,7 @@ const Hero = () => {
                       Est. Annual Savings
                     </p>
                     <p className="text-2xl font-bold text-slate-900">
-                      {hero.annualSavings}
+                      {data.annualSavings}
                     </p>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
@@ -198,7 +139,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Trust Bar (Replaces Marquee) */}
+      {/* Trust Bar */}
       <div className="py-8 bg-white border-t border-slate-100">
         <div className="max-w-[1400px] mx-auto px-6 flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
           <span className="text-xl font-bold text-slate-400 flex items-center gap-2">

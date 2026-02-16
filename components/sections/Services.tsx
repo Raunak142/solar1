@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import {
@@ -17,9 +16,7 @@ import {
   FileCheck,
   ArrowRight,
 } from "lucide-react";
-import { client } from "@/lib/sanity";
-import { benefitsByCategoryQuery, allServicesQuery } from "@/lib/queries";
-import type { SanityBenefit, SanityService } from "@/lib/sanity-types";
+import type { BenefitItem, ServiceItem } from "@/lib/data";
 
 // Icon mapping for CMS data (keys match PascalCase names stored in Sanity)
 const iconMap: Record<string, React.ReactNode> = {
@@ -36,114 +33,66 @@ const iconMap: Record<string, React.ReactNode> = {
   FileCheck: <FileCheck className="w-5 h-5" />,
 };
 
-// 6 Benefit Cards Data (fallback)
+// Fallback data in case CMS returns empty
 const fallbackBenefits = [
   {
-    icon: <Wallet className="w-6 h-6" />,
+    icon: "Wallet",
     title: "Lower Electricity Bills",
     description: "Save up to 70–90% on monthly bills for the next 25+ years",
     color: "bg-green-500",
   },
   {
-    icon: <Zap className="w-6 h-6" />,
+    icon: "Zap",
     title: "Reliable Power Every Day",
     description: "No interruptions for work, study, or appliances",
     color: "bg-amber-500",
   },
   {
-    icon: <IndianRupee className="w-6 h-6" />,
+    icon: "IndianRupee",
     title: "Affordable & EMI Options",
     description: "Designed for middle-class budgets with subsidy support",
     color: "bg-blue-500",
   },
   {
-    icon: <Wrench className="w-6 h-6" />,
+    icon: "Wrench",
     title: "Zero Maintenance Stress",
     description: "Installation, monitoring, and support handled by SolarX",
     color: "bg-purple-500",
   },
   {
-    icon: <Home className="w-6 h-6" />,
+    icon: "Home",
     title: "Higher Home Value",
     description: "A modern, future-ready solar-powered home",
     color: "bg-teal-500",
   },
   {
-    icon: <Leaf className="w-6 h-6" />,
+    icon: "Leaf",
     title: "Better Future for Your Family",
     description: "Save money while protecting the environment",
     color: "bg-emerald-500",
   },
 ];
 
-// 6 Service Cards Data (fallback)
 const fallbackServices = [
-  { icon: <Sun className="w-5 h-5" />, title: "Residential Solar Systems" },
-  {
-    icon: <Grid3X3 className="w-5 h-5" />,
-    title: "Rooftop Solar Installation",
-  },
-  { icon: <Zap className="w-5 h-5" />, title: "On-Grid & Off-Grid Systems" },
-  { icon: <Battery className="w-5 h-5" />, title: "Solar with Battery Backup" },
-  { icon: <Settings className="w-5 h-5" />, title: "Maintenance & AMC" },
-  {
-    icon: <FileCheck className="w-5 h-5" />,
-    title: "Government Subsidy Support",
-  },
+  { icon: "Sun", title: "Residential Solar Systems" },
+  { icon: "Grid3X3", title: "Rooftop Solar Installation" },
+  { icon: "Zap", title: "On-Grid & Off-Grid Systems" },
+  { icon: "Battery", title: "Solar with Battery Backup" },
+  { icon: "Settings", title: "Maintenance & AMC" },
+  { icon: "FileCheck", title: "Government Subsidy Support" },
 ];
 
-interface BenefitItem {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  color: string;
+interface ServicesProps {
+  benefits: BenefitItem[];
+  services: ServiceItem[];
 }
 
-interface ServiceItem {
-  icon: React.ReactNode;
-  title: string;
-}
-
-const Services = () => {
-  const [benefits, setBenefits] = useState<BenefitItem[]>(fallbackBenefits);
-  const [services, setServices] = useState<ServiceItem[]>(fallbackServices);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        // Fetch benefits with category 'service'
-        const sanityBenefits: SanityBenefit[] = await client.fetch(
-          benefitsByCategoryQuery,
-          { category: "service" },
-        );
-        if (sanityBenefits && sanityBenefits.length > 0) {
-          setBenefits(
-            sanityBenefits.map((b) => ({
-              icon: iconMap[b.icon] || <Zap className="w-6 h-6" />,
-              title: b.title,
-              description: b.description,
-              color: b.color || "bg-green-500",
-            })),
-          );
-        }
-
-        // Fetch services
-        const sanityServices: SanityService[] =
-          await client.fetch(allServicesQuery);
-        if (sanityServices && sanityServices.length > 0) {
-          setServices(
-            sanityServices.map((s) => ({
-              icon: iconMap[s.icon] || <Sun className="w-5 h-5" />,
-              title: s.title,
-            })),
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching services data from Sanity:", error);
-      }
-    }
-    fetchData();
-  }, []);
+const Services = ({
+  benefits: propBenefits,
+  services: propServices,
+}: ServicesProps) => {
+  const benefits = propBenefits.length > 0 ? propBenefits : fallbackBenefits;
+  const services = propServices.length > 0 ? propServices : fallbackServices;
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -211,7 +160,7 @@ const Services = () => {
                 <div
                   className={`w-14 h-14 rounded-xl ${benefit.color} flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform`}
                 >
-                  {benefit.icon}
+                  {iconMap[benefit.icon] || <Zap className="w-6 h-6" />}
                 </div>
                 <h4 className="text-xl font-bold text-slate-900 mb-2">
                   {benefit.title}

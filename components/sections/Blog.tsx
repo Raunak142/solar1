@@ -5,94 +5,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Calendar, User, Tag } from "lucide-react";
 import { blogPosts } from "./blogData";
-import { useEffect, useState } from "react";
-import { client, urlFor } from "@/lib/sanity";
-import { allPostsQuery } from "@/lib/queries";
-import type { SanityPost } from "@/lib/sanity-types";
+import type { BlogPostItem } from "@/lib/data";
 
-interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-  date: string;
-  author: string;
-  color: string;
+interface BlogProps {
+  posts?: BlogPostItem[];
+  limit?: number;
 }
 
-const Blog = ({ limit }: { limit?: number }) => {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const sanityPosts: SanityPost[] = await client.fetch(allPostsQuery);
-
-        if (sanityPosts && sanityPosts.length > 0) {
-          // Transform Sanity posts to match the component's expected format
-          const transformedPosts: BlogPost[] = sanityPosts.map((post) => ({
-            id: post._id,
-            slug: post.slug.current,
-            title: post.title,
-            category: post.category,
-            description: post.description,
-            image: post.image
-              ? urlFor(post.image).width(800).height(600).url()
-              : "/images/Panel.png",
-            date: new Date(post.publishedAt).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            }),
-            author: post.author,
-            color: post.color,
-          }));
-          setPosts(transformedPosts);
-        } else {
-          // Fallback to hardcoded data
-          setPosts(
-            blogPosts.map((post) => ({
-              ...post,
-              slug: post.slug,
-              image: post.image,
-            })),
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching posts from Sanity:", error);
-        // Fallback to hardcoded data
-        setPosts(
-          blogPosts.map((post) => ({
-            ...post,
-            slug: post.slug,
-            image: post.image,
-          })),
-        );
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchPosts();
-  }, []);
+const Blog = ({ posts: propPosts, limit }: BlogProps) => {
+  // Use prop data if available, fall back to hardcoded blogData
+  const posts: BlogPostItem[] =
+    propPosts && propPosts.length > 0
+      ? propPosts
+      : blogPosts.map((post) => ({
+          ...post,
+          slug: post.slug,
+          image: post.image,
+        }));
 
   const displayedPosts =
     limit && posts.length > 0 ? posts.slice(0, limit) : posts;
-
-  if (loading) {
-    return (
-      <section className="py-24 lg:py-32 bg-slate-50">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="text-slate-600">Loading blog posts...</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section
@@ -121,8 +53,8 @@ const Blog = ({ limit }: { limit?: number }) => {
             </p>
           </motion.div>
 
-          {/* View All Button - Enhanced */}
-          {limit && ( // Only show "View All" if we are limiting the view (i.e., on Home Page)
+          {/* View All Button */}
+          {limit && (
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -171,7 +103,7 @@ const Blog = ({ limit }: { limit?: number }) => {
                       <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
                     </div>
 
-                    {/* Category Badge - Shows on top left */}
+                    {/* Category Badge */}
                     <div className="absolute top-4 left-4 z-10">
                       <span
                         className={`inline-flex items-center px-3 py-1.5 rounded-full ${post.color || "bg-slate-800"} text-white text-xs font-bold shadow-lg transform transition-transform duration-300 group-hover:scale-105`}
@@ -181,7 +113,7 @@ const Blog = ({ limit }: { limit?: number }) => {
                       </span>
                     </div>
 
-                    {/* Date Badge - Shows on top right */}
+                    {/* Date Badge */}
                     <div className="absolute top-4 right-4 z-10 transform translate-y-[-10px] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                       <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-slate-700 text-xs font-bold shadow-lg">
                         <Calendar className="w-3 h-3 mr-1.5 text-green-500" />
