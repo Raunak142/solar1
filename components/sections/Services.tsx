@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import {
@@ -16,9 +17,27 @@ import {
   FileCheck,
   ArrowRight,
 } from "lucide-react";
+import { client } from "@/lib/sanity";
+import { benefitsByCategoryQuery, allServicesQuery } from "@/lib/queries";
+import type { SanityBenefit, SanityService } from "@/lib/sanity-types";
 
-// 6 Benefit Cards Data
-const benefits = [
+// Icon mapping for CMS data (keys match PascalCase names stored in Sanity)
+const iconMap: Record<string, React.ReactNode> = {
+  Wallet: <Wallet className="w-6 h-6" />,
+  Zap: <Zap className="w-6 h-6" />,
+  IndianRupee: <IndianRupee className="w-6 h-6" />,
+  Wrench: <Wrench className="w-6 h-6" />,
+  Home: <Home className="w-6 h-6" />,
+  Leaf: <Leaf className="w-6 h-6" />,
+  Sun: <Sun className="w-5 h-5" />,
+  Grid3X3: <Grid3X3 className="w-5 h-5" />,
+  Battery: <Battery className="w-5 h-5" />,
+  Settings: <Settings className="w-5 h-5" />,
+  FileCheck: <FileCheck className="w-5 h-5" />,
+};
+
+// 6 Benefit Cards Data (fallback)
+const fallbackBenefits = [
   {
     icon: <Wallet className="w-6 h-6" />,
     title: "Lower Electricity Bills",
@@ -57,8 +76,8 @@ const benefits = [
   },
 ];
 
-// 6 Service Cards Data
-const services = [
+// 6 Service Cards Data (fallback)
+const fallbackServices = [
   { icon: <Sun className="w-5 h-5" />, title: "Residential Solar Systems" },
   {
     icon: <Grid3X3 className="w-5 h-5" />,
@@ -73,7 +92,59 @@ const services = [
   },
 ];
 
+interface BenefitItem {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  color: string;
+}
+
+interface ServiceItem {
+  icon: React.ReactNode;
+  title: string;
+}
+
 const Services = () => {
+  const [benefits, setBenefits] = useState<BenefitItem[]>(fallbackBenefits);
+  const [services, setServices] = useState<ServiceItem[]>(fallbackServices);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Fetch benefits with category 'service'
+        const sanityBenefits: SanityBenefit[] = await client.fetch(
+          benefitsByCategoryQuery,
+          { category: "service" },
+        );
+        if (sanityBenefits && sanityBenefits.length > 0) {
+          setBenefits(
+            sanityBenefits.map((b) => ({
+              icon: iconMap[b.icon] || <Zap className="w-6 h-6" />,
+              title: b.title,
+              description: b.description,
+              color: b.color || "bg-green-500",
+            })),
+          );
+        }
+
+        // Fetch services
+        const sanityServices: SanityService[] =
+          await client.fetch(allServicesQuery);
+        if (sanityServices && sanityServices.length > 0) {
+          setServices(
+            sanityServices.map((s) => ({
+              icon: iconMap[s.icon] || <Sun className="w-5 h-5" />,
+              title: s.title,
+            })),
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching services data from Sanity:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {

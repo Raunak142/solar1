@@ -1,11 +1,14 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Star, MapPin, Zap, Play } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { client, urlFor, getFileUrl } from "@/lib/sanity";
+import { allTestimonialsQuery } from "@/lib/queries";
+import type { SanityTestimonial } from "@/lib/sanity-types";
 
-// Testimonial Data
-const testimonials = [
+// Hardcoded fallback data
+const fallbackTestimonials = [
   {
     id: 1,
     name: "Ramesh Sharma",
@@ -62,7 +65,48 @@ const testimonials = [
   },
 ];
 
+interface Testimonial {
+  id: number | string;
+  name: string;
+  location: string;
+  systemSize: string;
+  rating: number;
+  quote: string;
+  video: string;
+  poster: string;
+}
+
 const Testimonials = () => {
+  const [testimonials, setTestimonials] =
+    useState<Testimonial[]>(fallbackTestimonials);
+
+  useEffect(() => {
+    async function fetchTestimonials() {
+      try {
+        const sanityTestimonials: SanityTestimonial[] =
+          await client.fetch(allTestimonialsQuery);
+        if (sanityTestimonials && sanityTestimonials.length > 0) {
+          const transformed: Testimonial[] = sanityTestimonials.map((t) => ({
+            id: t._id,
+            name: t.name,
+            location: t.location,
+            systemSize: t.systemSize,
+            rating: t.rating,
+            quote: t.quote,
+            video: t.video ? getFileUrl(t.video) : "/blog1.mp4",
+            poster: t.poster
+              ? urlFor(t.poster).width(760).height(1000).url()
+              : "/images/Testimonial1.png",
+          }));
+          setTestimonials(transformed);
+        }
+      } catch (error) {
+        console.error("Error fetching testimonials from Sanity:", error);
+      }
+    }
+    fetchTestimonials();
+  }, []);
+
   return (
     <section className="py-24 lg:py-32 bg-slate-950 relative overflow-hidden">
       {/* Background Ambience */}
@@ -135,11 +179,7 @@ const Testimonials = () => {
 };
 
 // VideoCard Component
-const VideoCard = ({
-  testimonial,
-}: {
-  testimonial: (typeof testimonials)[0];
-}) => {
+const VideoCard = ({ testimonial }: { testimonial: Testimonial }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = () => {
@@ -193,7 +233,7 @@ const VideoCard = ({
       <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
         {/* Quote */}
         <p className="text-slate-100 text-base mb-6 leading-relaxed font-medium line-clamp-4 text-shadow-sm">
-          "{testimonial.quote}"
+          &quot;{testimonial.quote}&quot;
         </p>
 
         {/* Client Info */}

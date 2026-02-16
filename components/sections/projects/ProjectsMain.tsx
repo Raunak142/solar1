@@ -1,22 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProjectHero from "./ProjectHero";
 import ProjectFilters from "./ProjectFilters";
 import ProjectGrid from "./ProjectGrid";
-import { projects, ProjectCategory } from "./projectData";
+import {
+  projects as fallbackProjects,
+  ProjectCategory,
+  Project,
+} from "./projectData";
 import { motion } from "framer-motion";
 import { CheckCircle, Clock, Shield, ArrowRight } from "lucide-react";
+import { client, urlFor } from "@/lib/sanity";
+import { allProjectsQuery } from "@/lib/queries";
+import type { SanityProject } from "@/lib/sanity-types";
 
 const ProjectsMain = () => {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | "all">(
     "all",
   );
+  const [projectsList, setProjectsList] = useState<Project[]>(fallbackProjects);
+
+  // Fetch projects from Sanity
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const sanityProjects: SanityProject[] =
+          await client.fetch(allProjectsQuery);
+        if (sanityProjects && sanityProjects.length > 0) {
+          const transformed: Project[] = sanityProjects.map((p, i) => ({
+            id: i + 1,
+            slug: p.slug?.current || `project-${i}`,
+            title: p.title,
+            category: p.category as ProjectCategory,
+            location: p.location,
+            systemSize: p.systemSize,
+            type: p.type || p.category,
+            image: p.image
+              ? urlFor(p.image).width(800).height(600).url()
+              : "/images/Panel.png",
+            monthlySavings: p.monthlySavings,
+            yearlySavings: p.yearlySavings,
+            installationTime: p.installationTime,
+            panelType: p.panelType,
+            inverter: p.inverter,
+            battery: p.battery,
+            content: "",
+          }));
+          setProjectsList(transformed);
+        }
+      } catch (error) {
+        console.error("Error fetching projects from Sanity:", error);
+      }
+    }
+    fetchProjects();
+  }, []);
 
   const filteredProjects =
     activeCategory === "all"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory);
+      ? projectsList
+      : projectsList.filter((p) => p.category === activeCategory);
 
   return (
     <div className="bg-slate-50 min-h-screen">

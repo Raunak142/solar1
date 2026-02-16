@@ -6,26 +6,77 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   IndianRupee,
-  Sun,
-  Cpu,
   MapPin,
   Zap,
   Battery,
-  Calendar,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 
-// Filter Categories - REMOVED
+import { projects as fallbackProjects } from "./projects/projectData";
+import { client, urlFor } from "@/lib/sanity";
+import { allProjectsQuery } from "@/lib/queries";
+import type { SanityProject } from "@/lib/sanity-types";
 
-import { projects } from "./projects/projectData";
-
-// Filter Categories - REMOVED
+interface ProjectItem {
+  id: number | string;
+  slug: string;
+  title: string;
+  category: string;
+  location: string;
+  systemSize: string;
+  type: string;
+  image: string;
+  monthlySavings?: string;
+  yearlySavings?: string;
+  installationTime: string;
+  panelType: string;
+  inverter?: string;
+  battery: string;
+  content: string;
+}
 
 const Projects = () => {
   const [index, setIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [projectsList, setProjectsList] =
+    useState<ProjectItem[]>(fallbackProjects);
+
+  // Fetch projects from Sanity
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const sanityProjects: SanityProject[] =
+          await client.fetch(allProjectsQuery);
+        if (sanityProjects && sanityProjects.length > 0) {
+          const transformed: ProjectItem[] = sanityProjects.map((p, i) => ({
+            id: p._id || i,
+            slug: p.slug?.current || `project-${i}`,
+            title: p.title,
+            category: p.category,
+            location: p.location,
+            systemSize: p.systemSize,
+            type: p.type || p.category,
+            image: p.image
+              ? urlFor(p.image).width(1200).height(800).url()
+              : "/images/Panel.png",
+            monthlySavings: p.monthlySavings,
+            yearlySavings: p.yearlySavings,
+            installationTime: p.installationTime,
+            panelType: p.panelType,
+            inverter: p.inverter,
+            battery: p.battery,
+            content: "",
+          }));
+          setProjectsList(transformed);
+        }
+      } catch (error) {
+        console.error("Error fetching projects from Sanity:", error);
+      }
+    }
+    fetchProjects();
+  }, []);
 
   // Hydration fix for window width
   useEffect(() => {
@@ -93,128 +144,32 @@ const Projects = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Centered container logic */}
-          <div className="flex justify-center overflow-hidden">
-            {/* 
-                We render a massive track. 
-                Using `x` transform to slide. 
-                `index` keeps increasing unboundedly.
-                We render enough items to cover the view.
-                Actually simpler: Just map a range around the current index.
-             */}
-            <motion.div
-              className="flex gap-4 md:gap-8 items-center"
-              initial={false}
-              animate={{ x: -offset }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 25,
-                mass: 1,
-              }}
-              style={{ x: 0 }} // Reset or init
-            >
-              {/* 
-                 Render a very broad range of items to create infinite illusion. 
-                 We shift the "center" of the rendering based on the index.
-                 This is a virtualization technique for infinite scrolling.
-              */}
-              {[-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8].map((offsetIndex) => {
-                // Calculate the actual infinite index
-                const currentIndex = index + offsetIndex;
-
-                // Modulo math to cycle through data
-                // ((i % n) + n) % n handles negative numbers correctly
-                const dataIndex =
-                  ((currentIndex % projects.length) + projects.length) %
-                  projects.length;
-                const project = projects[dataIndex];
-
-                // We only need to render if it's somewhat visible
-                // But for simplicity with framer motion width calculations, we render a fixed set relative to "index" 0 position
-                // Wait, simpler approach:
-                // We render a list from index-2 to index+5
-                // And we strictly control their key to be unique based on position
-                return null;
-              })}
-
-              {/* 
-                  RETRYING LOGIC:
-                  The best way for infinite slider with Framer Motion:
-                  1. Have an index state that grows forever (0, 1, 2...).
-                  2. Render items from `index - 2` to `index + 2`.
-                  3. Position them absolutely? No, changing DOM order breaks animations.
-                  4. Standard approach: Render a huge list? No, performance.
-                  
-                  BETTER APPROACH:
-                  Use the track method but simply re-order?
-                  
-                  LET'S STICK TO THE UNBOUNDED INDEX + MODULO MAPPING.
-                  We render a distinct set of keys.
-               */}
-
-              {/* Let's render a static large-enough array and slide the track. 
-                   Actually, to be truly infinite without rewind, specific "infinite carousel" libraries used.
-                   With just React/Framer:
-                   We can assume the user won't scroll 1000 times.
-                   We'll just map a large range relative to the current index.
-               */}
-              {Array.from({ length: 20 }).map((_, i) => {
-                // We render a window around the current index.
-                // Let's say we render index - 2 to index + 5
-                // No, that changes the DOM.
-
-                // Alternative: Just render "projects" repeated 100 times?
-                // Too heavy.
-
-                // Correct logic:
-                // We rely on the fact that we can just cycle the `x` value.
-                // But strictly for the user's request "last to first should start from first":
-                // The "rewind" happens because index goes projects.length -> 0.
-                // If index goes ... -> 4 -> 5 -> 6, it never rewinds.
-                // So we just need to render project[index % length].
-                return null;
-              })}
-            </motion.div>
-          </div>
-
-          {/* 
-              IMPLEMENTATION ATTEMPT 2:
-              We will maintain the `motion.div` track.
-              We will render items from `index - 2` to `index + 2` dynamically.
-              We adjust the `x` offset to keep the current item centered.
-           */}
           <div className="flex justify-center">
             <div className="relative h-[250px] sm:h-[400px] lg:h-[600px] w-full max-w-[900px]">
               <AnimatePresence initial={false} custom={index}>
-                {/* 
-                        Actually, a full carousel replacement is safer than trying to hack the track 
-                        if we want perfect infinite loop without complex virtualization code in one file.
-                        
-                        Let's use a "Center Mode" Slider approach where we absolute position the slides based on their distance from "index".
-                     */}
-                {[-2, -1, 0, 1, 2].map((offset) => {
-                  const effectiveIndex = index + offset;
+                {[-2, -1, 0, 1, 2].map((offsetVal) => {
+                  const effectiveIndex = index + offsetVal;
                   const dataIndex =
-                    ((effectiveIndex % projects.length) + projects.length) %
-                    projects.length;
-                  const project = projects[dataIndex];
+                    ((effectiveIndex % projectsList.length) +
+                      projectsList.length) %
+                    projectsList.length;
+                  const project = projectsList[dataIndex];
 
                   return (
                     <motion.div
-                      key={effectiveIndex} // UNIQUE KEY is critical
+                      key={effectiveIndex}
                       className="absolute top-0 left-0 w-full h-full"
                       initial={{
-                        x: `${offset * 110}%`,
+                        x: `${offsetVal * 110}%`,
                         scale: 0.9,
                         opacity: 0.5,
                         zIndex: 0,
                       }}
                       animate={{
-                        x: `${offset * 105}%`, // 105% allows for a 5% gap
-                        scale: offset === 0 ? 1 : 0.9,
-                        opacity: offset === 0 ? 1 : 0.4,
-                        zIndex: offset === 0 ? 10 : 0,
+                        x: `${offsetVal * 105}%`,
+                        scale: offsetVal === 0 ? 1 : 0.9,
+                        opacity: offsetVal === 0 ? 1 : 0.4,
+                        zIndex: offsetVal === 0 ? 10 : 0,
                       }}
                       transition={{
                         type: "spring",
@@ -228,7 +183,7 @@ const Projects = () => {
                       >
                         <ProjectCard
                           project={project}
-                          isActive={offset === 0}
+                          isActive={offsetVal === 0}
                         />
                       </Link>
                     </motion.div>
@@ -251,7 +206,7 @@ const Projects = () => {
           </motion.button>
           <motion.button
             whileTap={{ scale: 0.9 }}
-            onClick={() => setIndex((prev) => prev + 1)} // Unbounded increment
+            onClick={() => setIndex((prev) => prev + 1)}
             className="p-4 rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-green-500 hover:text-green-600 hover:shadow-lg transition-colors duration-300 group z-20"
             aria-label="Next project"
           >
@@ -268,7 +223,7 @@ const ProjectCard = ({
   project,
   isActive,
 }: {
-  project: (typeof projects)[0];
+  project: ProjectItem;
   isActive: boolean;
 }) => {
   return (

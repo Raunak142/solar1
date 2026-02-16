@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import {
   Wallet,
@@ -14,11 +15,25 @@ import {
   MapPin,
   CheckCircle,
   Users,
-  ArrowRight,
 } from "lucide-react";
+import { client } from "@/lib/sanity";
+import { allBenefitsQuery } from "@/lib/queries";
+import type { SanityBenefit } from "@/lib/sanity-types";
 
-// 8 Benefit Cards
-const benefits = [
+// Icon mapping for CMS data (keys match PascalCase names stored in Sanity)
+const iconMap: Record<string, React.ReactNode> = {
+  Wallet: <Wallet className="w-6 h-6" />,
+  Zap: <Zap className="w-6 h-6" />,
+  IndianRupee: <IndianRupee className="w-6 h-6" />,
+  Battery: <Battery className="w-6 h-6" />,
+  Shield: <Shield className="w-6 h-6" />,
+  Settings: <Settings className="w-6 h-6" />,
+  Home: <Home className="w-6 h-6" />,
+  Leaf: <Leaf className="w-6 h-6" />,
+};
+
+// 8 Benefit Cards (fallback)
+const fallbackBenefits = [
   {
     icon: <Wallet className="w-6 h-6" />,
     title: "Up to 90% Lower Electricity Bills",
@@ -69,6 +84,13 @@ const benefits = [
   },
 ];
 
+interface BenefitItem {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  color: string;
+}
+
 // Trust Badges
 const trustBadges = [
   { icon: <Award className="w-5 h-5" />, label: "10+ Years Experience" },
@@ -88,6 +110,30 @@ const comparisonData = [
 ];
 
 const Benefits = () => {
+  const [benefits, setBenefits] = useState<BenefitItem[]>(fallbackBenefits);
+
+  useEffect(() => {
+    async function fetchBenefits() {
+      try {
+        const sanityBenefits: SanityBenefit[] =
+          await client.fetch(allBenefitsQuery);
+        if (sanityBenefits && sanityBenefits.length > 0) {
+          setBenefits(
+            sanityBenefits.map((b) => ({
+              icon: iconMap[b.icon] || <Zap className="w-6 h-6" />,
+              title: b.title,
+              description: b.description,
+              color: b.color || "bg-green-500",
+            })),
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching benefits from Sanity:", error);
+      }
+    }
+    fetchBenefits();
+  }, []);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
