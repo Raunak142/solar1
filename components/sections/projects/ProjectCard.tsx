@@ -11,8 +11,9 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { Project } from "./projectData";
+import type { ProjectItem } from "@/lib/data";
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project }: { project: ProjectItem }) => {
   return (
     <motion.div
       layout

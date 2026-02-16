@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "./ProjectCard";
-import { Project } from "./projectData";
+import type { ProjectItem } from "@/lib/data";
 
-const ProjectGrid = ({ projects }: { projects: Project[] }) => {
+const ProjectGrid = ({ projects }: { projects: ProjectItem[] }) => {
   return (
     <motion.div
       layout
