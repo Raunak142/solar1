@@ -19,7 +19,7 @@ const AboutIntro = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto bg-white overflow-hidden"
+      className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto page-bg overflow-hidden"
     >
       <div className="grid lg:grid-cols-2 gap-16 items-start">
         {/* Left: Content */}

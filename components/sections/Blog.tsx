@@ -29,7 +29,7 @@ const Blog = ({ posts: propPosts, limit }: BlogProps) => {
   return (
     <section
       id="blog"
-      className="py-24 lg:py-32 bg-slate-50 relative overflow-hidden"
+      className="py-24 lg:py-32 page-bg relative overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADER */}

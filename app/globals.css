@@ -2,9 +2,14 @@
 
 :root {
   --font-onest: "Onest", sans-serif;
+  --page-bg: #EBF5EB;
 }
 
 body {
   font-family: var(--font-onest), system-ui, sans-serif;
-  background-color: #fafafa;
+  background-color: var(--page-bg);
+}
+
+.page-bg {
+  background-color: var(--page-bg);
 }

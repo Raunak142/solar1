@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const ContactMap = () => {
   return (
-    <section className="py-20 bg-slate-50">
+    <section className="py-20 page-bg">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -128,7 +128,7 @@ const StatCard = ({
 
 const AboutTrust = () => {
   return (
-    <section className="py-24 lg:py-32 bg-slate-50 overflow-hidden">
+    <section className="py-24 lg:py-32 page-bg overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div

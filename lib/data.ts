@@ -247,25 +247,76 @@ export async function getServices(): Promise<ServiceItem[]> {
 }
 
 export async function getBlogPosts(): Promise<BlogPostItem[]> {
+  const { blogPosts: localPosts } = await import('@/components/sections/blogData')
+
+  // Local data is the source of truth for which blogs to show
+  const localBySlug = new Map(localPosts.map((p) => [p.slug, p]))
+  const allowedSlugs = new Set(localPosts.map((p) => p.slug))
+
   try {
     const data: SanityPost[] = await client.fetch(allPostsQuery)
-    if (!data || data.length === 0) return []
-    return data.map((post) => ({
-      id: post._id,
-      slug: post.slug.current,
-      title: post.title,
-      category: post.category,
-      description: post.description,
-      image: post.image ? urlFor(post.image).width(800).url() : '',
-      date: post.publishedAt
-        ? new Date(post.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
-        : '',
-      author: post.author,
-      color: post.color || 'bg-green-600',
-    }))
+    const seenSlugs = new Set<string>()
+    const result: BlogPostItem[] = []
+
+    // Only include CMS posts that also exist in local data
+    if (data && data.length > 0) {
+      for (const post of data) {
+        const slug = post.slug.current
+        if (!allowedSlugs.has(slug)) continue // skip CMS-only posts
+        if (seenSlugs.has(slug)) continue     // skip duplicates
+        seenSlugs.add(slug)
+
+        const localFallback = localBySlug.get(slug)!
+        const image = post.image
+          ? urlFor(post.image).width(800).url()
+          : (localFallback.image || '/images/Panel.png')
+
+        result.push({
+          id: post._id,
+          slug,
+          title: post.title,
+          category: post.category,
+          description: post.description,
+          image,
+          date: post.publishedAt
+            ? new Date(post.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+            : localFallback.date,
+          author: post.author,
+          color: post.color || 'bg-green-600',
+        })
+      }
+    }
+
+    // Add any local posts not found in CMS
+    for (const local of localPosts) {
+      if (seenSlugs.has(local.slug)) continue
+      result.push({
+        id: local.id,
+        slug: local.slug,
+        title: local.title,
+        category: local.category,
+        description: local.description,
+        image: local.image || '/images/Panel.png',
+        date: local.date,
+        author: local.author,
+        color: local.color,
+      })
+    }
+
+    return result
   } catch (err) {
     console.error('getBlogPosts error:', err)
-    return []
+    return localPosts.map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      title: p.title,
+      category: p.category,
+      description: p.description,
+      image: p.image || '/images/Panel.png',
+      date: p.date,
+      author: p.author,
+      color: p.color,
+    }))
   }
 }
 

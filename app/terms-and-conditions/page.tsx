@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function TermsAndConditionsPage() {
   return (
-    <main className="pt-20 bg-white min-h-screen">
+    <main className="pt-20 page-bg min-h-screen">
       <Header />
 
       <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8">

@@ -57,7 +57,7 @@ const ProjectsMain = ({ projects: propProjects }: ProjectsMainProps) => {
       </Suspense>
       <ProjectHero />
 
-      <section className="py-16 bg-white">
+      <section className="py-16 page-bg">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <ProjectFilters
             activeCategory={activeCategory}

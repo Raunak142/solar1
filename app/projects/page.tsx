@@ -10,7 +10,7 @@ export default async function ProjectsPage() {
   const projects = await getProjects();
 
   return (
-    <main className="pt-20 bg-[#EDF7ED] min-h-screen">
+    <main className="pt-20 page-bg min-h-screen">
       <Header />
       <ProjectsMain projects={projects} />
       <Footer />

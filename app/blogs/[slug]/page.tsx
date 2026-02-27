@@ -36,7 +36,7 @@ export default async function BlogPostPage({
   const relatedPosts = blogPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen page-bg">
       <Header />
 
       <article>
@@ -168,7 +168,7 @@ export default async function BlogPostPage({
       </article>
 
       {/* AUTHOR BIO & RELATED POSTS */}
-      <section className="bg-slate-50 py-16 border-t border-slate-200">
+      <section className="page-bg py-16 border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Author Bio */}
           <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 mb-16 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">

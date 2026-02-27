@@ -99,7 +99,7 @@ const accentMap: Record<
 
 const AboutDifferentiators = () => {
   return (
-    <section className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
+    <section className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 page-bg overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <motion.div

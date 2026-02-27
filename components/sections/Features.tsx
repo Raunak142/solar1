@@ -58,7 +58,7 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="bg-slate-50 relative">
+    <section className="page-bg relative">
       {/* Header Section */}
       <div className="pt-24 pb-12 lg:pt-32 lg:pb-0 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center mb-16 lg:mb-24">

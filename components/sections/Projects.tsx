@@ -55,7 +55,7 @@ const Projects = ({ projects }: { projects: ProjectItem[] }) => {
     <section
       id="projects"
       ref={sectionRef}
-      className="py-24 lg:py-32 bg-slate-50 overflow-hidden"
+      className="py-24 lg:py-32 page-bg overflow-hidden"
     >
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADER */}

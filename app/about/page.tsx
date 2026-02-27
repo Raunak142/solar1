@@ -4,7 +4,7 @@ import Footer from "@/components/sections/Footer";
 
 export default function AboutPage() {
   return (
-    <main className="pt-20 bg-[#EDF7ED] min-h-screen">
+    <main className="pt-20 page-bg min-h-screen">
       <Header />
       <AboutMain />
       <Footer />

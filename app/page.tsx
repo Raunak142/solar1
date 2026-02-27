@@ -38,7 +38,7 @@ export default async function Home() {
     ]);
 
   return (
-    <main className="pt-20 bg-[#EDF7ED]">
+    <main className="pt-20 page-bg">
       <Header />
       <Hero data={heroData} />
       <About />

@@ -11,7 +11,7 @@ import AboutCTA from "./AboutCTA";
 
 const AboutMain = () => {
   return (
-    <div className="bg-white">
+    <div className="page-bg">
       <AboutHero />
       <AboutIntro />
       <AboutFounder />

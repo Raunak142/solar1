@@ -19,7 +19,7 @@ const AboutFounder = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50 overflow-hidden"
+      className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 page-bg overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
