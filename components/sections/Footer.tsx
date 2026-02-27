@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   Facebook,
   Twitter,
@@ -20,10 +21,12 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { label: "Residential Solar", href: "/#services" },
-    { label: "Commercial Solar", href: "/#services" },
+    { label: "Residential Solar", href: "/projects?category=residential" },
+    { label: "Commercial Solar", href: "/projects?category=commercial" },
     { label: "Our Blog", href: "/blog" },
     { label: "Support", href: "/contact" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms & Conditions", href: "/terms-and-conditions" },
   ];
 
   const socialLinks = [
@@ -52,21 +55,25 @@ const Footer = () => {
   return (
     <footer className="bg-slate-950 text-slate-300 border-t border-slate-800">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-white tracking-tight">
-                SOLAR<span className="text-green-500">X</span>
-              </span>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/images/Solar Logo.png"
+                alt="Kartik Solar Logo"
+                width={140}
+                height={42}
+                className="h-16 w-auto object-contain"
+              />
             </Link>
 
             {/* Description */}
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-              Uttarakhand's most trusted solar partner. We are committed to
-              powering homes and businesses with clean, renewable energy
-              tailored to the Himalayan climate.
+              A Dehradun-based solar company dedicated to powering Indian homes
+              with clean, reliable, and affordable energy solutions designed for
+              Indian climate conditions.
             </p>
 
             {/* Social Links */}
@@ -87,7 +94,7 @@ const Footer = () => {
           </div>
 
           {/* Essential Pages */}
-          <div>
+          <div className="mt-10 lg:mt-20">
             <h4 className="text-lg font-bold text-white mb-6">Menu</h4>
             <ul className="space-y-3">
               {essentialPages.map((link) => (
@@ -104,7 +111,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="mt-10 lg:mt-20">
             <h4 className="text-lg font-bold text-white mb-6">Solutions</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
@@ -121,7 +128,7 @@ const Footer = () => {
           </div>
 
           {/* Contact Us */}
-          <div>
+          <div className="mt-10 lg:mt-20">
             <h4 className="text-lg font-bold text-white mb-6">Get in Touch</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-4">
@@ -141,10 +148,10 @@ const Footer = () => {
                   <Mail className="w-4 h-4" />
                 </div>
                 <a
-                  href="mailto:connect@solarx.in"
+                  href="mailto:connect@Kartik Solar.in"
                   className="text-slate-400 text-sm hover:text-white transition-colors"
                 >
-                  connect@solarx.in
+                  connect@Kartik Solar.in
                 </a>
               </li>
               <li className="flex items-center gap-4">
@@ -165,7 +172,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-xs">
-            &copy; {new Date().getFullYear()} SolarX Energy Solutions. All
+            &copy; {new Date().getFullYear()} Kartik Solar Energy Solutions. All
             rights reserved.
           </p>
           <p className="text-slate-600 text-xs flex items-center gap-1">

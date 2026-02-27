@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -16,33 +16,45 @@ import type { ProjectItem } from "@/lib/data";
 
 const Projects = ({ projects }: { projects: ProjectItem[] }) => {
   const [index, setIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
-  // Hydration fix for window width
+  // Auto-play: only when in viewport and not hovered
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Auto-play logic
-  useEffect(() => {
-    if (isHovered) return;
+    if (!isInView || isHovered) return;
     const interval = setInterval(() => {
       setIndex((prev) => prev + 1);
-    }, 4000);
+    }, 5000); // Slower 5-second intervals
     return () => clearInterval(interval);
-  }, [isHovered, index]);
+  }, [isInView, isHovered, index]);
 
-  const cardWidth = windowWidth < 640 ? 350 : windowWidth < 1024 ? 600 : 900;
-  const gap = windowWidth < 768 ? 16 : 32;
-  const offset = (cardWidth + gap) * index;
+  // Touch / swipe handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        setIndex((prev) => prev + 1);
+      } else {
+        setIndex((prev) => prev - 1);
+      }
+    }
+  }, []);
 
   return (
     <section
       id="projects"
+      ref={sectionRef}
       className="py-24 lg:py-32 bg-slate-50 overflow-hidden"
     >
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,11 +71,14 @@ const Projects = ({ projects }: { projects: ProjectItem[] }) => {
               Our Projects
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
-              Our Work, Our <span className="text-green-600">Pride</span>
+              Powering Real Homes with{" "}
+              <span className="text-green-600">Real Savings</span>
             </h2>
             <p className="text-lg text-slate-600 mt-4 leading-relaxed">
-              At SolarX, every project tells a story of savings, reliability,
-              and a smarter lifestyle.
+              Every project we complete represents a family choosing smarter
+              energy. From consultation to installation, Kartik Solar
+              Enterprises helps homeowners reduce electricity bills and enjoy
+              reliable solar power built for Indian conditions.
             </p>
           </motion.div>
 
@@ -84,6 +99,9 @@ const Projects = ({ projects }: { projects: ProjectItem[] }) => {
           className="relative py-12"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           <div className="flex justify-center">
             <div className="relative h-[250px] sm:h-[400px] lg:h-[600px] w-full max-w-[900px]">
@@ -101,20 +119,21 @@ const Projects = ({ projects }: { projects: ProjectItem[] }) => {
                       className="absolute top-0 left-0 w-full h-full"
                       initial={{
                         x: `${offsetVal * 110}%`,
-                        scale: 0.9,
-                        opacity: 0.5,
+                        scale: 0.88,
+                        opacity: 0.4,
                         zIndex: 0,
                       }}
                       animate={{
                         x: `${offsetVal * 105}%`,
-                        scale: offsetVal === 0 ? 1 : 0.9,
-                        opacity: offsetVal === 0 ? 1 : 0.4,
+                        scale: offsetVal === 0 ? 1 : 0.88,
+                        opacity: offsetVal === 0 ? 1 : 0.35,
                         zIndex: offsetVal === 0 ? 10 : 0,
                       }}
                       transition={{
                         type: "spring",
-                        stiffness: 200,
-                        damping: 20,
+                        stiffness: 120,
+                        damping: 22,
+                        mass: 1.2,
                       }}
                     >
                       <Link
@@ -134,24 +153,48 @@ const Projects = ({ projects }: { projects: ProjectItem[] }) => {
           </div>
         </div>
 
-        {/* Navigation Arrows */}
-        <div className="flex justify-center gap-4 mt-8">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIndex((prev) => prev - 1)}
-            className="p-4 rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-green-500 hover:text-green-600 hover:shadow-lg transition-colors duration-300 group z-20"
-            aria-label="Previous project"
-          >
-            <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
-          </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIndex((prev) => prev + 1)}
-            className="p-4 rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-green-500 hover:text-green-600 hover:shadow-lg transition-colors duration-300 group z-20"
-            aria-label="Next project"
-          >
-            <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-          </motion.button>
+        {/* Navigation Arrows + Dots */}
+        <div className="flex flex-col items-center gap-6 mt-8">
+          <div className="flex items-center gap-4">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIndex((prev) => prev - 1)}
+              className="p-4 rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-green-500 hover:text-green-600 hover:shadow-lg transition-colors duration-300 group z-20"
+              aria-label="Previous project"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+            </motion.button>
+
+            {/* Dot indicators */}
+            <div className="flex gap-2">
+              {projects.map((_, i) => {
+                const activeIndex =
+                  ((index % projects.length) + projects.length) %
+                  projects.length;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setIndex(i)}
+                    className={`rounded-full transition-all duration-300 ${
+                      i === activeIndex
+                        ? "w-8 h-2.5 bg-green-500"
+                        : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400"
+                    }`}
+                    aria-label={`Go to project ${i + 1}`}
+                  />
+                );
+              })}
+            </div>
+
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIndex((prev) => prev + 1)}
+              className="p-4 rounded-xl bg-white border border-slate-200 text-slate-600 hover:border-green-500 hover:text-green-600 hover:shadow-lg transition-colors duration-300 group z-20"
+              aria-label="Next project"
+            >
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </div>
         </div>
       </div>
     </section>
@@ -212,7 +255,7 @@ const ProjectCard = ({
 
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-amber-400 text-xs sm:text-sm font-medium uppercase tracking-wider">
-              <Zap className="w-3 h-3 sm:w-4 sm:h-4" /> Size
+              <Zap className="w-3 h-3 sm:w-4 sm:h-4" /> System Size
             </div>
             <div className="font-semibold text-slate-100 text-sm sm:text-base">
               {project.systemSize}
@@ -221,7 +264,7 @@ const ProjectCard = ({
 
           <div className="space-y-1 hidden sm:block">
             <div className="flex items-center gap-2 text-green-400 text-xs sm:text-sm font-medium uppercase tracking-wider">
-              <IndianRupee className="w-3 h-3 sm:w-4 sm:h-4" /> Savings
+              <IndianRupee className="w-3 h-3 sm:w-4 sm:h-4" /> Monthly Savings
             </div>
             <div className="font-semibold text-slate-100 text-sm sm:text-base">
               {project.monthlySavings}
@@ -230,7 +273,7 @@ const ProjectCard = ({
 
           <div className="space-y-1 hidden sm:block">
             <div className="flex items-center gap-2 text-blue-400 text-xs sm:text-sm font-medium uppercase tracking-wider">
-              <Battery className="w-3 h-3 sm:w-4 sm:h-4" /> Battery
+              <Battery className="w-3 h-3 sm:w-4 sm:h-4" /> Battery Backup
             </div>
             <div className="font-semibold text-slate-100 text-sm sm:text-base">
               {project.battery}

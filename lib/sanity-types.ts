@@ -40,7 +40,9 @@ export interface SanityHomePage {
     ctaLink?: string
     image?: SanityImage
     annualSavings?: string
+    annualSavingsDescription?: string
     totalClients?: string
+    trustLine?: string
   }
   partnersSection?: {
     partners?: Array<{

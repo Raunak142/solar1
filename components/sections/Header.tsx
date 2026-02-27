@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
@@ -45,21 +46,22 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg py-3"
-          : "bg-transparent py-5"
+          ? "bg-white/95 backdrop-blur-md shadow-lg py-1"
+          : "bg-[#EDF7ED] py-1"
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <span
-              className={`text-2xl font-extrabold tracking-tight transition-colors duration-300 ${
-                isScrolled ? "text-slate-800" : "text-slate-800"
-              }`}
-            >
-              SOLAR<span className="text-green-500">X</span>
-            </span>
+            <Image
+              src="/images/Solar Logo.png"
+              alt="Kartik Solar Logo"
+              width={160}
+              height={48}
+              className="h-20 w-auto object-contain transition-all duration-300"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation - Pill Style */}

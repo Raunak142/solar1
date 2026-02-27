@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import ProjectHero from "./ProjectHero";
 import ProjectFilters from "./ProjectFilters";
 import ProjectGrid from "./ProjectGrid";
@@ -11,6 +12,28 @@ import type { ProjectItem } from "@/lib/data";
 
 interface ProjectsMainProps {
   projects?: ProjectItem[];
+}
+
+function ProjectCategorySync({
+  setActiveCategory,
+}: {
+  setActiveCategory: (category: ProjectCategory | "all") => void;
+}) {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category") as ProjectCategory | null;
+
+  useEffect(() => {
+    if (
+      categoryParam &&
+      ["residential", "commercial", "industrial", "offgrid"].includes(
+        categoryParam,
+      )
+    ) {
+      setActiveCategory(categoryParam);
+    }
+  }, [categoryParam, setActiveCategory]);
+
+  return null;
 }
 
 const ProjectsMain = ({ projects: propProjects }: ProjectsMainProps) => {
@@ -29,6 +52,9 @@ const ProjectsMain = ({ projects: propProjects }: ProjectsMainProps) => {
 
   return (
     <>
+      <Suspense fallback={null}>
+        <ProjectCategorySync setActiveCategory={setActiveCategory} />
+      </Suspense>
       <ProjectHero />
 
       <section className="py-16 bg-white">
@@ -65,10 +91,12 @@ const ProjectsMain = ({ projects: propProjects }: ProjectsMainProps) => {
             className="text-center max-w-3xl mx-auto"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Ready to Join Our Growing List of Happy Clients?
+              Ready to Power Your Home with Smart Solar Energy?
             </h2>
             <p className="text-green-100 text-lg mb-10">
-              Get a free consultation and see how much you can save with SolarX.
+              Discover how much you can save with a customized solar solution
+              designed for Indian homes, local weather, and your monthly
+              electricity needs.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -76,7 +104,7 @@ const ProjectsMain = ({ projects: propProjects }: ProjectsMainProps) => {
                 href="/contact"
                 className="group inline-flex items-center gap-3 bg-white text-green-700 font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
-                Get Your Free Quote
+                Start Your Solar Journey
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>

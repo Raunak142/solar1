@@ -10,7 +10,7 @@ const About = () => {
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/hero-house.png"
-          alt="SolarX Installation"
+          alt="Kartik Solar Installation"
           fill
           className="object-cover opacity-30"
           priority
@@ -30,25 +30,30 @@ const About = () => {
               Who We Are
             </span>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight tracking-tight">
-              Transforming How Uttarakhand <br className="hidden md:block" />{" "}
-              Consumes Power
+              Smart Solar Energy for the <br className="hidden md:block" />{" "}
+              Indian Household
             </h2>
 
             <div className="text-lg md:text-xl text-slate-300 leading-relaxed space-y-6">
               <p>
-                SolarX is a Dehradun-based solar energy company dedicated to
-                transforming how Uttarakhand and India consume power. Founded
-                with a strong belief in clean, affordable, and sustainable
-                energy, SolarX delivers smart solar solutions that help homes
-                and businesses reduce electricity bills while protecting the
-                environment.
+                Kartik Solar Enterprises is creating a new way for Indian homes
+                to generate and use electricity. Focusing on Indian homes and
+                the Indian climate, we aim to meet real energy needs with our
+                innovative, affordable, and personalized solar solutions.
               </p>
               <p>
-                With a strong focus on innovation, quality, and long-term value,
-                SolarX designs and installs high-performance solar systems for
-                residential, commercial, and industrial clients. Our mission is
-                simple—to make solar energy easy, reliable, and accessible for
-                everyone.
+                Kartik Solar Enterprises understands that in the varying and
+                often extreme weather conditions common to India, solar energy
+                harnessing systems must be durable and tough. We hope to provide
+                families with the ability to be energy independent while also
+                diminishing the energy and power generation issues that plague
+                modern society.
+              </p>
+              <p>
+                We aim to simplify and modernize solar energy to provide the
+                Indian family with a practical and affordable energy solution
+                while retaining a focus on performance and the long-term
+                efficiency of the systems.
               </p>
             </div>
           </motion.div>

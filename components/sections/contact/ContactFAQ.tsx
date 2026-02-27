@@ -6,29 +6,34 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    question: "Is the site visit and consultation really free?",
+    question: "Is the site survey and solar consultation really free?",
     answer:
-      "Yes! We offer a 100% free site survey and energy consultation in Dehradun. Our experts will visit your property, analyze your roof, and suggest the best solar solution for you—no strings attached.",
+      "Yes. Our team provides a completely free site visit and consultation to understand your roof space, electricity usage, and recommend the best solar solution.",
   },
   {
-    question: "How much can I save with solar?",
+    question: "How much can I save on electricity bills with solar?",
     answer:
-      "Most of our residential customers save between 80-90% on their electricity bills. A typical 5kW system for a 3-4 bedroom home can save approx. ₹50,000 to ₹70,000 annually.",
+      "Most homes reduce their electricity bills by 70–90%, depending on system size and energy consumption. We provide a personalized savings estimate during consultation.",
   },
   {
-    question: "What is the warranty period?",
+    question: "Do you help with government subsidy and documentation?",
     answer:
-      "We provide a 25-year performance warranty on solar panels and a 5-10 year warranty on inverters. Our installation services also come with a workmanship guarantee.",
+      "Absolutely. Kartik Solar handles the entire subsidy process — from application and approvals to net-metering — making the experience hassle-free for you.",
   },
   {
-    question: "Do you help with the subsidy process?",
+    question: "How long does solar installation take?",
     answer:
-      "Absolutely. We handle the entire government subsidy paperwork for you under the 'PM Surya Ghar: Muft Bijli Yojana', ensuring you get the maximum benefit without the hassle.",
+      "Most residential systems are installed within 2–5 days after approvals. Our local Dehradun team manages everything end-to-end.",
   },
   {
-    question: "How long does installation take?",
+    question: "Will solar work during cloudy weather or power cuts?",
     answer:
-      "Once the design is finalized, the actual installation usually takes just 1-3 days for residential projects. Commercial projects may take longer depending on key size.",
+      "Yes. Solar panels still generate power in cloudy conditions. With optional battery backup, your home can also stay powered during outages.",
+  },
+  {
+    question: "What happens after installation? Do you provide support?",
+    answer:
+      "Yes. We provide ongoing monitoring, maintenance support, and warranty assistance to ensure your system performs efficiently for years.",
   },
 ];
 

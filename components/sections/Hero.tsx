@@ -31,69 +31,32 @@ const Hero = ({ data }: { data: HeroData }) => {
             </h1>
 
             {/* Description */}
-            <p className="text-lg text-slate-600 max-w-lg leading-relaxed font-medium">
-              {data.subheading}
-            </p>
-
-            {/* CTA and Reviews */}
-            <div className="flex flex-wrap items-center gap-6 pt-4">
-              <Link
-                href={data.ctaLink}
-                className="group px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-green-500/30 transition-all transform hover:scale-105 overflow-hidden"
-              >
-                <span className="relative block h-6 overflow-hidden">
-                  <span className="block transition-transform duration-300 ease-out group-hover:-translate-y-full">
-                    {data.ctaText}
-                  </span>
-                  <span className="absolute top-0 left-0 block transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0">
-                    {data.ctaText}
-                  </span>
-                </span>
-              </Link>
-
-              {/* Reviews */}
-              <div className="flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className="w-10 h-10 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center overflow-hidden"
-                    >
-                      <div
-                        className={`w-full h-full bg-linear-to-br ${["from-blue-200 to-indigo-300", "from-green-200 to-teal-300", "from-amber-200 to-orange-300", "from-purple-200 to-pink-300"][i - 1]}`}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="flex gap-0.5 text-amber-400">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className="w-4 h-4 fill-current"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <span className="text-sm text-slate-600 font-bold">
-                    Trusted by {data.totalClients} locals
-                  </span>
-                </div>
-              </div>
+            <div className="text-lg text-slate-600 max-w-lg leading-relaxed font-medium space-y-3">
+              {data.subheading
+                .split("\n")
+                .filter(Boolean)
+                .map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
             </div>
 
-            {/* Value Props */}
-            <div className="flex gap-6 text-sm font-semibold text-slate-600 pt-2">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle className="w-4 h-4 text-green-500" /> Free Site
-                Survey
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle className="w-4 h-4 text-green-500" /> 25-Year
-                Warranty
-              </span>
+            {/* CTA and Reviews */}
+            <div className="space-y-4 pt-4">
+              <div className="flex flex-wrap items-center gap-6">
+                <Link
+                  href={data.ctaLink}
+                  className="group px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-green-500/30 transition-all transform hover:scale-105 overflow-hidden"
+                >
+                  <span className="relative block h-6 overflow-hidden">
+                    <span className="block transition-transform duration-300 ease-out group-hover:-translate-y-full">
+                      {data.ctaText}
+                    </span>
+                    <span className="absolute top-0 left-0 block transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0">
+                      {data.ctaText}
+                    </span>
+                  </span>
+                </Link>
+              </div>
             </div>
           </motion.div>
 
@@ -123,10 +86,13 @@ const Hero = ({ data }: { data: HeroData }) => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs text-slate-500 font-semibold uppercase">
-                      Est. Annual Savings
+                      Estimated Annual Savings
                     </p>
                     <p className="text-2xl font-bold text-slate-900">
                       {data.annualSavings}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {data.annualSavingsDescription}
                     </p>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
@@ -140,23 +106,80 @@ const Hero = ({ data }: { data: HeroData }) => {
       </div>
 
       {/* Trust Bar */}
-      <div className="py-8 bg-white border-t border-slate-100">
-        <div className="max-w-[1400px] mx-auto px-6 flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-          <span className="text-xl font-bold text-slate-400 flex items-center gap-2">
-            <div className="w-6 h-6 bg-slate-300 rounded-full" /> Luminous
-          </span>
-          <span className="text-xl font-bold text-slate-400 flex items-center gap-2">
-            <div className="w-6 h-6 bg-slate-300 rounded-full" /> Tata Power
-          </span>
-          <span className="text-xl font-bold text-slate-400 flex items-center gap-2">
-            <div className="w-6 h-6 bg-slate-300 rounded-full" /> Havells
-          </span>
-          <span className="text-xl font-bold text-slate-400 flex items-center gap-2">
-            <div className="w-6 h-6 bg-slate-300 rounded-full" /> Microtek
-          </span>
-          <span className="text-xl font-bold text-slate-400 flex items-center gap-2">
-            <div className="w-6 h-6 bg-slate-300 rounded-full" /> Adani Solar
-          </span>
+      {/* Trusted Technology Partners */}
+      <div className="py-20 lg:py-24 bg-[#EDF7ED] border-t border-slate-100 relative overflow-hidden">
+        {/* Subtle Gradient Background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,var(--tw-gradient-stops))] from-green-50/40 via-white to-white -z-10" />
+
+        <div className="max-w-[1400px] mx-auto px-6">
+          {/* Section Header */}
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div className="space-y-6">
+              <h3 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight leading-tight">
+                Trusted Technology Partners
+                <span className="block w-24 h-1.5 bg-green-500 mt-4 rounded-full" />
+              </h3>
+            </div>
+            <div>
+              <p className="text-slate-600 text-base md:text-lg leading-relaxed font-medium max-w-[520px]">
+                We install high-quality solar components from India’s most
+                reliable and industry-certified brands to ensure long-lasting
+                performance and safety.
+              </p>
+            </div>
+          </div>
+
+          {/* Logos Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6"
+          >
+            {/* Luminous */}
+            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
+              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                Luminous
+              </span>
+            </div>
+            {/* Tata Power Solar */}
+            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
+              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                Tata Power
+              </span>
+            </div>
+            {/* Havells */}
+            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
+              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                Havells
+              </span>
+            </div>
+            {/* Microtek */}
+            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
+              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                Microtek
+              </span>
+            </div>
+            {/* Adani Solar */}
+            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
+              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                Adani Solar
+              </span>
+            </div>
+            {/* Growatt */}
+            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
+              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                Growatt
+              </span>
+            </div>
+            {/* Waaree */}
+            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
+              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                Waaree
+              </span>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

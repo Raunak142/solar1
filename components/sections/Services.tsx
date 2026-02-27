@@ -38,37 +38,43 @@ const fallbackBenefits = [
   {
     icon: "Wallet",
     title: "Lower Electricity Bills",
-    description: "Save up to 70–90% on monthly bills for the next 25+ years",
+    description:
+      "Reduce your monthly electricity expenses by 70–90% and protect your family from continuously increasing power tariffs. Solar is a one-time investment that delivers savings for 25+ years.",
     color: "bg-green-500",
   },
   {
     icon: "Zap",
     title: "Reliable Power Every Day",
-    description: "No interruptions for work, study, or appliances",
+    description:
+      "No more stress during power cuts. Keep fans, lights, Wi-Fi, study equipment, and essential appliances running smoothly — perfect for work-from-home and students.",
     color: "bg-amber-500",
   },
   {
     icon: "IndianRupee",
-    title: "Affordable & EMI Options",
-    description: "Designed for middle-class budgets with subsidy support",
+    title: "Affordable for Middle-Class Budgets",
+    description:
+      "Government subsidies, flexible payment options, and EMI support make solar affordable without financial burden. Start saving from the first month itself.",
     color: "bg-blue-500",
   },
   {
     icon: "Wrench",
-    title: "Zero Maintenance Stress",
-    description: "Installation, monitoring, and support handled by SolarX",
+    title: "Low Maintenance & Long Life",
+    description:
+      "Built for Indian dust, heat, and monsoon conditions. Our systems require minimal maintenance while delivering consistent performance year after year.",
     color: "bg-purple-500",
   },
   {
     icon: "Home",
-    title: "Higher Home Value",
-    description: "A modern, future-ready solar-powered home",
+    title: "Increase Home Value",
+    description:
+      "A solar-powered home is modern, energy-efficient, and more attractive for future buyers or tenants, increasing long-term property value.",
     color: "bg-teal-500",
   },
   {
     icon: "Leaf",
-    title: "Better Future for Your Family",
-    description: "Save money while protecting the environment",
+    title: "Secure Future for Your Family",
+    description:
+      "Save money while contributing to a cleaner environment. Solar energy reduces pollution and ensures a sustainable future for the next generation.",
     color: "bg-emerald-500",
   },
 ];
@@ -129,18 +135,21 @@ const Services = ({
               Why Solar?
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight mb-6">
-              Smart Energy for{" "}
-              <span className="text-green-600">Smart Families</span>
+              Intelligent Solution for{" "}
+              <span className="text-green-600">Indian Consumers</span>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              SolarX helps Indian middle-class families reduce electricity
-              bills, enjoy reliable power, and upgrade their lifestyle with
-              affordable and worry-free solar solutions.
+              With the aid of Kartik Solar Enterprises, Indian middle-class
+              families can utilize safe and affordable solar options while
+              managing climbing electricity costs. Our systems, made for the
+              power requirements and weather conditions of India, offer enduring
+              savings and provide your family with the convenience of a smart
+              lifestyle and uninterrupted energy.
             </p>
           </motion.div>
         </div>
 
-        {/* HOW SOLARX HELPS - 6 BENEFIT CARDS */}
+        {/* HOW Kartik Solar HELPS - 6 BENEFIT CARDS */}
         <div className="mb-20 lg:mb-24">
           <motion.div
             variants={containerVariants}
@@ -181,17 +190,18 @@ const Services = ({
           className="bg-linear-to-r from-green-500 to-emerald-600 rounded-3xl p-8 lg:p-12 text-center"
         >
           <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-            Not sure which solar system is right for your home?
+            Not Sure Which Solar System is Right for Your Home?
           </h3>
           <p className="text-white/90 mb-8 text-lg max-w-xl mx-auto">
-            Our experts will analyze your energy needs and recommend the perfect
+            Our experts at Kartik Solar Enterprises analyze your electricity
+            usage, rooftop space, and budget to recommend the perfect solar
             solution.
           </p>
           <Link
             href="/contact"
             className="group inline-flex items-center gap-3 bg-white text-green-700 font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
-            Get Free Solar Consultation
+            Start Your Solar Journey
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>

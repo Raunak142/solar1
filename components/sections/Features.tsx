@@ -21,9 +21,9 @@ const features = [
   {
     id: 0,
     icon: <Zap className="w-6 h-6" />,
-    title: "Designed for Indian Climate",
+    title: "Designed for the Indian Climate",
     description:
-      "Built to handle high temperatures, dust, heavy rainfall, and power fluctuations—ensuring long life and stable performance for Indian homes.",
+      "Engineered to perform efficiently in extreme heat, dust, monsoon rains, and voltage fluctuations. Our systems are built to handle real Indian conditions while maintaining stable performance and longer life.",
     image: "/images/House.png",
     color: "from-green-500 to-emerald-600",
   },
@@ -32,16 +32,16 @@ const features = [
     icon: <Settings className="w-6 h-6" />,
     title: "Smart Energy Optimization",
     description:
-      "We analyze your daily usage, peak hours, and seasonal variations to deliver maximum output without wasted capacity.",
+      "We study your electricity usage, peak consumption hours, and seasonal patterns to design the right system size — so you get maximum savings without overspending on unnecessary capacity.",
     image: "/images/Field Panel.png",
     color: "from-blue-500 to-indigo-600",
   },
   {
     id: 2,
     icon: <Handshake className="w-6 h-6" />,
-    title: "Long-Term Support",
+    title: "Reliable Long-Term Support",
     description:
-      "We don't disappear after installation. Regular checkups, fast service, easy warranty claims, and maintenance plans keep your system running smoothly.",
+      "Our relationship doesn\u2019t end after installation. From regular system checks to quick service support and smooth warranty assistance, we ensure your solar system keeps running worry-free.",
     image: "/images/GroundPanel.png",
     color: "from-teal-500 to-cyan-600",
   },
@@ -50,7 +50,7 @@ const features = [
     icon: <ShieldCheck className="w-6 h-6" />,
     title: "Built for Long-Term Value",
     description:
-      "High-quality components and expert installation ensure reliable performance for 25+ years—saving money while reducing your carbon footprint.",
+      "Premium components combined with expert installation deliver dependable performance for 25+ years — helping you save money every month while contributing to a cleaner environment.",
     image: "/images/Panel.png",
     color: "from-slate-600 to-slate-800",
   },
@@ -69,7 +69,7 @@ const Features = () => {
             viewport={{ once: true }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tighter mb-6"
           >
-            Why SolarX Panels Are Smarter
+            Why Kartik Solar Panels Are a Smarter Choice
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -78,9 +78,10 @@ const Features = () => {
             viewport={{ once: true }}
             className="text-lg sm:text-lg text-slate-600 max-w-2xl mx-auto"
           >
-            Most solar companies sell panels. SolarX delivers complete energy
-            solutions designed for Indian homes, Indian weather, and Indian
-            budgets.
+            Many companies only install solar panels. Kartik Solar Enterprises
+            delivers complete energy solutions carefully designed for Indian
+            homes, Indian weather conditions, and practical household budgets —
+            ensuring real savings and reliable performance for years to come.
           </motion.p>
         </div>
       </div>

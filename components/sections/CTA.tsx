@@ -99,17 +99,6 @@ const CTA = () => {
           viewport={{ once: true }}
           className="bg-slate-800 rounded-3xl px-6 sm:px-10 lg:px-16 py-10 lg:py-14 relative overflow-hidden"
         >
-          {/* Background Decorative Element */}
-          <div className="absolute right-8 bottom-4 opacity-20 hidden sm:block">
-            <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-              <path d="M60 10L60 110" stroke="white" strokeWidth="4" />
-              <path d="M60 30L30 60" stroke="white" strokeWidth="4" />
-              <path d="M60 30L90 60" stroke="white" strokeWidth="4" />
-              <path d="M60 30L60 80" stroke="white" strokeWidth="4" />
-              <circle cx="60" cy="90" r="15" stroke="white" strokeWidth="4" />
-            </svg>
-          </div>
-
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start relative z-10">
             {/* Left Side - Heading */}
             <motion.div
@@ -120,12 +109,33 @@ const CTA = () => {
               className="flex flex-col justify-center"
             >
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">
-                Ready to Go Solar?
+                Take the First Step Toward Lower Electricity Bills
               </h2>
               <p className="text-slate-300 text-base lg:text-lg leading-relaxed">
-                Get in touch with us today. Our team will respond within 24
-                hours to help you start your solar journey.
+                Do not hesitate to contact us. Our team will get back to you
+                within 24 hours.
               </p>
+
+              {/* Map Section */}
+              <div className="mt-8 relative w-[400px] h-[150px] rounded-2xl overflow-hidden border border-slate-600 shadow-lg group">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110204.74637174665!2d77.94709403248384!3d30.32540979219662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390929c356c888af%3A0x4c3562c032518799!2sDehradun%2C%20Uttarakhand!5e0!3m2!1sen!2sin!4v1710321234567!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                ></iframe>
+
+                {/* Overlay Text */}
+                <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-4 opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none">
+                  <p className="text-white text-sm font-medium">
+                    Dehradun, Uttarakhand
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
             {/* Right Side - Form */}

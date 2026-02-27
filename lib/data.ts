@@ -34,7 +34,9 @@ export interface HeroData {
   ctaLink: string
   image: string
   annualSavings: string
+  annualSavingsDescription: string
   totalClients: string
+  trustLine: string
 }
 
 export interface FaqItem {
@@ -69,6 +71,11 @@ export interface ProjectItem {
   inverter?: string
   battery: string
   content: string
+  shortDescription?: string
+  impactBefore?: string
+  impactAfter?: string
+  ctaText?: string
+  tagline?: string
 }
 
 export interface BenefitItem {
@@ -101,30 +108,38 @@ export interface BlogPostItem {
 
 const fallbackHero: HeroData = {
   badge: '#1 Solar Partner in Uttarakhand',
-  heading: 'Power Your Home with Free Energy from the Sun',
-  subheading: 'Join 500+ happy families in Dehradun who cut their electricity bills by up to 90%. Reliable, affordable, and built for the hills.',
-  ctaText: 'Explore Solutions',
+  heading: 'Powering Indian Homes with Smart Solar Energy',
+  subheading: 'Switch to reliable, affordable solar solutions designed specially for Indian homes and climate conditions. Kartik Solar Enterprises helps families reduce electricity bills, avoid power cuts, and enjoy long-term energy savings.\n\nSave up to 70–90% on electricity bills with high-performance solar systems trusted by homeowners across Dehradun, Haridwar, Rishikesh, and nearby regions.',
+  ctaText: 'Get Free Solar Consultation',
   ctaLink: '/#services',
   image: '/images/House.png',
-  annualSavings: '₹60,000+',
+  annualSavings: '₹50,000 – ₹80,000+',
+  annualSavingsDescription: 'depending on usage',
   totalClients: '500+',
+  trustLine: 'Trusted by 500+ happy families | Local installation & support | Government subsidy guidance',
 }
 
 const fallbackFaqs: FaqItem[] = [
-  { question: 'Is solar really worth it for Indian homes?', answer: 'Yes. With rising electricity prices, solar helps you save up to 70–90% on your monthly bills. It\'s a one-time investment that gives you free power for 25+ years.' },
-  { question: 'Will solar panels work during cloudy or rainy days?', answer: 'Yes. Panels still generate electricity during cloudy days, though at a slightly reduced capacity. Uttarakhand\'s climate is suitable for solar production.' },
-  { question: 'What happens at night?', answer: 'At night, your home uses grid power. If you choose a battery system, you can use stored solar power even at night.' },
-  { question: 'Can I run AC, fridge, TV, and washing machine on solar?', answer: 'Yes. We design systems based on your appliance usage so that all essential devices run smoothly.' },
-  { question: 'How much rooftop space do I need?', answer: 'Approximate requirement:1kW = 80–100 sq. ft., 3kW = 250–300 sq. ft., 5kW = 400–500 sq. ft.' },
-  { question: 'What is the lifespan of solar panels?', answer: 'High-quality solar panels last 25+ years. Inverters usually last 8–12 years.' },
+  { question: 'Is solar really worth it for Indian homes?', answer: 'Yes. With rising electricity prices, solar helps homeowners reduce bills by up to 70–90%. It is a long-term investment that provides savings for 25+ years while increasing energy independence.' },
+  { question: 'How much can I save every month with solar?', answer: 'Savings depend on your electricity usage and system size, but most households save between ₹2,000–₹6,000 per month after installing solar.' },
+  { question: 'Will solar panels work during cloudy or rainy days?', answer: 'Yes. Solar panels still generate electricity during cloudy weather, though output may be slightly lower. Systems are designed to perform efficiently even during monsoon seasons.' },
+  { question: 'What happens at night?', answer: 'Solar panels generate electricity during the day. At night, you can use grid power or optional battery backup systems to run essential appliances.' },
+  { question: 'Can solar run AC, fridge, TV, and washing machine?', answer: 'Yes. A properly designed system can easily run daily household appliances including ACs, refrigerators, TVs, washing machines, fans, and lights.' },
+  { question: 'How much rooftop space is required?', answer: 'On average, a 1 kW solar system needs about 80–100 sq. ft. of shadow-free rooftop area. Our team conducts a site survey to recommend the right setup.' },
+  { question: 'How long do solar panels last?', answer: 'High-quality solar panels typically last 25 years or more with minimal performance reduction over time.' },
+  { question: 'Do you help with government subsidy and documentation?', answer: 'Yes. Kartik Solar Enterprises provides complete assistance with subsidy applications, documentation, and net metering processes.' },
+  { question: 'How long does installation take?', answer: 'Most residential installations are completed within 1–3 days after approvals and material readiness.' },
+  { question: 'Do solar panels require regular maintenance?', answer: 'Solar systems require very little maintenance. Occasional cleaning and basic inspection are enough, and our team provides support whenever needed.' },
+  { question: 'Will solar panels get damaged in heat, rain, or storms?', answer: 'No. Our systems are designed for Indian climate conditions, including high temperatures, dust, heavy rain, and strong winds common in Uttarakhand.' },
+  { question: 'What support do you provide after installation?', answer: 'We provide ongoing service support, warranty assistance, and system guidance to ensure your solar system runs smoothly for years.' },
 ]
 
 const fallbackTestimonials: TestimonialItem[] = [
-  { id: 1, name: 'Ramesh Sharma', location: 'Rajpur Road, Dehradun', systemSize: '5 kW', rating: 5, quote: 'SolarX made the entire process simple and affordable. My electricity bill is almost zero now.', video: '/blog1.mp4', poster: '/images/Testimonial1.png' },
-  { id: 2, name: 'Priya Gupta', location: 'Vasant Vihar, Dehradun', systemSize: '3 kW', rating: 5, quote: 'The team explained everything clearly. Very professional installation.', video: '/blog2.mp4', poster: '/images/Testimonial2.png' },
-  { id: 3, name: 'Anil Thakur', location: 'Selaqui, Dehradun', systemSize: '10 kW', rating: 5, quote: 'My factory\'s power bill dropped by ₹40,000 per month. Best investment ever.', video: '/blog3.mp4', poster: '/images/Testimonial3.png' },
-  { id: 4, name: 'Sunita Rawat', location: 'Mussoorie', systemSize: '4 kW', rating: 5, quote: 'Living off-grid in the hills was a dream. SolarX made it happen.', video: '/blog4.mp4', poster: '/images/Testimonial4.png' },
-  { id: 5, name: 'Vikram Singh', location: 'Clement Town, Dehradun', systemSize: '6 kW', rating: 5, quote: 'No more power cuts during summers. My family is very happy with SolarX.', video: '/blog1.mp4', poster: '/images/Testimonial1.png' },
+  { id: 1, name: 'Vikram Singh', location: 'Clement Town, Dehradun', systemSize: '6 kW', rating: 5, quote: 'Power cuts used to disturb our daily routine, especially in summers. After installing solar with Kartik Solar, our home runs smoothly and electricity bills are almost gone.', video: '/blog1.mp4', poster: '/images/Testimonial1.png' },
+  { id: 2, name: 'Ramesh Sharma', location: 'Rajpur Road, Dehradun', systemSize: '5 kW', rating: 5, quote: 'The entire process was simple and transparent. The team explained everything clearly, and now my electricity expenses have reduced significantly.', video: '/blog2.mp4', poster: '/images/Testimonial2.png' },
+  { id: 3, name: 'Priya Gupta', location: 'Vasant Vihar, Dehradun', systemSize: '3 kW', rating: 5, quote: 'Professional installation and excellent support. Switching to solar was easier than I expected, and the savings started from the first month.', video: '/blog3.mp4', poster: '/images/Testimonial3.png' },
+  { id: 4, name: 'Anil Thakur', location: 'Selaqui, Dehradun', systemSize: '10 kW', rating: 5, quote: 'My factory\'s electricity bill dropped by nearly ₹40,000 per month. One of the best investments for my business.', video: '/blog4.mp4', poster: '/images/Testimonial4.png' },
+  { id: 5, name: 'Sunita Rawat', location: 'Mussoorie', systemSize: '4 kW', rating: 5, quote: 'Living in the hills, power reliability was always an issue. Solar has made our home energy-independent and stress-free.', video: '/blog1.mp4', poster: '/images/Testimonial1.png' },
 ]
 
 // ============================================
@@ -133,151 +148,122 @@ const fallbackTestimonials: TestimonialItem[] = [
 
 export async function getHeroData(): Promise<HeroData> {
   try {
-    const data: SanityHomePage = await client.fetch(homePageQuery)
-    if (data?.heroSection) {
-      const h = data.heroSection
-      return {
-        badge: h.badge || fallbackHero.badge,
-        heading: h.heading || fallbackHero.heading,
-        subheading: h.subheading || fallbackHero.subheading,
-        ctaText: h.ctaText || fallbackHero.ctaText,
-        ctaLink: h.ctaLink || fallbackHero.ctaLink,
-        image: h.image ? urlFor(h.image).width(1200).height(900).url() : fallbackHero.image,
-        annualSavings: h.annualSavings || fallbackHero.annualSavings,
-        totalClients: h.totalClients || fallbackHero.totalClients,
-      }
+    const data: SanityHomePage | null = await client.fetch(homePageQuery, {}, { next: { revalidate: 60 } })
+    const hero = data?.heroSection
+    if (!hero || !hero.heading) return fallbackHero
+    return {
+      badge: hero.badge || fallbackHero.badge,
+      heading: hero.heading,
+      subheading: hero.subheading || fallbackHero.subheading,
+      ctaText: hero.ctaText || fallbackHero.ctaText,
+      ctaLink: hero.ctaLink || fallbackHero.ctaLink,
+      image: hero.image ? urlFor(hero.image).width(1200).url() : fallbackHero.image,
+      annualSavings: hero.annualSavings || fallbackHero.annualSavings,
+      annualSavingsDescription: hero.annualSavingsDescription || fallbackHero.annualSavingsDescription,
+      totalClients: hero.totalClients || fallbackHero.totalClients,
+      trustLine: hero.trustLine || fallbackHero.trustLine,
     }
-  } catch (error) {
-    console.error('Error fetching hero data:', error)
+  } catch (err) {
+    console.error('getHeroData error:', err)
+    return fallbackHero
   }
-  return fallbackHero
 }
 
 export async function getFaqs(): Promise<FaqItem[]> {
   try {
-    const sanityFaqs: SanityFaq[] = await client.fetch(allFaqsQuery)
-    if (sanityFaqs && sanityFaqs.length > 0) {
-      return sanityFaqs.map((faq) => ({
-        question: faq.question,
-        answer: faq.answer,
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching FAQs:', error)
+    const data: SanityFaq[] = await client.fetch(allFaqsQuery, {}, { next: { revalidate: 60 } })
+    if (!data || data.length === 0) return fallbackFaqs
+    return data.map((faq) => ({ question: faq.question, answer: faq.answer }))
+  } catch (err) {
+    console.error('getFaqs error:', err)
+    return fallbackFaqs
   }
-  return fallbackFaqs
 }
 
 export async function getTestimonials(): Promise<TestimonialItem[]> {
   try {
-    const sanityTestimonials: SanityTestimonial[] = await client.fetch(allTestimonialsQuery)
-    if (sanityTestimonials && sanityTestimonials.length > 0) {
-      return sanityTestimonials.map((t) => ({
-        id: t._id,
-        name: t.name,
-        location: t.location,
-        systemSize: t.systemSize,
-        rating: t.rating,
-        quote: t.quote,
-        video: t.video ? getFileUrl(t.video) : '/blog1.mp4',
-        poster: t.poster ? urlFor(t.poster).width(760).height(1000).url() : '/images/Testimonial1.png',
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching testimonials:', error)
+    const data: SanityTestimonial[] = await client.fetch(allTestimonialsQuery, {}, { next: { revalidate: 60 } })
+    if (!data || data.length === 0) return fallbackTestimonials
+    return data.map((t, index) => ({
+      id: t._id,
+      name: t.name,
+      location: t.location,
+      systemSize: t.systemSize,
+      rating: t.rating,
+      quote: t.quote,
+      video: getFileUrl(t.video) || (fallbackTestimonials[index % fallbackTestimonials.length]?.video || '/blog1.mp4'),
+      poster: t.poster ? urlFor(t.poster).width(800).url() : (fallbackTestimonials[index % fallbackTestimonials.length]?.poster || '/images/Testimonial1.png'),
+    }))
+  } catch (err) {
+    console.error('getTestimonials error:', err)
+    return fallbackTestimonials
   }
-  return fallbackTestimonials
 }
 
+// Slugs of projects that have been removed from the site
+const excludedProjectSlugs = [
+  'gupta-home',
+  'singh-residence',
+  'city-care-clinic',
+  'modern-honda-showroom',
+  'auto-parts-factory',
+  'village-clinic',
+]
+
 export async function getProjects(): Promise<ProjectItem[]> {
-  try {
-    const sanityProjects: SanityProject[] = await client.fetch(allProjectsQuery)
-    if (sanityProjects && sanityProjects.length > 0) {
-      return sanityProjects.map((p, i) => ({
-        id: p._id || i,
-        slug: p.slug?.current || `project-${i}`,
-        title: p.title,
-        category: p.category,
-        location: p.location,
-        systemSize: p.systemSize,
-        type: p.type || p.category,
-        image: p.image ? urlFor(p.image).width(1200).height(800).url() : '/images/Panel.png',
-        monthlySavings: p.monthlySavings,
-        yearlySavings: p.yearlySavings,
-        installationTime: p.installationTime,
-        panelType: p.panelType,
-        inverter: p.inverter,
-        battery: p.battery,
-        content: '',
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching projects:', error)
-  }
-  // Import fallback dynamically to avoid bundling in server
+  // TEMPORARY: bypass CMS
   const { projects } = await import('@/components/sections/projects/projectData')
   return projects
 }
 
 export async function getBenefits(category?: string): Promise<BenefitItem[]> {
   try {
-    let sanityBenefits: SanityBenefit[]
-    if (category) {
-      sanityBenefits = await client.fetch(benefitsByCategoryQuery, { category })
-    } else {
-      sanityBenefits = await client.fetch(allBenefitsQuery)
-    }
-    if (sanityBenefits && sanityBenefits.length > 0) {
-      return sanityBenefits.map((b) => ({
-        title: b.title,
-        description: b.description,
-        icon: b.icon,
-        color: b.color || 'bg-green-500',
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching benefits:', error)
+    const query = category ? benefitsByCategoryQuery : allBenefitsQuery
+    const params = category ? { category } : {}
+    const data: SanityBenefit[] = await client.fetch(query, params, { next: { revalidate: 60 } })
+    if (!data || data.length === 0) return []
+    return data.map((b) => ({
+      title: b.title,
+      description: b.description,
+      icon: b.icon,
+      color: b.color,
+    }))
+  } catch (err) {
+    console.error('getBenefits error:', err)
+    return []
   }
-  return []
 }
 
 export async function getServices(): Promise<ServiceItem[]> {
   try {
-    const sanityServices: SanityService[] = await client.fetch(allServicesQuery)
-    if (sanityServices && sanityServices.length > 0) {
-      return sanityServices.map((s) => ({
-        title: s.title,
-        icon: s.icon,
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching services:', error)
+    const data: SanityService[] = await client.fetch(allServicesQuery, {}, { next: { revalidate: 60 } })
+    if (!data || data.length === 0) return []
+    return data.map((s) => ({ title: s.title, icon: s.icon }))
+  } catch (err) {
+    console.error('getServices error:', err)
+    return []
   }
-  return []
 }
 
 export async function getBlogPosts(): Promise<BlogPostItem[]> {
   try {
-    const sanityPosts: SanityPost[] = await client.fetch(allPostsQuery)
-    if (sanityPosts && sanityPosts.length > 0) {
-      return sanityPosts.map((post) => ({
-        id: post._id,
-        slug: post.slug.current,
-        title: post.title,
-        category: post.category,
-        description: post.description,
-        image: post.image ? urlFor(post.image).width(800).height(600).url() : '/images/Panel.png',
-        date: new Date(post.publishedAt).toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-          year: 'numeric',
-        }),
-        author: post.author,
-        color: post.color,
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching blog posts:', error)
+    const data: SanityPost[] = await client.fetch(allPostsQuery, {}, { next: { revalidate: 60 } })
+    if (!data || data.length === 0) return []
+    return data.map((post) => ({
+      id: post._id,
+      slug: post.slug.current,
+      title: post.title,
+      category: post.category,
+      description: post.description,
+      image: post.image ? urlFor(post.image).width(800).url() : '',
+      date: post.publishedAt
+        ? new Date(post.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+        : '',
+      author: post.author,
+      color: post.color || 'bg-green-600',
+    }))
+  } catch (err) {
+    console.error('getBlogPosts error:', err)
+    return []
   }
-  return []
 }

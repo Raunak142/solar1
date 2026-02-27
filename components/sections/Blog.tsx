@@ -45,11 +45,13 @@ const Blog = ({ posts: propPosts, limit }: BlogProps) => {
               Learn About Solar
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
-              Solar <span className="text-green-600">Knowledge Hub</span>
+              Solar <span className="text-green-600">Knowledge Hub</span> for
+              Smarter Energy Decisions
             </h2>
             <p className="text-lg text-slate-600 mt-4 leading-relaxed">
-              Stay informed with the latest solar tips, cost-saving ideas,
-              government updates, and expert guidance from SolarX.
+              Explore expert guides, cost-saving tips, and government updates
+              designed to help Indian homeowners understand solar energy, reduce
+              electricity bills, and make informed decisions.
             </p>
           </motion.div>
 
@@ -142,7 +144,7 @@ const Blog = ({ posts: propPosts, limit }: BlogProps) => {
 
                     <div className="mt-auto pt-5 border-t border-slate-100 flex items-center justify-between">
                       <span className="text-sm font-bold text-green-600 flex items-center gap-2 group/btn">
-                        Read Full Story
+                        Read Full Article →
                       </span>
 
                       <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 transform transition-all duration-300 group-hover:bg-green-500 group-hover:text-white group-hover:scale-110">

@@ -176,27 +176,27 @@ const ContactForm = () => {
   const contactInfo = [
     {
       icon: <Mail className="w-5 h-5" />,
-      label: "Email Us",
-      value: "info@solarx.com",
-      subtext: "We'll respond within 24 hours",
+      label: "Email Support",
+      value: "connect@kartiksolar.in",
+      subtext: "For quotes & subsidy inquiries",
     },
     {
       icon: <Phone className="w-5 h-5" />,
-      label: "Call Us",
-      value: "+1 (555) 123-4567",
-      subtext: "Mon-Fri from 8am to 6pm",
+      label: "Speak to an Expert",
+      value: "+91 98970 12345",
+      subtext: "Mon-Sat from 9am to 7pm",
     },
     {
       icon: <MapPin className="w-5 h-5" />,
-      label: "Visit Us",
+      label: "Visit Our Office",
       value: "25/4, Rajpur Road",
       subtext: "Dehradun, Uttarakhand 248001",
     },
     {
       icon: <Clock className="w-5 h-5" />,
-      label: "Business Hours",
-      value: "Mon - Fri: 8am - 6pm",
-      subtext: "Sat: 9am - 2pm",
+      label: "Working Hours",
+      value: "Mon - Sat: 9am - 7pm",
+      subtext: "Sunday: Closed",
     },
   ];
 
@@ -218,8 +218,9 @@ const ContactForm = () => {
             Let&apos;s Start Your Solar Journey
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Have questions about solar energy? Ready to make the switch? Fill
-            out the form below and our team will get back to you promptly.
+            Share your requirements with us, and our solar experts will provide
+            a personalized solution tailored to your home, budget, and energy
+            needs.
           </p>
         </motion.div>
 
@@ -233,31 +234,26 @@ const ContactForm = () => {
             className="lg:col-span-2 space-y-6"
           >
             <div className="bg-linear-to-br from-green-500 to-green-600 rounded-3xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-2">Contact Information</h3>
+              <h3 className="text-2xl font-bold mb-2">Talk to Our Team</h3>
               <p className="text-green-100 mb-8">
-                Reach out to us through any of these channels.
+                Get expert advice on solar installation, subsidies, and savings.
               </p>
 
-              <div className="space-y-6">
-                {contactInfo.map((item, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-                      {item.icon}
+              <div className="flex-1 flex flex-col justify-between">
+                <div className="space-y-6">
+                  {contactInfo.map((item, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p className="text-green-100 text-sm">{item.label}</p>
+                        <p className="font-semibold">{item.value}</p>
+                        <p className="text-green-200 text-sm">{item.subtext}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-green-100 text-sm">{item.label}</p>
-                      <p className="font-semibold">{item.value}</p>
-                      <p className="text-green-200 text-sm">{item.subtext}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Decorative Elements */}
-              <div className="mt-12 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-white/10" />
-                <div className="w-20 h-20 rounded-full bg-white/10" />
-                <div className="w-16 h-16 rounded-full bg-white/10" />
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -491,7 +487,10 @@ const ContactForm = () => {
 
                   <p className="text-center text-sm text-slate-500">
                     By submitting this form, you agree to our{" "}
-                    <a href="#" className="text-green-600 hover:underline">
+                    <a
+                      href="/privacy-policy"
+                      className="text-green-600 hover:underline"
+                    >
                       Privacy Policy
                     </a>
                   </p>

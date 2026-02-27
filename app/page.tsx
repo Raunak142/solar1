@@ -45,7 +45,7 @@ export default async function Home() {
       <Services benefits={benefits} services={services} />
       <Features />
       <Benefits benefits={benefits} />
-      <Projects projects={projects} />
+      <Projects projects={projects.slice(0, 6)} />
       <Testimonials testimonials={testimonials} />
       <FAQ faqs={faqs} />
       <Blog posts={posts} limit={3} />

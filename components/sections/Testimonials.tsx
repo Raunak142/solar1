@@ -28,14 +28,16 @@ const Testimonials = ({
             Testimonials
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6">
-            Real Stories,{" "}
+            Real Families, Real Experiences,{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-500">
               Real Savings
             </span>
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Don&apos;t just take our word for it—see how SolarX is transforming
-            homes and businesses across Uttarakhand.
+            Don&apos;t just take our word for it — hear from families and
+            businesses who switched to solar with Kartik Solar Enterprises and
+            now enjoy lower electricity bills, reliable power, and peace of
+            mind.
           </p>
         </motion.div>
       </div>
@@ -47,7 +49,7 @@ const Testimonials = ({
         <div className="absolute right-0 top-0 bottom-0 w-32 md:w-64 bg-linear-to-l from-slate-950 to-transparent z-10 pointer-events-none" />
 
         {/* Marquee Track */}
-        <div className="flex gap-8 pl-8 w-max animate-marquee group-hover:paused">
+        <div className="flex gap-8 pl-8 w-max marquee-track">
           {[...testimonials, ...testimonials, ...testimonials].map(
             (testimonial, index) => (
               <VideoCard
@@ -63,16 +65,18 @@ const Testimonials = ({
       <style jsx>{`
         @keyframes marquee {
           from {
-            transform: translateX(0);
+            transform: translate3d(0, 0, 0);
           }
           to {
-            transform: translateX(-33.33%);
+            transform: translate3d(-33.33%, 0, 0);
           }
         }
-        .animate-marquee {
-          animation: marquee 60s linear infinite;
+        .marquee-track {
+          animation: marquee 80s linear infinite;
+          will-change: transform;
+          backface-visibility: hidden;
         }
-        .group:hover .group-hover\\:paused {
+        .group:hover .marquee-track {
           animation-play-state: paused;
         }
       `}</style>
@@ -113,13 +117,15 @@ const VideoCard = ({ testimonial }: { testimonial: TestimonialItem }) => {
       <div className="relative aspect-3/4 overflow-hidden bg-slate-900/50">
         <video
           ref={videoRef}
-          poster={testimonial.poster}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          {...(testimonial.poster ? { poster: testimonial.poster } : {})}
+          className="w-full h-full object-cover"
           playsInline
           loop
           preload="metadata"
         >
-          <source src={testimonial.video} type="video/mp4" />
+          {testimonial.video && (
+            <source src={testimonial.video} type="video/mp4" />
+          )}
         </video>
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-slate-950 via-slate-950/80 to-transparent opacity-90" />
       </div>

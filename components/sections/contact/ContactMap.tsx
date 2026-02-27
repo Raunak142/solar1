@@ -30,7 +30,7 @@ const ContactMap = () => {
             {/* Overlay Title */}
             <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-md px-6 py-4 rounded-xl shadow-lg border border-slate-100 max-w-xs">
               <h3 className="font-bold text-slate-800 text-lg mb-1">
-                SolarX Headquarters
+                Kartik Solar Headquarters
               </h3>
               <p className="text-sm text-slate-600">
                 Rajpur Road, Dehradun, Uttarakhand 248001

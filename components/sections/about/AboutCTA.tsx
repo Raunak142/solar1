@@ -26,8 +26,8 @@ const AboutCTA = () => {
               Ready to Switch to Solar?
             </h2>
             <p className="text-lg text-green-50 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
-              Join the green energy revolution with SolarX. Get a custom solar
-              solution designed for your home and budget today.
+              Join hundreds of families who are already saving money and
+              enjoying reliable power with Kartik Solar Enterprises.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -48,7 +48,7 @@ const AboutCTA = () => {
             </div>
 
             <p className="mt-8 text-sm text-green-200/80 font-medium">
-              Free Consultation • No Hidden Costs • 25-Year Warranty
+              Free consultation • Subsidy guidance • Long-term warranty support
             </p>
           </div>
         </motion.div>

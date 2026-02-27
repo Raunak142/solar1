@@ -1,46 +1,259 @@
 "use client";
 
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  MessageCircle,
+  X,
+  Send,
+  User,
+  Phone,
+  MapPin,
+  Mail,
+  Loader2,
+} from "lucide-react";
 
-const WhatsAppButton = () => {
+const WHATSAPP_NUMBER = "916397913908"; // Updated business number
+
+const WhatsAppWidget = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
+  });
+
+  // Load saved data from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("solar_lead_data");
+    if (saved) {
+      try {
+        setFormData(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to parse saved lead data", e);
+      }
+    }
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const updated = { ...formData, [name]: value };
+    setFormData(updated);
+    localStorage.setItem("solar_lead_data", JSON.stringify(updated));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // 1. Send data to existing Contact API (Sheets + Email)
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          message: `Lead from WhatsApp Widget: Interested in Solar Consultation. Name: ${formData.name}`, // Auto-generated message to satisfy API validation
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit lead");
+      }
+
+      // 2. Construct WhatsApp Message
+      const message = `Hello Kartik Solar, my name is ${formData.name}. I want solar consultation.`;
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+      // 3. Clear storage
+      localStorage.removeItem("solar_lead_data");
+
+      // 4. Redirect to WhatsApp (using window.location.href for better mobile support)
+      window.location.href = whatsappUrl;
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert(
+        "Something went wrong. Please try again or click the WhatsApp icon to chat directly.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <Link
-      href="https://wa.me/919897000000" // Replace with actual number
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg shadow-green-500/30 hover:shadow-green-500/50 hover:bg-[#20bd5a] transition-all duration-300 group"
-    >
-      <motion.div
-        className="absolute inset-0 rounded-full bg-green-500 z-0"
-        animate={{
-          scale: [1, 1.6, 1.6],
-          opacity: [0.7, 0, 0],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeOut",
-        }}
-      />
-      <motion.div
-        className="relative z-10"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
-      </motion.div>
+    <>
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
+            />
 
-      {/* Tooltip */}
-      <span className="absolute right-full mr-3 bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-        Chat on WhatsApp
-      </span>
-    </Link>
+            {/* Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="fixed bottom-24 right-4 md:right-6 w-[90vw] max-w-[380px] bg-white rounded-2xl shadow-2xl z-50 overflow-hidden border border-slate-100"
+            >
+              {/* Header */}
+              <div className="bg-[#075E54] p-5 text-white relative overflow-hidden">
+                <div className="relative z-10">
+                  <h3 className="font-bold text-lg">Free Solar Consultation</h3>
+                  <p className="text-green-100 text-xs mt-1 flex items-center gap-1">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    Response within 10 minutes
+                  </p>
+                </div>
+
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+                >
+                  <X size={20} />
+                </button>
+
+                {/* Decorative Circles */}
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
+                <div className="absolute top-0 left-0 w-16 h-16 bg-white/5 rounded-full blur-lg"></div>
+              </div>
+
+              {/* Form */}
+              <div className="p-5">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Name */}
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Full Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] transition-all"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="Email Address"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] transition-all"
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      placeholder="Phone Number"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] transition-all"
+                    />
+                  </div>
+
+                  {/* City (Optional) */}
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      name="city"
+                      placeholder="City (Optional)"
+                      value={formData.city}
+                      onChange={handleChange}
+                      className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] transition-all"
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#25D366] hover:bg-[#1ebc57] text-white font-semibold py-3 rounded-xl shadow-lg shadow-green-500/20 flex items-center justify-center gap-2 transition-all transform active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <MessageCircle className="w-5 h-5" />
+                        <span>Connect on WhatsApp</span>
+                      </>
+                    )}
+                  </button>
+
+                  <p className="text-[10px] text-center text-slate-400">
+                    By connecting, you agree to receive solar updates.
+                  </p>
+                </form>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Trigger Button */}
+      <motion.button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg shadow-green-500/30 hover:shadow-green-500/50 hover:bg-[#20bd5a] transition-all duration-300 group"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <motion.div
+          className="absolute inset-0 rounded-full bg-green-500 z-0"
+          animate={{
+            scale: [1, 1.6, 1.6],
+            opacity: [0.7, 0, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeOut",
+          }}
+        />
+        <div className="relative z-10">
+          {isOpen ? (
+            <X className="w-7 h-7" />
+          ) : (
+            <MessageCircle className="w-7 h-7" />
+          )}
+        </div>
+
+        {/* Tooltip (Only when closed) */}
+        {!isOpen && (
+          <span className="absolute right-full mr-3 bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Chat on WhatsApp
+          </span>
+        )}
+      </motion.button>
+    </>
   );
 };
 
-export default WhatsAppButton;
+export default WhatsAppWidget;

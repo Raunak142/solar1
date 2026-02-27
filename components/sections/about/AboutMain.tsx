@@ -3,6 +3,7 @@
 import AboutHero from "./AboutHero";
 import AboutIntro from "./AboutIntro";
 import AboutFounder from "./AboutFounder";
+import AboutTeam from "./AboutTeam";
 import AboutDifferentiators from "./AboutDifferentiators";
 import AboutMission from "./AboutMission";
 import AboutTrust from "./AboutTrust";
@@ -14,6 +15,7 @@ const AboutMain = () => {
       <AboutHero />
       <AboutIntro />
       <AboutFounder />
+      <AboutTeam />
       <AboutDifferentiators />
       <AboutMission />
       <AboutTrust />

@@ -26,12 +26,14 @@ const ContactHero = () => {
             Contact Us
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
-            We&apos;re Here to <span className="text-green-400">Help</span>
+            Let’s Power Your Home with{" "}
+            <span className="text-green-400">Solar</span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-200 leading-relaxed max-w-2xl mx-auto font-medium">
-            Whether you have questions about our solar solutions, need a quote,
-            or want to learn more about renewable energy, our team is ready to
-            assist you.
+          <p className="text-lg md:text-xl text-slate-200 leading-relaxed max-w-3xl mx-auto font-medium">
+            Have questions about solar installation, savings, or government
+            subsidies? Our Dehradun-based team is here to guide you with expert
+            advice and personalized solutions designed for Indian homes and
+            climate conditions.
           </p>
         </motion.div>
       </div>

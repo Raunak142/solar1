@@ -104,7 +104,7 @@ const generateEmailHTML = (data: ContactEmailData): string => {
                 <tr>
                   <td style="padding: 20px 40px; background-color: #f8fafc; border-radius: 0 0 12px 12px; text-align: center;">
                     <p style="margin: 0; color: #94a3b8; font-size: 12px;">
-                      This email was sent from your SolarX website contact form.<br>
+                      This email was sent from your Kartik Solar website contact form.<br>
                       Submitted at ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
                     </p>
                   </td>
@@ -131,7 +131,7 @@ export async function sendContactEmail(data: ContactEmailData): Promise<void> {
   const transporter = createTransporter();
 
   const mailOptions = {
-    from: `"SolarX Website" <${process.env.EMAIL_USER}>`,
+    from: `"Kartik Solar Website" <${process.env.EMAIL_USER}>`,
     to: recipient,
     replyTo: data.email,
     subject: `New Contact: ${data.name} from ${data.city}`,
@@ -162,7 +162,7 @@ const generateConfirmationEmailHTML = (data: ContactEmailData): string => {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Thank You for Contacting SolarX</title>
+        <title>Thank You for Contacting Kartik Solar</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4;">
         <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -173,7 +173,7 @@ const generateConfirmationEmailHTML = (data: ContactEmailData): string => {
                 <tr>
                   <td style="padding: 30px 40px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border-radius: 12px 12px 0 0; text-align: center;">
                     <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 600;">
-                      🌞 SOLARX
+                      🌞 Kartik Solar
                     </h1>
                     <p style="margin: 10px 0 0; color: #dcfce7; font-size: 14px;">Powering your future with clean energy</p>
                   </td>
@@ -213,7 +213,7 @@ const generateConfirmationEmailHTML = (data: ContactEmailData): string => {
                     
                     <p style="margin: 20px 0 0; color: #64748b; font-size: 14px; line-height: 1.6;">
                       Best regards,<br>
-                      <strong style="color: #1e293b;">The SolarX Team</strong>
+                      <strong style="color: #1e293b;">The Kartik Solar Team</strong>
                     </p>
                   </td>
                 </tr>
@@ -226,7 +226,7 @@ const generateConfirmationEmailHTML = (data: ContactEmailData): string => {
                         <td style="text-align: center; padding-bottom: 15px;">
                           <p style="margin: 0 0 8px; color: #1e293b; font-size: 14px; font-weight: 600;">Contact Us</p>
                           <p style="margin: 0; color: #64748b; font-size: 13px;">
-                            📧 info@solarx.com | 📞 +1 (555) 123-4567<br>
+                            📧 info@Kartik Solar.com | 📞 +1 (555) 123-4567<br>
                             📍 25/4, Rajpur Road, Dehradun, Uttarakhand 248001
                           </p>
                         </td>
@@ -257,14 +257,14 @@ export async function sendUserConfirmationEmail(data: ContactEmailData): Promise
   const transporter = createTransporter();
 
   const mailOptions = {
-    from: `"SolarX" <${process.env.EMAIL_USER}>`,
+    from: `"Kartik Solar" <${process.env.EMAIL_USER}>`,
     to: data.email,
-    subject: 'Thank You for Contacting SolarX - We\'ll Be In Touch Soon!',
+    subject: 'Thank You for Contacting Kartik Solar - We\'ll Be In Touch Soon!',
     html: generateConfirmationEmailHTML(data),
     text: `
 Hi ${data.name},
 
-Thank you for reaching out to SolarX!
+Thank you for reaching out to Kartik Solar!
 
 We've received your message and our team will review it carefully. You can expect to hear back from us within 24 hours.
 
@@ -274,11 +274,11 @@ ${data.message}
 In the meantime, feel free to explore our website to learn more about our solar energy solutions.
 
 Best regards,
-The SolarX Team
+The Kartik Solar Team
 
 ---
-SolarX
-Email: info@solarx.com
+Kartik Solar
+Email: info@Kartik Solar.com
 Phone: +1 (555) 123-4567
 Address: 25/4, Rajpur Road, Dehradun, Uttarakhand 248001
     `.trim(),

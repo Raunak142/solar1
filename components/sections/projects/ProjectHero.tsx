@@ -26,7 +26,7 @@ const ProjectHero = () => {
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
         >
-          Our Work, Our Pride
+          Powering Real Homes with Real Savings
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -34,9 +34,11 @@ const ProjectHero = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed"
         >
-          At SolarX, every project tells a story of savings, reliability, and a
-          smarter lifestyle. From small rooftops to large installations, we’ve
-          helped families and businesses switch to clean energy with confidence.
+          At Kartik Solar Enterprises, every installation represents a family or
+          business taking control of rising electricity costs. From residential
+          rooftops to commercial projects across Uttarakhand, we deliver
+          reliable solar solutions designed for Indian climate conditions —
+          helping customers save more and live with energy confidence.
         </motion.p>
       </div>
     </section>
