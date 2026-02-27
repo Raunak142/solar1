@@ -3,8 +3,8 @@ import ProjectsMain from "@/components/sections/projects/ProjectsMain";
 import Footer from "@/components/sections/Footer";
 import { getProjects } from "@/lib/data";
 
-// ISR: Revalidate every 60 seconds
-export const revalidate = 60;
+// ISR: Revalidate every 1 hour
+export const revalidate = 3600;
 
 export default async function ProjectsPage() {
   const projects = await getProjects();

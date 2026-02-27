@@ -11,6 +11,7 @@ import {
   benefitsByCategoryQuery,
   allServicesQuery,
   allPostsQuery,
+  postBySlugQuery,
 } from './queries'
 import type {
   SanityHomePage,
@@ -148,7 +149,7 @@ const fallbackTestimonials: TestimonialItem[] = [
 
 export async function getHeroData(): Promise<HeroData> {
   try {
-    const data: SanityHomePage | null = await client.fetch(homePageQuery, {}, { next: { revalidate: 60 } })
+    const data: SanityHomePage | null = await client.fetch(homePageQuery, {})
     const hero = data?.heroSection
     if (!hero || !hero.heading) return fallbackHero
     return {
@@ -171,7 +172,7 @@ export async function getHeroData(): Promise<HeroData> {
 
 export async function getFaqs(): Promise<FaqItem[]> {
   try {
-    const data: SanityFaq[] = await client.fetch(allFaqsQuery, {}, { next: { revalidate: 60 } })
+    const data: SanityFaq[] = await client.fetch(allFaqsQuery, {})
     if (!data || data.length === 0) return fallbackFaqs
     return data.map((faq) => ({ question: faq.question, answer: faq.answer }))
   } catch (err) {
@@ -182,7 +183,7 @@ export async function getFaqs(): Promise<FaqItem[]> {
 
 export async function getTestimonials(): Promise<TestimonialItem[]> {
   try {
-    const data: SanityTestimonial[] = await client.fetch(allTestimonialsQuery, {}, { next: { revalidate: 60 } })
+    const data: SanityTestimonial[] = await client.fetch(allTestimonialsQuery, {})
     if (!data || data.length === 0) return fallbackTestimonials
     return data.map((t, index) => ({
       id: t._id,
@@ -220,7 +221,7 @@ export async function getBenefits(category?: string): Promise<BenefitItem[]> {
   try {
     const query = category ? benefitsByCategoryQuery : allBenefitsQuery
     const params = category ? { category } : {}
-    const data: SanityBenefit[] = await client.fetch(query, params, { next: { revalidate: 60 } })
+    const data: SanityBenefit[] = await client.fetch(query, params)
     if (!data || data.length === 0) return []
     return data.map((b) => ({
       title: b.title,
@@ -236,7 +237,7 @@ export async function getBenefits(category?: string): Promise<BenefitItem[]> {
 
 export async function getServices(): Promise<ServiceItem[]> {
   try {
-    const data: SanityService[] = await client.fetch(allServicesQuery, {}, { next: { revalidate: 60 } })
+    const data: SanityService[] = await client.fetch(allServicesQuery, {})
     if (!data || data.length === 0) return []
     return data.map((s) => ({ title: s.title, icon: s.icon }))
   } catch (err) {
@@ -247,7 +248,7 @@ export async function getServices(): Promise<ServiceItem[]> {
 
 export async function getBlogPosts(): Promise<BlogPostItem[]> {
   try {
-    const data: SanityPost[] = await client.fetch(allPostsQuery, {}, { next: { revalidate: 60 } })
+    const data: SanityPost[] = await client.fetch(allPostsQuery)
     if (!data || data.length === 0) return []
     return data.map((post) => ({
       id: post._id,
@@ -265,5 +266,85 @@ export async function getBlogPosts(): Promise<BlogPostItem[]> {
   } catch (err) {
     console.error('getBlogPosts error:', err)
     return []
+  }
+}
+
+// ============================================
+// BLOG DETAIL (for static generation of /blogs/[slug])
+// ============================================
+
+export interface BlogPostDetail {
+  id: string
+  slug: string
+  title: string
+  category: string
+  description: string
+  image: string
+  date: string
+  author: string
+  color: string
+  content: string      // HTML content from fallback
+  sanityContent: any   // Portable Text content from CMS
+}
+
+export async function getAllBlogSlugs(): Promise<string[]> {
+  try {
+    const data: SanityPost[] = await client.fetch(allPostsQuery)
+    const cmsSlugs = data ? data.map((p) => p.slug.current) : []
+    // Also include fallback/local blog slugs
+    const { blogPosts } = await import('@/components/sections/blogData')
+    const localSlugs = blogPosts.map((p) => p.slug)
+    // Deduplicate
+    return [...new Set([...cmsSlugs, ...localSlugs])]
+  } catch {
+    const { blogPosts } = await import('@/components/sections/blogData')
+    return blogPosts.map((p) => p.slug)
+  }
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | null> {
+  // Try local/fallback data first (matches existing priority)
+  const { blogPosts } = await import('@/components/sections/blogData')
+  const localPost = blogPosts.find((p) => p.slug === slug)
+  if (localPost) {
+    return {
+      id: localPost.id,
+      slug: localPost.slug,
+      title: localPost.title,
+      category: localPost.category,
+      description: localPost.description,
+      image: localPost.image,
+      date: localPost.date,
+      author: localPost.author,
+      color: localPost.color,
+      content: localPost.content,
+      sanityContent: null,
+    }
+  }
+
+  // Fallback to Sanity CMS
+  try {
+    const sanityPost: SanityPost = await client.fetch(postBySlugQuery, { slug })
+    if (!sanityPost) return null
+    return {
+      id: sanityPost._id,
+      slug: sanityPost.slug.current,
+      title: sanityPost.title,
+      category: sanityPost.category,
+      description: sanityPost.description,
+      image: sanityPost.image ? urlFor(sanityPost.image).width(1200).height(800).url() : '/images/Panel.png',
+      date: new Date(sanityPost.publishedAt).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      }),
+      author: sanityPost.author,
+      color: sanityPost.color || 'bg-green-600',
+      content: '',
+      sanityContent: sanityPost.content,
+    }
+  } catch (err) {
+    console.error('getBlogPostBySlug error:', err)
+    return null
   }
 }

@@ -3,8 +3,8 @@ import Blog from "@/components/sections/Blog";
 import Footer from "@/components/sections/Footer";
 import { getBlogPosts } from "@/lib/data";
 
-// ISR: Revalidate every 60 seconds
-export const revalidate = 60;
+// ISR: Revalidate every 1 hour
+export const revalidate = 3600;
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();

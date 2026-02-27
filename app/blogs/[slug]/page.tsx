@@ -1,131 +1,43 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
-import { blogPosts, BlogPost } from "@/components/sections/blogData";
+import { blogPosts } from "@/components/sections/blogData";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
-import { client, urlFor } from "@/lib/sanity";
-import { postBySlugQuery } from "@/lib/queries";
-import type { SanityPost } from "@/lib/sanity-types";
 import { PortableText } from "@portabletext/react";
+import { notFound } from "next/navigation";
+import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/data";
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [sanityContent, setSanityContent] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+// ISR: Revalidate every 1 hour
+export const revalidate = 3600;
 
-  useEffect(() => {
-    async function fetchPost() {
-      // Check local data first to reflect recent updates
-      const localPost = blogPosts.find((p) => p.slug === slug);
-      if (localPost) {
-        setPost(localPost);
-        setLoading(false);
-        return;
-      }
+// Pre-build all known blog slugs at build time
+export async function generateStaticParams() {
+  const slugs = await getAllBlogSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
-      try {
-        const sanityPost: SanityPost = await client.fetch(postBySlugQuery, {
-          slug,
-        });
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
 
-        if (sanityPost) {
-          // Transform Sanity post to match component format
-          const transformedPost: BlogPost = {
-            id: sanityPost._id,
-            slug: sanityPost.slug.current,
-            title: sanityPost.title,
-            category: sanityPost.category,
-            description: sanityPost.description,
-            image: sanityPost.image
-              ? urlFor(sanityPost.image).width(1200).height(800).url()
-              : "/images/Panel.png",
-            date: new Date(sanityPost.publishedAt).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            }),
-            author: sanityPost.author,
-            color: sanityPost.color,
-            content: "", // Will use portable text instead
-          };
-          setPost(transformedPost);
-          setSanityContent(sanityPost.content);
-        } else {
-          // Fallback to hardcoded data
-          const foundPost = blogPosts.find((p) => p.slug === slug);
-          setPost(foundPost || null);
-        }
-      } catch (error) {
-        console.error("Error fetching post from Sanity:", error);
-        // Fallback to hardcoded data
-        const foundPost = blogPosts.find((p) => p.slug === slug);
-        setPost(foundPost || null);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchPost();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <main className="min-h-screen bg-white pt-20">
-        <Header />
-        <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-          <p className="text-slate-600">Loading...</p>
-        </div>
-        <Footer />
-      </main>
-    );
+  if (!post) {
+    notFound();
   }
 
   // Calculate read time (approximate)
-  const readTime = post ? Math.ceil(post.content.length / 1000) : 5;
+  const readTime = post.content ? Math.ceil(post.content.length / 1000) : 5;
 
   // Get related posts (exclude current post, take up to 3)
   const relatedPosts = blogPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
-  if (!post) {
-    return (
-      <main className="min-h-screen bg-slate-50 pt-32 pb-20">
-        <Header />
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 mb-6">
-            <Tag className="w-8 h-8 text-slate-400" />
-          </div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-4">
-            Article Not Found
-          </h1>
-          <p className="text-slate-600 mb-8 max-w-md mx-auto">
-            The article you are looking for might have been removed or is
-            temporarily unavailable.
-          </p>
-          <Link
-            href="/blog"
-            className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Return to Blog
-          </Link>
-        </div>
-        <Footer />
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen bg-white">
       <Header />
-
-      {/* Progress Bar (Optional - could be added later) */}
 
       <article>
         {/* HERO SECTION */}
@@ -204,11 +116,10 @@ export default function BlogPostPage() {
             {/* Content Body */}
             <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100">
               <div className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-8 prose-li:text-slate-600 prose-strong:text-slate-900 prose-a:text-green-600 hover:prose-a:text-green-700">
-                {sanityContent ? (
+                {post.sanityContent ? (
                   <PortableText
-                    value={sanityContent}
+                    value={post.sanityContent}
                     components={{
-                      /* ... same portable text components can be reused but styled better ... */
                       block: {
                         normal: ({ children }) => (
                           <p className="mb-6">{children}</p>
@@ -234,7 +145,7 @@ export default function BlogPostPage() {
                 )}
               </div>
 
-              {/* Tags / Share (Placeholder) */}
+              {/* Tags / Share */}
               <div className="mt-12 pt-8 border-t border-slate-100 flex flex-wrap gap-4 justify-between items-center">
                 <div className="flex gap-2">
                   <span className="text-slate-400 text-sm font-semibold uppercase tracking-wider">
@@ -250,7 +161,6 @@ export default function BlogPostPage() {
                     #Sustainability
                   </span>
                 </div>
-                {/* Share buttons could go here */}
               </div>
             </div>
           </div>
