@@ -199,14 +199,14 @@ const generateConfirmationEmailHTML = (data: ContactEmailData): string => {
                     </div>
                     
                     <p style="margin: 0 0 25px; color: #475569; font-size: 16px; line-height: 1.6;">
-                      In the meantime, feel free to explore our <a href="https://yourwebsite.com/projects" style="color: #22c55e; text-decoration: none; font-weight: 500;">recent projects</a> or learn more about <a href="https://yourwebsite.com/about" style="color: #22c55e; text-decoration: none; font-weight: 500;">our mission</a>.
+                      In the meantime, feel free to explore our <a href="https://solar1-cyan.vercel.app/projects" style="color: #22c55e; text-decoration: none; font-weight: 500;">recent projects</a> or learn more about <a href="https://solar1-cyan.vercel.app/about" style="color: #22c55e; text-decoration: none; font-weight: 500;">our mission</a>.
                     </p>
                     
                     <!-- CTA Button -->
                     <table role="presentation" style="margin: 30px 0;">
                       <tr>
                         <td style="border-radius: 8px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
-                          <a href="https://yourwebsite.com" style="display: inline-block; padding: 14px 28px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">Visit Our Website</a>
+                          <a href="https://solar1-cyan.vercel.app" style="display: inline-block; padding: 14px 28px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">Visit Our Website</a>
                         </td>
                       </tr>
                     </table>
@@ -226,7 +226,7 @@ const generateConfirmationEmailHTML = (data: ContactEmailData): string => {
                         <td style="text-align: center; padding-bottom: 15px;">
                           <p style="margin: 0 0 8px; color: #1e293b; font-size: 14px; font-weight: 600;">Contact Us</p>
                           <p style="margin: 0; color: #64748b; font-size: 13px;">
-                            📧 info@Kartik Solar.com | 📞 +1 (555) 123-4567<br>
+                            📧 kartiksolar.in@gmail.com | 📞 +91 63979 13908<br>
                             📍 25/4, Rajpur Road, Dehradun, Uttarakhand 248001
                           </p>
                         </td>
@@ -278,8 +278,8 @@ The Kartik Solar Team
 
 ---
 Kartik Solar
-Email: info@Kartik Solar.com
-Phone: +1 (555) 123-4567
+Email: kartiksolar.in@gmail.com
+Phone: +91 63979 13908
 Address: 25/4, Rajpur Road, Dehradun, Uttarakhand 248001
     `.trim(),
   };
