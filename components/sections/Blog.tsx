@@ -126,14 +126,6 @@ const Blog = ({ posts: propPosts, limit }: BlogProps) => {
 
                   {/* Content */}
                   <div className="p-6 flex flex-col flex-1 relative bg-white">
-                    {/* Meta Info - Author */}
-                    <div className="flex items-center gap-2 text-xs text-slate-400 font-medium mb-3">
-                      <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
-                        <User className="w-3.5 h-3.5" />
-                      </div>
-                      <span>By {post.author}</span>
-                    </div>
-
                     <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-green-600 transition-colors duration-300 line-clamp-2 leading-tight">
                       {post.title}
                     </h3>

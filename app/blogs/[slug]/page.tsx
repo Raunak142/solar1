@@ -77,13 +77,6 @@ export default async function BlogPostPage({
             <div className="flex flex-wrap items-center justify-center gap-6 text-slate-300 text-sm md:text-base font-medium">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 bg-white/10 rounded-full">
-                  <User className="w-4 h-4 text-green-400" />
-                </div>
-                <span>{post.author}</span>
-              </div>
-              <div className="w-1.5 h-1.5 rounded-full bg-slate-600"></div>
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-white/10 rounded-full">
                   <Calendar className="w-4 h-4 text-blue-400" />
                 </div>
                 <span>{post.date}</span>
@@ -170,30 +163,6 @@ export default async function BlogPostPage({
       {/* AUTHOR BIO & RELATED POSTS */}
       <section className="page-bg py-16 border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Author Bio */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 mb-16 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
-            <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border-4 border-green-50">
-              <User className="w-8 h-8 text-slate-400" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">
-                Written by {post.author}
-              </h3>
-              <p className="text-slate-600 mb-4">
-                Expert in renewable energy solutions and sustainable living.
-                Dedicated to helping Indian homeowners transition to clean
-                power.
-              </p>
-              <Link
-                href="/about"
-                className="text-green-600 font-semibold hover:text-green-700 text-sm inline-flex items-center gap-1"
-              >
-                View Verified Profile{" "}
-                <ArrowLeft className="w-3 h-3 rotate-180" />
-              </Link>
-            </div>
-          </div>
-
           {/* Related Articles */}
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold text-slate-900">

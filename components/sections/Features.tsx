@@ -242,7 +242,7 @@ const FeatureBlock = ({
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ margin: "-20% 0px -20% 0px" }}
+        viewport={{ once: true, margin: "-20% 0px -20% 0px" }}
         transition={{ duration: 0.5 }}
         className="relative"
       >

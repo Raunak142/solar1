@@ -19,7 +19,7 @@ const AboutFounder = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 page-bg overflow-hidden"
+      className="pt-24 pb-12 lg:pt-32 lg:pb-16 px-4 sm:px-6 lg:px-8 page-bg overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
@@ -51,9 +51,9 @@ const AboutFounder = () => {
               style={{ scale: imageScale, rotate: imageRotate }}
               className="relative rounded-3xl overflow-hidden shadow-2xl"
             >
-              <div className="aspect-[3/4] relative">
+              <div className="aspect-square relative">
                 <Image
-                  src="/images/about-team.png"
+                  src="/images/Team.png"
                   alt="Raunak — Founder, Kartik Solar Enterprises"
                   fill
                   className="object-cover"

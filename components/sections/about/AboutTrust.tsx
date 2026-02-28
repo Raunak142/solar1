@@ -94,7 +94,7 @@ const StatCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`group relative text-center p-8 rounded-3xl bg-white border border-slate-100 shadow-sm transition-all duration-500 hover:shadow-xl hover:${stat.glow} hover:-translate-y-1 hover:border-slate-200 overflow-hidden`}
+      className={`group relative text-center p-8 rounded-3xl bg-white border border-slate-100 shadow-sm transition-colors duration-500 hover:shadow-xl hover:${stat.glow} hover:border-slate-200 overflow-hidden`}
     >
       {/* Subtle bg tint on hover */}
       <div

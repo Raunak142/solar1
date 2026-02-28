@@ -135,7 +135,7 @@ const AboutDifferentiators = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className={`group relative bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-all duration-500 ease-out hover:shadow-xl hover:${colors.glow} hover:-translate-y-2 hover:border-slate-200 overflow-hidden`}
+                className={`group relative bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-colors duration-500 ease-out hover:shadow-xl hover:${colors.glow} hover:border-slate-200 overflow-hidden`}
               >
                 {/* Subtle gradient on hover */}
                 <div

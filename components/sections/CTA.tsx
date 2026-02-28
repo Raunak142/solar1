@@ -117,25 +117,33 @@ const CTA = () => {
               </p>
 
               {/* Map Section */}
-              <div className="mt-8 relative w-[400px] h-[150px] rounded-2xl overflow-hidden border border-slate-600 shadow-lg group">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=30.3244,78.0411"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 relative w-[400px] h-[150px] rounded-2xl overflow-hidden border border-slate-600 shadow-lg group block"
+              >
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110204.74637174665!2d77.94709403248384!3d30.32540979219662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390929c356c888af%3A0x4c3562c032518799!2sDehradun%2C%20Uttarakhand!5e0!3m2!1sen!2sin!4v1710321234567!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3444.15286591!2d78.0411!3d30.3244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390929c356c888af%3A0x4c3562c032518799!2sClock%20Tower%2C%20Dehradun!5e0!3m2!1sen!2sin!4v1710321234567!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                  className="grayscale group-hover:grayscale-0 transition-all duration-700 pointer-events-none"
                 ></iframe>
 
                 {/* Overlay Text */}
-                <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-4 opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none">
-                  <p className="text-white text-sm font-medium">
-                    Dehradun, Uttarakhand
+                <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-4 transition-opacity duration-500">
+                  <p className="text-white text-sm font-medium flex items-center justify-between">
+                    <span>Dehradun, Uttarakhand</span>
+                    <span className="text-xs text-green-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                      Click to view map
+                    </span>
                   </p>
                 </div>
-              </div>
+              </a>
             </motion.div>
 
             {/* Right Side - Form */}

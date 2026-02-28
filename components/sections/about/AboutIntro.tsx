@@ -123,7 +123,7 @@ const AboutIntro = () => {
               {/* Floating Stat Card */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.5 }}
                 className="absolute bottom-8 left-8 bg-white/95 backdrop-blur-xl p-6 rounded-2xl shadow-xl border border-white/20 max-w-[200px]"
               >

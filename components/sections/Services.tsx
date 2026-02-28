@@ -164,7 +164,7 @@ const Services = ({
                 variants={itemVariants}
                 whileHover={{ y: -5, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="group bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:border-green-200 transition-all duration-300"
+                className="group bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:border-green-200 transition-colors"
               >
                 <div
                   className={`w-14 h-14 rounded-xl ${benefit.color} flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform`}

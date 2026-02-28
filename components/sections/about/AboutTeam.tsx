@@ -8,37 +8,37 @@ import { Linkedin, Twitter, Mail } from "lucide-react";
 const TEAM_MEMBERS = [
   {
     id: 1,
-    name: "Raunak Aggarwal",
+    name: "Raunak",
     role: "Founder & Solar Consultant",
-    image: "/images/about-team.png",
+    image: "/images/member1.png",
     tagline: "Vision & Leadership",
   },
   {
     id: 2,
-    name: "Solar Engineer",
+    name: "Ashish",
     role: "Lead Installation Engineer",
-    image: "/images/Field Panel.png",
+    image: "/images/member2.png",
     tagline: "Precision & Quality",
   },
   {
     id: 3,
-    name: "Operations Lead",
+    name: "Sneha",
     role: "Site & Project Manager",
-    image: "/images/House.png",
+    image: "/images/member3.png",
     tagline: "Seamless Execution",
   },
   {
     id: 4,
-    name: "Support Specialist",
+    name: "Kaushik",
     role: "Customer Success",
-    image: "/images/Forest Panel.png",
+    image: "/images/member4.png",
     tagline: "Client Satisfaction",
   },
 ];
 
 const AboutTeam = () => {
   return (
-    <section className="py-20 lg:py-28 page-bg">
+    <section className="pt-12 pb-20 lg:pt-16 lg:pb-28 page-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -74,10 +74,10 @@ const AboutTeam = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -10 }}
-              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-colors duration-300"
             >
               {/* Image Container */}
-              <div className="relative aspect-3/4 overflow-hidden">
+              <div className="relative aspect-square overflow-hidden">
                 <Image
                   src={member.image}
                   alt={member.name}

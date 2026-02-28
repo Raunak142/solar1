@@ -38,7 +38,7 @@ const AboutMission = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-3xl p-10 lg:p-12 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-2xl hover:shadow-green-500/10 hover:-translate-y-1"
+            className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-3xl p-10 lg:p-12 transition-colors duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-2xl hover:shadow-green-500/10"
           >
             {/* Card glow on hover */}
             <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -69,7 +69,7 @@ const AboutMission = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-3xl p-10 lg:p-12 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1"
+            className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-3xl p-10 lg:p-12 transition-colors duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-2xl hover:shadow-blue-500/10"
           >
             {/* Card glow on hover */}
             <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
