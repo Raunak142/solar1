@@ -120,7 +120,7 @@ const Services = ({
   return (
     <section
       id="services"
-      className="py-24 lg:py-32 bg-linear-to-b from-white via-green-50/30 to-white overflow-hidden"
+      className="py-24 lg:py-32 bg-[#EBF5EB] overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADER */}
