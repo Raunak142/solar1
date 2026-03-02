@@ -141,10 +141,7 @@ const Services = ({
             <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               With the aid of Kartik Solar Enterprises, Indian middle-class
               families can utilize safe and affordable solar options while
-              managing climbing electricity costs. Our systems, made for the
-              power requirements and weather conditions of India, offer enduring
-              savings and provide your family with the convenience of a smart
-              lifestyle and uninterrupted energy.
+              managing climbing electricity costs.
             </p>
           </motion.div>
         </div>

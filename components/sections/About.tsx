@@ -41,14 +41,7 @@ const About = () => {
                 the Indian climate, we aim to meet real energy needs with our
                 innovative, affordable, and personalized solar solutions.
               </p>
-              <p>
-                Kartik Solar Enterprises understands that in the varying and
-                often extreme weather conditions common to India, solar energy
-                harnessing systems must be durable and tough. We hope to provide
-                families with the ability to be energy independent while also
-                diminishing the energy and power generation issues that plague
-                modern society.
-              </p>
+
               <p>
                 We aim to simplify and modernize solar energy to provide the
                 Indian family with a practical and affordable energy solution

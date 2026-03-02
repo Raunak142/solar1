@@ -26,6 +26,7 @@ const Footer = () => {
     { label: "Our Blog", href: "/blog" },
     { label: "Support", href: "/contact" },
     { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Cookies Policy", href: "/cookies" },
     { label: "Terms & Conditions", href: "/terms-and-conditions" },
   ];
 

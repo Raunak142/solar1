@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
               Privacy Policy
             </h1>
             <p className="text-slate-500 text-sm">
-              Last updated: February 18, 2026
+              Effective Date: 1st February 2026 | Last updated: 28th February 2026
             </p>
           </div>
 
@@ -31,232 +31,176 @@ export default function PrivacyPolicyPage() {
           <div className="prose prose-slate prose-lg max-w-none space-y-10">
             {/* Introduction */}
             <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                1. Introduction
+              </h2>
               <p className="text-slate-600 leading-relaxed">
-                At Kartik Solar Enterprises, we respect your privacy and are
-                committed to protecting the personal information you share with
-                us. This Privacy Policy explains how we collect, use, store, and
-                protect your data when you visit our website or use our
-                services. By using our website, you agree to the practices
-                described in this policy.
+                The purpose of this privacy policy is to explain the ways in which we at Kartik Solar Enterprises &quot;we,&quot; &quot;us,&quot; or &quot;our&quot; and/or other companies or clients operating under the &quot;Kartic Solar Enterprises&quot; umbrella or brand name or direct competitors or clients of ours who provide solar energy services to clients having &quot;data protection practices&quot; or &quot;data protection services&quot; and/or through the use of our Website at <a href="https://solar1-cyan.vercel.app" className="text-green-600 hover:underline">solar1-cyan.vercel.app</a> and/or provide other privacy and/or personal data protection services to users and/or services to us from users who service or consult clients. You are invited to review the policy.
               </p>
             </div>
 
-            {/* Information We Collect */}
+            {/* Collection of Your Data */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                1. Information We Collect
+                2. Collection of Your Data
               </h2>
               <p className="text-slate-600 leading-relaxed mb-3">
-                We may collect the following types of information when you
-                interact with our website:
+                We are processing and collecting the following personal data from you:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  <strong>Personal Information:</strong> Name, email address,
-                  phone number, city, and any message you provide through our
-                  contact form.
-                </li>
-                <li>
-                  <strong>Technical Information:</strong> IP address, browser
-                  type, device type, operating system, and pages visited on our
-                  website.
-                </li>
-                <li>
-                  <strong>Usage Data:</strong> How you interact with our
-                  website, including page views, time spent, and navigation
-                  patterns.
-                </li>
+                <li><strong>Identification Information:</strong> If you communicate with us through the WhatsApp application or the contact form or you do an enquiry and communicate with us, we collect your name, phone number, email, and address.</li>
+                <li><strong>Technical and Property Data:</strong> While you are in an online consultation, you might provide us the measurements of your roof, your electricity bills, your location for site assessment(s). You might also share the photos of your house.</li>
+                <li><strong>Usage data:</strong> Data is collected and recorded automatically through the utilization of cookies and analytics. This data includes the following information: your IP address, the type of the browser you are using, the data regarding the pages you have visited, the duration you have spent on the Website, the URLs which have directed you to our Website.</li>
+                <li><strong>Communication Record:</strong> You may have communications via email, WhatsApp, or phone with our staff, and the law provides the extent of records of such communications.</li>
               </ul>
             </div>
 
-            {/* How We Use Your Information */}
+            {/* Your Data: What We Do with Your Data */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                2. How We Use Your Information
+                3. Your Data: What We Do with Your Data
               </h2>
               <p className="text-slate-600 leading-relaxed mb-3">
-                The information we collect is used for the following purposes:
+                Your personal data is used to:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  To respond to your inquiries and provide solar consultation
-                </li>
-                <li>To process and manage service requests</li>
-                <li>
-                  To send relevant updates about our solar solutions and offers
-                  (only with your consent)
-                </li>
-                <li>To improve our website experience and services</li>
-                <li>To comply with legal obligations</li>
+                <li>Answer questions and perform solar consultations</li>
+                <li>Draft and send quotes and descriptions for solar projects</li>
+                <li>Schedule site visits and installations, as well as maintenance</li>
+                <li>File government subsidies on your behalf</li>
+                <li>Provide updates, and offers on services and programs (with your consent)</li>
+                <li>Help improve our website, services, and customer experience</li>
+                <li>Fulfill our obligations under the laws of India</li>
               </ul>
             </div>
 
-            {/* Contact Form Data */}
+            {/* Processing Justification */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                3. Contact Form Data Handling
+                4. Processing Justification (Invoking the IT Act, 2000, &amp; DPDP Act, 2023)
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-3">
+                Your data is processed for the following justified reasons:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                <li><strong>Consent:</strong> Where consent is provided for particular communications</li>
+                <li><strong>Contractual duty:</strong> Related to services for solar installation</li>
+                <li><strong>Legal duty:</strong> Following the laws of India</li>
+                <li><strong>Interest:</strong> For the improvement of services and website</li>
+              </ul>
+            </div>
+
+            {/* Data Sharing and Disclosure */}
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                5. Data Sharing and Disclosure
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-3">
+                Your personal data is never sold, traded, or rented to other entities. We may share your information only under the following circumstances:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                <li>For project execution with installation partners or subcontractors</li>
+                <li>Data may be shared with government entities, such as DISCOM (distribution companies) or MNRE, for net metering and subsidy applications.</li>
+                <li>The sharing of data with technology service providers (such as website hosting and analytics) is a result of data processing agreements.</li>
+                <li>Data may be disclosed when provided for under a law, a court order, or in instances of an appropriate lawful regulatory scope in India.</li>
+              </ul>
+            </div>
+
+            {/* Data Retention */}
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                6. Data Retention
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                When you submit a form on our website, your information (name,
-                email, phone number, city, and message) is securely transmitted
-                to our team via email and stored in our internal records. We use
-                this data solely to respond to your inquiry and provide the
-                requested solar consultation. Your contact form data is never
-                sold or shared with third parties for marketing purposes.
+                Personal data will be kept as long as it is necessary to achieve the purpose outlined in this Policy or as required by law. Data related to inquiries will be kept for 3 years. Data related to Projects and Warranty will be kept for 10 years as per the service warranty obligations. You may request for deletion of your data in the absence of any legal retention obligations.
               </p>
             </div>
 
-            {/* Cookies */}
+            {/* Your Rights */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                4. Cookies & Tracking Technologies
+                7. Your Rights
               </h2>
-              <p className="text-slate-600 leading-relaxed">
-                Our website may use cookies and similar technologies to enhance
-                your browsing experience. Cookies help us understand how
-                visitors use our site, remember your preferences, and improve
-                overall performance. You can control or disable cookies through
-                your browser settings. Disabling cookies may affect certain
-                features of the website.
+              <p className="text-slate-600 leading-relaxed mb-3">
+                In respect of the current legislation in India, including the Digital Personal Data Protection Act, 2023, you are entitled to:
               </p>
-            </div>
-
-            {/* Third-Party Services */}
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                5. Third-Party Services
-              </h2>
+              <ul className="list-disc pl-6 space-y-2 text-slate-600 mb-4">
+                <li>Be informed of, and have access to, the personal data we hold about you.</li>
+                <li>Have any data you claim is inaccurate or incomplete corrected.</li>
+                <li>Have your personal data deleted, (unless otherwise provided for by law).</li>
+                <li>Revoke your consent to receive direct marketing communications.</li>
+                <li>Submit a complaint to our Data Grievance Officer.</li>
+              </ul>
               <p className="text-slate-600 leading-relaxed">
-                We may use trusted third-party services for analytics, email
-                delivery, and website hosting. These services may collect
-                limited technical data as part of their operations. We do not
-                share your personal information with any third party for
-                advertising or marketing purposes. Third-party services we may
-                use include Google Analytics, Vercel (hosting), and Nodemailer
-                (email delivery).
+                To exercise your rights, please write to us at <a href="mailto:kartiksolar.in@gmail.com" className="text-green-600 hover:underline">kartiksolar.in@gmail.com</a>, with the subject line “Data Privacy Request”.
               </p>
             </div>
 
             {/* Data Protection */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                6. Data Protection & Security
+                8. Data Protection
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                We take reasonable technical and organizational measures to
-                protect your personal information from unauthorized access,
-                loss, misuse, or alteration. Our website uses HTTPS encryption
-                to secure data transmission. However, no method of electronic
-                storage or transmission over the internet is 100% secure, and we
-                cannot guarantee absolute security.
+                Data protection from unauthorized access, loss, destruction, or disclosure is a priority for us. We help protect your data by utilizing HTTPS for our website. Unfortunately, total data protection threats cannot be compromised.
               </p>
             </div>
 
-            {/* Data Retention */}
+            {/* Other Websites */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                7. Data Retention
+                9. Other Websites
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                We retain your personal information only for as long as
-                necessary to fulfill the purposes described in this policy or as
-                required by law. Contact form submissions are retained for up to
-                12 months unless you request earlier deletion.
+                Our website may contain links to third parties, including government and brand partner websites. We recommend reviewing the third-party site’s privacy policies, as we do not govern or control them.
               </p>
             </div>
 
-            {/* User Rights */}
+            {/* Children’s Data */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                8. Your Rights
+                10. Children’s Data
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-3">
-                As a user, you have the following rights regarding your personal
-                data:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  <strong>Access:</strong> You can request a copy of the
-                  personal data we hold about you.
-                </li>
-                <li>
-                  <strong>Correction:</strong> You can ask us to correct any
-                  inaccurate or incomplete information.
-                </li>
-                <li>
-                  <strong>Deletion:</strong> You can request the deletion of
-                  your personal data from our records.
-                </li>
-                <li>
-                  <strong>Opt-out:</strong> You can unsubscribe from marketing
-                  communications at any time.
-                </li>
-              </ul>
-              <p className="text-slate-600 leading-relaxed mt-3">
-                To exercise any of these rights, please contact us using the
-                details provided below.
+              <p className="text-slate-600 leading-relaxed">
+                Our website’s and services’ intended audience is not individuals below 18 years old. We do not collect personal data from children. Please contact us if you believe we have obtained personal data from children.
               </p>
             </div>
 
-            {/* Children's Privacy */}
+            {/* Privacy Policy Updates */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                9. Children&apos;s Privacy
+                11. Privacy Policy Updates
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                Our website and services are not directed at individuals under
-                the age of 18. We do not knowingly collect personal information
-                from children. If you believe we have inadvertently collected
-                such data, please contact us and we will promptly delete it.
-              </p>
-            </div>
-
-            {/* Changes to Policy */}
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                10. Changes to This Privacy Policy
-              </h2>
-              <p className="text-slate-600 leading-relaxed">
-                We may update this Privacy Policy from time to time to reflect
-                changes in our practices or for legal reasons. Any updates will
-                be posted on this page with a revised &quot;Last updated&quot;
-                date. We encourage you to review this page periodically.
+                Our Privacy Policy is subject to change. Updates are made available on this page, and a date will be published to indicate the most recent change. We recommend you periodically check for updates.
               </p>
             </div>
 
             {/* Contact Us */}
             <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                11. Contact Us
+                12. Data Grievance Officer
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                If you have any questions or concerns about this Privacy Policy
-                or how we handle your data, please reach out to us:
-              </p>
-              <div className="space-y-2 text-slate-600">
+              <div className="space-y-4 text-slate-600">
                 <p>
-                  <strong>Kartik Solar Enterprises</strong>
+                  <strong>Name:</strong> Kartik Solar Enterprises — Grievance Officer
                 </p>
-                <p>25/4, Rajpur Road, Dehradun, Uttarakhand 248001</p>
                 <p>
-                  Email:{" "}
+                  <strong>Email:</strong>{" "}
                   <a
-                    href="mailto:connect@kartiksolar.in"
-                    className="text-green-600 hover:underline"
+                    href="mailto:kartiksolar.in@gmail.com"
+                    className="text-green-600 hover:underline break-all"
                   >
-                    connect@kartiksolar.in
+                    kartiksolar.in@gmail.com
                   </a>
                 </p>
                 <p>
-                  Phone:{" "}
-                  <a
-                    href="tel:+919897012345"
-                    className="text-green-600 hover:underline"
-                  >
-                    +91 98970 12345
-                  </a>
+                  <strong>Address:</strong> 25 / 4, Rajpur Road, Dehradun, Uttarakhand, India – 248001
                 </p>
               </div>
+              <p className="text-slate-600 leading-relaxed mt-4 pt-4 border-t border-slate-200">
+                We will respond to all data privacy complaints within 30 days.
+              </p>
             </div>
           </div>
         </div>

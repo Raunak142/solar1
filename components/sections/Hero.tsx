@@ -105,28 +105,44 @@ const Hero = ({ data }: { data: HeroData }) => {
         </div>
       </div>
 
-      {/* Trust Bar */}
-      {/* Trusted Technology Partners */}
-      <div className="py-20 lg:py-24 bg-[#EDF7ED] border-t border-slate-100 relative overflow-hidden">
-        {/* Subtle Gradient Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,var(--tw-gradient-stops))] from-green-50/40 via-white to-white -z-10" />
+      {/* Trust Bar (Trusted Technology Partners) */}
+      <div className="py-20 lg:py-28 relative overflow-hidden bg-white">
+        {/* Faint Background Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-green-100/40 blur-[100px] rounded-full pointer-events-none" />
 
-        <div className="max-w-[1400px] mx-auto px-6">
+        <div className="max-w-[1400px] mx-auto px-6 relative z-10">
           {/* Section Header */}
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-            <div className="space-y-6">
-              <h3 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight leading-tight">
-                Trusted Technology Partners
-                <span className="block w-24 h-1.5 bg-green-500 mt-4 rounded-full" />
-              </h3>
-            </div>
-            <div>
-              <p className="text-slate-600 text-base md:text-lg leading-relaxed font-medium max-w-[520px]">
-                We install high-quality solar components from India’s most
-                reliable and industry-certified brands to ensure long-lasting
-                performance and safety.
-              </p>
-            </div>
+          <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-block py-1.5 px-4 rounded-full bg-slate-50 text-slate-500 font-medium text-sm tracking-wide border border-slate-200 mb-4"
+            >
+              Industry Certified Brands
+            </motion.span>
+
+            <motion.h3
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-6"
+            >
+              Trusted Technology Partners
+            </motion.h3>
+
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="text-base md:text-lg text-slate-500 leading-relaxed font-medium"
+            >
+              We install high-quality solar components from India’s most
+              reliable manufacturers to ensure long-lasting performance, maximum
+              efficiency, and complete safety for your home or business.
+            </motion.p>
           </div>
 
           {/* Logos Grid */}
@@ -134,51 +150,55 @@ const Hero = ({ data }: { data: HeroData }) => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 md:gap-6"
           >
-            {/* Luminous */}
-            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
-              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                Luminous
-              </span>
-            </div>
-            {/* Tata Power Solar */}
-            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
-              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                Tata Power
-              </span>
-            </div>
-            {/* Havells */}
-            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
-              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                Havells
-              </span>
-            </div>
-            {/* Microtek */}
-            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
-              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                Microtek
-              </span>
-            </div>
-            {/* Adani Solar */}
-            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
-              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                Adani Solar
-              </span>
-            </div>
-            {/* Growatt */}
-            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
-              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                Growatt
-              </span>
-            </div>
-            {/* Waaree */}
-            <div className="group bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-green-100 hover:shadow-lg hover:shadow-green-100/50 rounded-xl p-6 flex items-center justify-center transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default h-24">
-              <span className="text-lg font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                Waaree
-              </span>
-            </div>
+            {[
+              {
+                name: "Luminous",
+                color: "text-[#ed1b24] group-hover:text-red-700",
+              },
+              {
+                name: "Tata Power",
+                color: "text-[#0b5c9b] group-hover:text-blue-800",
+              },
+              {
+                name: "Havells",
+                color: "text-[#ed1c24] group-hover:text-red-700",
+              },
+              {
+                name: "Microtek",
+                color: "text-[#ff0000] group-hover:text-red-800",
+              },
+              {
+                name: "Adani Solar",
+                color: "text-[#183661] group-hover:text-blue-900",
+              },
+              {
+                name: "Growatt",
+                color: "text-[#8ac340] group-hover:text-green-700",
+              },
+              {
+                name: "Waaree",
+                color: "text-[#f37021] group-hover:text-orange-600",
+              },
+            ].map((brand, i) => (
+              <motion.div
+                key={brand.name}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="group relative h-28 bg-white border border-slate-100 rounded-xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] flex items-center justify-center transition-all duration-300 hover:border-green-200 hover:shadow-xl hover:shadow-green-500/10 cursor-default"
+              >
+                {/* Green Glow Effect inside card on hover (subtle) */}
+                <div className="absolute inset-0 bg-linear-to-b from-green-50/0 to-green-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+
+                <span
+                  className={`relative z-10 text-xl font-black md:text-2xl transition-all duration-300 ${brand.color}`}
+                >
+                  {brand.name}
+                </span>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>

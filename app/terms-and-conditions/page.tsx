@@ -23,7 +23,8 @@ export default function TermsAndConditionsPage() {
               Terms &amp; Conditions
             </h1>
             <p className="text-slate-500 text-sm">
-              Last updated: February 18, 2026
+              Effective Date: 1st February 2026 | Last updated: 28th February
+              2026
             </p>
           </div>
 
@@ -31,265 +32,289 @@ export default function TermsAndConditionsPage() {
           <div className="prose prose-slate prose-lg max-w-none space-y-10">
             {/* Introduction */}
             <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                1. Acceptance of Terms
+              </h2>
               <p className="text-slate-600 leading-relaxed">
-                Welcome to Kartik Solar Enterprises. These Terms &amp;
-                Conditions govern your use of our website and the solar energy
-                services we provide. By accessing our website or engaging our
-                services, you agree to these terms. Please read them carefully
-                before proceeding.
+                By visiting the site{" "}
+                <a
+                  href="https://solar1-cyan.vercel.app"
+                  className="text-green-600 hover:underline"
+                >
+                  solar1-cyan.vercel.app
+                </a>{" "}
+                (the “Site”) owned by Kartik Solar Enterprises (“we,” “us,” or
+                “our”), or by using any solar energy product, installation, or
+                consulting service with us, you (“Customer,” “you,” or “your”)
+                agree to these Terms and Conditions (“Terms”). If you do not
+                agree to these Terms, do not use our Website or our services.
               </p>
             </div>
 
-            {/* Service Scope */}
+            {/* Company Information */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                1. Scope of Services
+                2. Company Information
+              </h2>
+              <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                <li>
+                  <strong>Business Name:</strong> Kartik Solar Enterprises
+                </li>
+                <li>
+                  <strong>Company Address:</strong> 25/4, Rajpur Road, Dehradun,
+                  Uttarakhand, India - 248001
+                </li>
+                <li>
+                  <strong>Email:</strong>{" "}
+                  <a
+                    href="mailto:kartiksolar.in@gmail.com"
+                    className="text-green-600 hover:underline"
+                  >
+                    kartiksolar.in@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <strong>Contact Number:</strong>{" "}
+                  <a
+                    href="tel:+919897012345"
+                    className="text-green-600 hover:underline"
+                  >
+                    +91 98970 12345
+                  </a>
+                </li>
+                <li>
+                  <strong>Serviceable Areas:</strong> Dehradun, Haridwar,
+                  Rishikesh, and surrounding areas of Uttarakhand, India
+                </li>
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                3. Services
               </h2>
               <p className="text-slate-600 leading-relaxed mb-3">
-                Kartik Solar Enterprises provides the following services for
-                residential and commercial customers:
+                Kartik Solar Enterprises provides the following services:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>Solar panel system design and consultation</li>
-                <li>Rooftop solar installation for homes and businesses</li>
-                <li>Battery backup and energy storage solutions</li>
                 <li>
-                  Government subsidy documentation and net metering assistance
+                  Design, supply and installation of solar panel systems for
+                  residential purposes
                 </li>
-                <li>Post-installation maintenance and service support</li>
+                <li>
+                  Solar energy solutions for the commercial and industrial
+                  sectors
+                </li>
+                <li>
+                  Consultation, site evaluation, and feasibility study of solar
+                  systems
+                </li>
+                <li>Configuration of battery backup and energy storage</li>
+                <li>
+                  Support in the application of government subsidy (MNRE/PM
+                  Surya Ghar Yojana)
+                </li>
+                <li>
+                  Post installation maintenance, service, and warranty support
+                </li>
               </ul>
               <p className="text-slate-600 leading-relaxed mt-3">
-                All services are subject to site feasibility, local regulations,
-                and availability in your area. Our team will conduct a site
-                survey before confirming the scope of work.
+                All services depend on project contracts, site circumstances,
+                and government regulations that are in effect at the time of
+                installation.
               </p>
             </div>
 
-            {/* Quotations & Payments */}
+            {/* Pricing and Quotations */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                2. Quotations &amp; Payments
+                4. Pricing and Quotations
               </h2>
-              <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  All quotations provided by Kartik Solar Enterprises are valid
-                  for 15 days from the date of issue unless stated otherwise.
-                </li>
-                <li>
-                  Prices may vary based on system size, component selection,
-                  site conditions, and applicable government subsidies.
-                </li>
-                <li>
-                  A booking advance is required to confirm the order. The
-                  remaining balance is payable as per the agreed payment
-                  schedule.
-                </li>
-                <li>
-                  Payments can be made via bank transfer, UPI, cheque, or any
-                  other mode agreed upon at the time of booking.
-                </li>
-                <li>
-                  GST and other applicable taxes will be charged as per
-                  government regulations.
-                </li>
-              </ul>
+              <p className="text-slate-600 leading-relaxed">
+                Quotes/estimates provided via our Website, WhatsApp, email, or
+                during an in-person meeting are valid for 30 days from the date
+                provided, unless otherwise specified on the estimate.
+                Quotes/estimates are subject to change due to government grants,
+                changing costs of materials and/or components, taxes (GST), and
+                site-specific conditions. We will not begin any work before
+                providing you with a formal agreement or work order.
+              </p>
             </div>
 
-            {/* Installation Terms */}
+            {/* Terms of Payment */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                3. Installation Terms
-              </h2>
-              <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  Installation timelines are estimated and may vary depending on
-                  weather conditions, approvals, and material availability.
-                </li>
-                <li>
-                  The customer must provide safe and clear access to the rooftop
-                  and electrical panel during installation.
-                </li>
-                <li>
-                  Any structural modifications required for installation (such
-                  as rooftop reinforcement) are the responsibility of the
-                  customer unless agreed otherwise.
-                </li>
-                <li>
-                  Kartik Solar Enterprises will ensure all installations comply
-                  with local electrical safety standards and regulations.
-                </li>
-                <li>
-                  Net metering application and approval timelines depend on the
-                  local electricity distribution company (DISCOM) and are
-                  outside our direct control.
-                </li>
-              </ul>
-            </div>
-
-            {/* Warranty & Maintenance */}
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                4. Warranty &amp; Maintenance
-              </h2>
-              <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  Solar panels come with a manufacturer&apos;s performance
-                  warranty of up to 25 years (as per the panel brand).
-                </li>
-                <li>
-                  Inverters and batteries carry separate manufacturer
-                  warranties, typically ranging from 5 to 10 years.
-                </li>
-                <li>
-                  Kartik Solar Enterprises provides workmanship warranty on
-                  installation for a period communicated at the time of
-                  purchase.
-                </li>
-                <li>
-                  Warranty does not cover damage caused by natural disasters,
-                  unauthorized modifications, negligence, or misuse.
-                </li>
-                <li>
-                  Maintenance services, including panel cleaning and system
-                  health checks, are available as per the service plan chosen by
-                  the customer.
-                </li>
-              </ul>
-            </div>
-
-            {/* Customer Responsibilities */}
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                5. Customer Responsibilities
+                5. Terms of Payment
               </h2>
               <p className="text-slate-600 leading-relaxed mb-3">
-                As a customer, you agree to the following:
+                The terms of payment are outlined in the individual project
+                contracts and can include:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-slate-600">
                 <li>
-                  Provide accurate information regarding your electricity usage,
-                  rooftop area, and property ownership.
+                  An advance payment due at the time of signing (typically
+                  30-50% of the total).
                 </li>
                 <li>
-                  Ensure the installation site is accessible and safe for our
-                  team during the scheduled installation period.
+                  A progress payment due during the execution and/or
+                  commencement of the installation.
                 </li>
                 <li>
-                  Obtain any required permissions or approvals from your housing
-                  society, landlord, or local authority before installation
-                  begins.
-                </li>
-                <li>
-                  Do not attempt to modify, repair, or tamper with the solar
-                  system without consulting Kartik Solar Enterprises.
-                </li>
-                <li>Make timely payments as per the agreed schedule.</li>
-              </ul>
-            </div>
-
-            {/* Limitation of Liability */}
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                6. Limitation of Liability
-              </h2>
-              <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  Kartik Solar Enterprises shall not be held liable for any
-                  indirect, incidental, or consequential damages arising from
-                  the use of our services or website.
-                </li>
-                <li>
-                  Energy generation estimates provided are approximate and may
-                  vary based on weather conditions, shading, panel orientation,
-                  and other environmental factors.
-                </li>
-                <li>
-                  We are not responsible for delays or disruptions caused by
-                  government bodies, electricity boards, or force majeure events
-                  (natural disasters, pandemics, etc.).
-                </li>
-                <li>
-                  Our total liability in any claim shall not exceed the total
-                  amount paid by the customer for the specific service in
-                  question.
+                  A retention payment due at the completion of the work and
+                  prior to handover.
                 </li>
               </ul>
-            </div>
-
-            {/* Cancellations & Refunds */}
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                7. Cancellations &amp; Refunds
-              </h2>
-              <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                <li>
-                  Cancellation requests must be made in writing before the
-                  commencement of installation work.
-                </li>
-                <li>
-                  If materials have already been procured or customized for your
-                  project, cancellation charges may apply.
-                </li>
-                <li>
-                  Refund amounts and timelines will be communicated on a
-                  case-by-case basis after reviewing the cancellation request.
-                </li>
-                <li>
-                  No refund will be issued after installation has been completed
-                  and the system has been commissioned.
-                </li>
-              </ul>
-            </div>
-
-            {/* Intellectual Property */}
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                8. Website &amp; Intellectual Property
-              </h2>
-              <p className="text-slate-600 leading-relaxed">
-                All content on this website — including text, images, logos,
-                designs, and graphics — is the property of Kartik Solar
-                Enterprises and is protected by applicable intellectual property
-                laws. You may not reproduce, distribute, or use any content from
-                this website without our prior written consent.
+              <p className="text-slate-600 leading-relaxed mt-3">
+                Payment can be made by bank transfer (NEFT/RTGS/IMPS), UPI, and
+                cheque. All prices, unless stated otherwise, include the
+                applicable GST. The contract stipulates the payment of interest
+                in the event of a payment made after the time specified.
               </p>
             </div>
 
-            {/* Governing Law */}
+            {/* Warranty Conditions */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                9. Governing Law
+                6. Warranty Conditions
               </h2>
-              <p className="text-slate-600 leading-relaxed">
-                These Terms &amp; Conditions are governed by and construed in
-                accordance with the laws of India. Any disputes arising out of
-                or related to these terms shall be subject to the exclusive
-                jurisdiction of the courts in Dehradun, Uttarakhand.
+              <p className="text-slate-600 leading-relaxed mb-3">
+                The warranty for installations done encompasses the following:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                <li>
+                  <strong>Solar panels:</strong> 25-year performance warranty
+                  (according to the manufacturer)
+                </li>
+                <li>
+                  <strong>Inverter:</strong> According to the manufacturer
+                  warranty (generally 5–10 years)
+                </li>
+                <li>
+                  <strong>Battery (if applicable):</strong> According to the
+                  manufacturer warranty (generally 2–5 years)
+                </li>
+                <li>
+                  <strong>Workmanship & Installation:</strong> 1-year
+                  Workmanship warranty from the date of commissioning
+                </li>
+              </ul>
+              <p className="text-slate-600 leading-relaxed mt-3">
+                Warranty claims not due to the misuse, modification or
+                unauthorized actions of the owner, boarding, god actions,
+                tampering and over electrical surges beyond warranted
+                specifications. Warranty inquiries must only be conducted by
+                email to{" "}
+                <a
+                  href="mailto:kartiksolar.in@gmail.com"
+                  className="text-green-600 hover:underline"
+                >
+                  kartiksolar.in@gmail.com
+                </a>
+                .
               </p>
             </div>
 
-            {/* Changes to Terms */}
+            {/* Terms of the Agreement */}
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                10. Changes to These Terms
+                7. Terms of the Agreement
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-3">
+                The Customer agrees to:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                <li>
+                  Submit complete site information including the roof
+                  dimensions, roof orientation, roof shading, and current
+                  electrical setup.
+                </li>
+                <li>
+                  Grant unobstructed entry to the installation site on the
+                  scheduled days.
+                </li>
+                <li>
+                  Obtain and provide any necessary legal, installation and
+                  housing society permission documents from the authorities
+                  before installation.
+                </li>
+                <li>
+                  Not alter any installed systems without prior written approval
+                  from Kartik Solar Enterprises.
+                </li>
+                <li>
+                  Any damages, malfunctions, and possible safety concerns should
+                  be reported to Kartik Solar Enterprises.
+                </li>
+              </ul>
+            </div>
+
+            {/* Copy Ownership */}
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                8. Copy Ownership
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                Kartik Solar Enterprises reserves the right to update or modify
-                these Terms &amp; Conditions at any time. Changes will be
-                reflected on this page with an updated &quot;Last updated&quot;
-                date. Continued use of our website or services after changes are
-                posted constitutes your acceptance of the revised terms.
+                All content on the website, such as text, images, graphics,
+                logos, pictures of finished work, project blogs, and other
+                graphics, belongs to Kartik Solar Enterprises and/or its
+                licensors. All copies of such content are the exclusive property
+                of Kartik Solar and may not be reproduced without express
+                written permission.
+              </p>
+            </div>
+
+            {/* Limitations on Liability */}
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                9. Limitations on Liability
+              </h2>
+              <p className="text-slate-600 leading-relaxed">
+                Except as provided by the laws of India, Kartik Solar
+                Enterprises shall not be held liable for (a) any indirect,
+                incidental, or consequential damages caused by the use of our
+                services, (b) estimates of electric bills or savings, which are
+                subject to actual usage, temperature, and changes in grid
+                tariffs, (c) delays caused by third-party vendors, government
+                distribution companies, approvals, or net metering.
+              </p>
+            </div>
+
+            {/* Applicable Law & Jurisdictions */}
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                10. Applicable Law & Jurisdictions
+              </h2>
+              <p className="text-slate-600 leading-relaxed">
+                The laws of India shall govern these Terms. Any disputes arising
+                from these Terms will be subject to settlement by direct
+                negotiations. If the dispute remains unsettled, it shall be
+                within the exclusive jurisdiction of the Courts of Dehradun,
+                Uttarakhand.
+              </p>
+            </div>
+
+            {/* Amendments to Terms */}
+            <div>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">
+                11. Amendments to Terms
+              </h2>
+              <p className="text-slate-600 leading-relaxed">
+                Kartik Solar Enterprises has the right to modify these Terms at
+                its discretion. New Terms will be updated on the Website along
+                with a new effective date. By using the Website or our services,
+                you will be accepting the new Terms.
               </p>
             </div>
 
             {/* Contact Us */}
             <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
               <h2 className="text-xl font-bold text-slate-900 mb-4">
-                11. Contact Us
+                12. Contact for Queries Related to Terms
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                If you have any questions about these Terms &amp; Conditions,
-                please contact us:
+                For further questions regarding these Terms and Conditions,
+                please reach us at:
               </p>
               <div className="space-y-2 text-slate-600">
                 <p>
@@ -299,10 +324,10 @@ export default function TermsAndConditionsPage() {
                 <p>
                   Email:{" "}
                   <a
-                    href="mailto:connect@kartiksolar.in"
+                    href="mailto:kartiksolar.in@gmail.com"
                     className="text-green-600 hover:underline"
                   >
-                    connect@kartiksolar.in
+                    kartiksolar.in@gmail.com
                   </a>
                 </p>
                 <p>

@@ -110,7 +110,7 @@ export interface BlogPostItem {
 const fallbackHero: HeroData = {
   badge: '#1 Solar Partner in Uttarakhand',
   heading: 'Powering Indian Homes with Smart Solar Energy',
-  subheading: 'Switch to reliable, affordable solar solutions designed specially for Indian homes and climate conditions. Kartik Solar Enterprises helps families reduce electricity bills, avoid power cuts, and enjoy long-term energy savings.\n\nSave up to 70–90% on electricity bills with high-performance solar systems trusted by homeowners across Dehradun, Haridwar, Rishikesh, and nearby regions.',
+  subheading: 'Switch to reliable, affordable solar solutions designed specially for Indian homes and climate conditions. Kartik Solar Enterprises helps families reduce electricity bills, avoid power cuts, and enjoy long-term energy savings.',
   ctaText: 'Get Free Solar Consultation',
   ctaLink: '/#services',
   image: '/images/House.png',
@@ -136,11 +136,12 @@ const fallbackFaqs: FaqItem[] = [
 ]
 
 const fallbackTestimonials: TestimonialItem[] = [
-  { id: 1, name: 'Vikram Singh', location: 'Clement Town, Dehradun', systemSize: '6 kW', rating: 5, quote: 'Power cuts used to disturb our daily routine, especially in summers. After installing solar with Kartik Solar, our home runs smoothly and electricity bills are almost gone.', video: '/blog1.mp4', poster: '/images/Testimonial1.png' },
-  { id: 2, name: 'Ramesh Sharma', location: 'Rajpur Road, Dehradun', systemSize: '5 kW', rating: 5, quote: 'The entire process was simple and transparent. The team explained everything clearly, and now my electricity expenses have reduced significantly.', video: '/blog2.mp4', poster: '/images/Testimonial2.png' },
-  { id: 3, name: 'Priya Gupta', location: 'Vasant Vihar, Dehradun', systemSize: '3 kW', rating: 5, quote: 'Professional installation and excellent support. Switching to solar was easier than I expected, and the savings started from the first month.', video: '/blog3.mp4', poster: '/images/Testimonial3.png' },
-  { id: 4, name: 'Anil Thakur', location: 'Selaqui, Dehradun', systemSize: '10 kW', rating: 5, quote: 'My factory\'s electricity bill dropped by nearly ₹40,000 per month. One of the best investments for my business.', video: '/blog4.mp4', poster: '/images/Testimonial4.png' },
-  { id: 5, name: 'Sunita Rawat', location: 'Mussoorie', systemSize: '4 kW', rating: 5, quote: 'Living in the hills, power reliability was always an issue. Solar has made our home energy-independent and stress-free.', video: '/blog1.mp4', poster: '/images/Testimonial1.png' },
+  { id: 1, name: 'Vikram Negi', location: 'Clement Town, Dehradun', systemSize: '5 kW', rating: 5, quote: 'Power cuts were a big problem in our area, especially during the summer. Since installing the system with battery backup, our home has run all day smoothly. Installation was quick and very clean.', video: '', poster: '/images/Testimonial1.png' },
+  { id: 2, name: 'Sanjay Sharma', location: 'Rajpur Road, Dehradun', systemSize: '7 kW', rating: 5, quote: 'My electricity bill used to cross ₹6,000 every month. After installing solar with Kartik Solar, it has reduced to almost nothing. The team handled everything professionally, including subsidy paperwork. Highly recommended!', video: '', poster: '/images/Testimonial2.png' },
+  { id: 3, name: 'Priya Rawat', location: 'Vasant Vihar, Dehradun', systemSize: '3 kW', rating: 5, quote: 'Electricity costs were affecting our business profits. Kartik Solar installed a rooftop system that now powers our refrigerators and lighting during the day. We are saving more than expected every month.', video: '', poster: '/images/Testimonial3.png' },
+  { id: 4, name: 'Rajesh Barthwal', location: 'Haridwar', systemSize: '10 kW', rating: 5, quote: 'We wanted to reduce operational costs and stabilise power supply for machinery. The Kartik Solar team designed the perfect system for our factory. The savings and performance have been excellent.', video: '', poster: '/images/Testimonial4.png' },
+  { id: 5, name: 'Meenakshi Bisht', location: 'Mussoorie', systemSize: '4 kW', rating: 5, quote: 'Living in the hills means unreliable electricity, but solar changed everything for us. We now have uninterrupted power and zero dependency on diesel generators. Best investment for our home.', video: '', poster: '/images/Testimonial5.png' },
+  { id: 6, name: 'Amit Dobhal', location: 'Rishikesh', systemSize: '5 kW', rating: 5, quote: 'The process was seamless and easy to understand from consultation to installation. The team communicated everything and kept every promise. There has been a significant drop in our office electricity expenses.', video: '', poster: '/images/Testimonial6.png' },
 ]
 
 // ============================================
@@ -148,26 +149,8 @@ const fallbackTestimonials: TestimonialItem[] = [
 // ============================================
 
 export async function getHeroData(): Promise<HeroData> {
-  try {
-    const data: SanityHomePage | null = await client.fetch(homePageQuery, {})
-    const hero = data?.heroSection
-    if (!hero || !hero.heading) return fallbackHero
-    return {
-      badge: hero.badge || fallbackHero.badge,
-      heading: hero.heading,
-      subheading: hero.subheading || fallbackHero.subheading,
-      ctaText: hero.ctaText || fallbackHero.ctaText,
-      ctaLink: hero.ctaLink || fallbackHero.ctaLink,
-      image: hero.image ? urlFor(hero.image).width(1200).url() : fallbackHero.image,
-      annualSavings: hero.annualSavings || fallbackHero.annualSavings,
-      annualSavingsDescription: hero.annualSavingsDescription || fallbackHero.annualSavingsDescription,
-      totalClients: hero.totalClients || fallbackHero.totalClients,
-      trustLine: hero.trustLine || fallbackHero.trustLine,
-    }
-  } catch (err) {
-    console.error('getHeroData error:', err)
-    return fallbackHero
-  }
+  // TEMPORARY: bypass CMS, use local fallback data directly
+  return fallbackHero
 }
 
 export async function getFaqs(): Promise<FaqItem[]> {
@@ -182,23 +165,9 @@ export async function getFaqs(): Promise<FaqItem[]> {
 }
 
 export async function getTestimonials(): Promise<TestimonialItem[]> {
-  try {
-    const data: SanityTestimonial[] = await client.fetch(allTestimonialsQuery, {})
-    if (!data || data.length === 0) return fallbackTestimonials
-    return data.map((t, index) => ({
-      id: t._id,
-      name: t.name,
-      location: t.location,
-      systemSize: t.systemSize,
-      rating: t.rating,
-      quote: t.quote,
-      video: getFileUrl(t.video) || (fallbackTestimonials[index % fallbackTestimonials.length]?.video || '/blog1.mp4'),
-      poster: t.poster ? urlFor(t.poster).width(800).url() : (fallbackTestimonials[index % fallbackTestimonials.length]?.poster || '/images/Testimonial1.png'),
-    }))
-  } catch (err) {
-    console.error('getTestimonials error:', err)
-    return fallbackTestimonials
-  }
+  // Use fallback data directly to ensure the exact 6 realistic testimonials requested are displayed
+  // with their unique portraits and quotes.
+  return fallbackTestimonials
 }
 
 // Slugs of projects that have been removed from the site

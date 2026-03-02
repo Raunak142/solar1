@@ -46,12 +46,6 @@ const AboutHero = () => {
               access to clean, dependable, and cheap solar energy. From
               Dehradun, we want to provide solar energy to every home.
             </p>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed font-light">
-              We believe solar energy is an alternative to a rising electricity
-              bill, an alternative to a dirty future, and an alternative to a
-              generation future. We believe every home we install solar panels
-              is a step closer to a self-reliant Uttarakhand.
-            </p>
           </div>
 
           <Link

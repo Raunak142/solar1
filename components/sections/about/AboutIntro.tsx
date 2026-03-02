@@ -61,13 +61,6 @@ const AboutIntro = () => {
               energy for the family and is an investment towards a more
               sustainable future.
             </p>
-            <p>
-              Currently, our work is more than just about installing panels. We
-              are working towards Uttarakhand&apos;s goal of a cleaner and more
-              independent energy future. Our focus is on building trust and
-              reducing the financial burden for households. We are also working
-              on constructing Uttarakhand&apos;s future.
-            </p>
           </div>
 
           <div className="mt-10 grid sm:grid-cols-2 gap-6">

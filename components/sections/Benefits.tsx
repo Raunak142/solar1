@@ -170,9 +170,7 @@ const Benefits = ({ benefits: propBenefits }: { benefits: BenefitItem[] }) => {
             <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Along with solar panel installation, Kartik Solar Enterprises
               offers a total energy solution tailored for Indian homes
-              considering Indian climate conditions. We focus on helping
-              families save on electricity bills, gain energy independence, and
-              secure hassle-free power for many years.
+              considering Indian climate conditions.
             </p>
           </motion.div>
         </div>
