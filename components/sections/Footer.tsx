@@ -15,7 +15,8 @@ import {
 const Footer = () => {
   const essentialPages = [
     { label: "About Us", href: "/about" },
-    { label: "Projects", href: "/projects" }, // Changed to real page
+    { label: "Projects", href: "/projects" },
+    { label: "Blogs", href: "/blog" },
     { label: "Services", href: "/#services" },
     { label: "Contact", href: "/contact" },
   ];
@@ -23,7 +24,6 @@ const Footer = () => {
   const quickLinks = [
     { label: "Residential Solar", href: "/projects?category=residential" },
     { label: "Commercial Solar", href: "/projects?category=commercial" },
-    { label: "Our Blog", href: "/blog" },
     { label: "Support", href: "/contact" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Cookies Policy", href: "/cookies" },
@@ -177,7 +177,10 @@ const Footer = () => {
             rights reserved.
           </p>
           <p className="text-slate-600 text-xs flex items-center gap-1">
-            Made with <span className="text-green-500">💚</span> in Devbhoomi
+            Made by{" "}
+            <span className="text-green-500 font-medium">
+              Ophanim Technologies
+            </span>
           </p>
         </div>
       </div>

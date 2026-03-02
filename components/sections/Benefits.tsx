@@ -181,7 +181,7 @@ const Benefits = ({ benefits: propBenefits }: { benefits: BenefitItem[] }) => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid md:grid-cols-2 gap-x-12 gap-y-5 mb-20 lg:mb-24 max-w-5xl mx-auto"
+          className="grid sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-5 mb-20 lg:mb-24 max-w-5xl mx-auto"
         >
           {benefits.map((benefit, index) => (
             <motion.div
@@ -214,44 +214,66 @@ const Benefits = ({ benefits: propBenefits }: { benefits: BenefitItem[] }) => {
           transition={{ duration: 0.6 }}
           className="mb-16 lg:mb-20"
         >
-          <h3 className="text-2xl lg:text-3xl font-bold text-center text-white mb-10">
+          <h3 className="text-2xl lg:text-3xl font-bold text-center text-white mb-10 px-4">
             Kartik Solar <span className="text-green-400">vs</span> Traditional
             Electricity
           </h3>
-          <div className="max-w-3xl mx-auto rounded-2xl border border-white/10 overflow-hidden bg-white/5 backdrop-blur-sm">
-            {/* Table Header */}
-            <div className="grid grid-cols-3 bg-white/10 border-b border-white/10">
-              <div className="px-6 py-4 text-sm font-bold text-slate-300 uppercase tracking-wider">
+          <div className="max-w-4xl mx-auto rounded-3xl border border-white/10 overflow-hidden bg-white/5 backdrop-blur-sm shadow-2xl">
+            {/* Table Header - Desktop Only */}
+            <div className="hidden md:grid grid-cols-3 bg-white/10 border-b border-white/10">
+              <div className="px-8 py-5 text-sm font-bold text-slate-300 uppercase tracking-wider">
                 Feature
               </div>
-              <div className="px-6 py-4 text-sm font-bold text-green-400 uppercase tracking-wider text-center">
+              <div className="px-8 py-5 text-sm font-bold text-green-400 uppercase tracking-wider text-center">
                 Kartik Solar
               </div>
-              <div className="px-6 py-4 text-sm font-bold text-slate-500 uppercase tracking-wider text-center">
+              <div className="px-8 py-5 text-sm font-bold text-slate-500 uppercase tracking-wider text-center">
                 Traditional Power
               </div>
             </div>
+
             {/* Table Rows */}
-            {comparisonData.map((row, i) => (
-              <div
-                key={i}
-                className={`grid grid-cols-3 ${i < comparisonData.length - 1 ? "border-b border-white/10" : ""}`}
-              >
-                <div className="px-6 py-4 text-slate-300 font-medium text-sm">
-                  {row.feature}
+            <div className="divide-y divide-white/10">
+              {comparisonData.map((row, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-2 md:grid-cols-3 hover:bg-white/5 transition-colors duration-200"
+                >
+                  {/* Feature Title - Full width on mobile/tablet until md */}
+                  <div className="col-span-2 md:col-span-1 px-6 sm:px-8 py-4 bg-white/5 md:bg-transparent">
+                    <span className="text-xs sm:text-sm font-bold md:font-medium text-slate-300 uppercase md:normal-case tracking-wider md:tracking-normal">
+                      {row.feature}
+                    </span>
+                  </div>
+
+                  {/* Kartik Solar Value */}
+                  <div className="px-4 sm:px-8 py-6 md:py-5 text-center border-r border-white/10 md:border-r-0 flex flex-col items-center justify-center">
+                    <div className="md:hidden text-[10px] text-green-500/60 font-bold uppercase mb-2 tracking-tighter">
+                      Kartik Solar
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 text-green-400 font-semibold px-2">
+                      <CheckCircle className="w-5 h-5 md:w-4 md:h-4 shrink-0" />
+                      <span className="text-xs sm:text-sm leading-tight">
+                        {row.kartikSolar}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Traditional Power Value */}
+                  <div className="px-4 sm:px-8 py-6 md:py-5 text-center flex flex-col items-center justify-center">
+                    <div className="md:hidden text-[10px] text-slate-500/60 font-bold uppercase mb-2 tracking-tighter">
+                      Traditional Power
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 text-red-400/70 font-medium px-2">
+                      <XCircle className="w-5 h-5 md:w-4 md:h-4 shrink-0" />
+                      <span className="text-xs sm:text-sm leading-tight text-center sm:text-left">
+                        {row.traditional}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="px-6 py-4 text-center">
-                  <span className="inline-flex items-center gap-1.5 text-green-400 font-semibold text-sm">
-                    <CheckCircle className="w-4 h-4" /> {row.kartikSolar}
-                  </span>
-                </div>
-                <div className="px-6 py-4 text-center">
-                  <span className="inline-flex items-center gap-1.5 text-red-400/70 font-medium text-sm">
-                    <XCircle className="w-4 h-4" /> {row.traditional}
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </motion.div>
 

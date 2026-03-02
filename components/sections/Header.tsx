@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,6 +19,8 @@ const Header = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   // Check if link is active
   const isActiveLink = (href: string) => {
@@ -41,6 +43,28 @@ const Header = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (
+        isMenuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        menuButtonRef.current &&
+        !menuButtonRef.current.contains(e.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
     <header
@@ -117,6 +141,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
+            ref={menuButtonRef}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={`md:hidden p-2.5 rounded-full transition-all duration-300 ${
               isScrolled
@@ -134,6 +159,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         <div
+          ref={menuRef}
           className={`md:hidden absolute left-4 right-4 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transition-all duration-300 ${
             isMenuOpen
               ? "opacity-100 translate-y-0"
@@ -148,9 +174,9 @@ const Header = () => {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className={`px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
+                    className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
                       isActive
-                        ? "bg-green-500 text-white"
+                        ? "bg-green-50 text-green-700 border-l-4 border-green-500 pl-6 shadow-sm translate-x-1"
                         : "text-slate-600 hover:bg-slate-100 hover:text-green-600"
                     }`}
                   >

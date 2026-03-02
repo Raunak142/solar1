@@ -1,11 +1,11 @@
+import type { Metadata } from "next";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
+import { getCookiesMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Cookies Policy | Kartik Solar Enterprises",
-  description:
-    "Read the cookies policy of Kartik Solar Enterprises. Learn about how we use cookies to improve your experience on our website.",
-};
+export function generateMetadata(): Metadata {
+  return getCookiesMetadata();
+}
 
 export default function CookiesPolicyPage() {
   return (

@@ -1,11 +1,11 @@
+import type { Metadata } from "next";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
+import { getTermsMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Terms & Conditions | Kartik Solar Enterprises",
-  description:
-    "Read the terms and conditions of Kartik Solar Enterprises. Understand our service terms, installation policies, warranty, and customer responsibilities.",
-};
+export function generateMetadata(): Metadata {
+  return getTermsMetadata();
+}
 
 export default function TermsAndConditionsPage() {
   return (

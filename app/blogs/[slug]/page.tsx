@@ -1,12 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import { blogPosts } from "@/components/sections/blogData";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
+import JsonLd from "@/components/JsonLd";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/data";
+import { getBlogPostMetadata } from "@/lib/seo";
+import {
+  getBlogArticleSchema,
+  getBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 // ISR: Revalidate every 1 hour
 export const revalidate = 3600;
@@ -15,6 +22,26 @@ export const revalidate = 3600;
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs();
   return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
+  if (!post) return { title: "Article Not Found" };
+
+  return getBlogPostMetadata({
+    title: post.title,
+    description: post.description,
+    slug: post.slug,
+    image: post.image,
+    date: post.date,
+    author: post.author,
+    category: post.category,
+  });
 }
 
 export default async function BlogPostPage({
@@ -37,6 +64,24 @@ export default async function BlogPostPage({
 
   return (
     <main className="min-h-screen page-bg">
+      <JsonLd
+        data={[
+          getBlogArticleSchema({
+            title: post.title,
+            description: post.description,
+            slug: post.slug,
+            date: post.date,
+            author: post.author,
+            image: post.image,
+            category: post.category,
+          }),
+          getBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blogs" },
+            { name: post.title, path: `/blogs/${post.slug}` },
+          ]),
+        ]}
+      />
       <Header />
 
       <article>

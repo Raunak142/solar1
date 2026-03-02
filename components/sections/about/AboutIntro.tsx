@@ -19,7 +19,7 @@ const AboutIntro = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto page-bg overflow-hidden"
+      className="pt-24 pb-12 lg:pt-32 lg:pb-20 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto page-bg overflow-hidden"
     >
       <div className="grid lg:grid-cols-2 gap-16 items-start">
         {/* Left: Content */}
@@ -97,40 +97,48 @@ const AboutIntro = () => {
           </div>
         </motion.div>
 
-        {/* Right: Image with scroll-linked motion */}
-        <motion.div style={{ y: imageY }} className="relative">
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="relative aspect-square md:aspect-4/3 rounded-3xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/Field Panel.png"
-                alt="Kartik Solar Team Installation"
-                fill
-                className="object-cover"
-              />
+        {/* Right: Image with scroll-linked motion (disabled on mobile) */}
+        <motion.div
+          className="relative lg:mt-0 mt-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{
+            y:
+              typeof window !== "undefined" && window.innerWidth >= 1024
+                ? imageY
+                : 0,
+          }}
+        >
+          <div className="relative aspect-square md:aspect-4/3 rounded-3xl overflow-hidden shadow-2xl">
+            <Image
+              src="/images/Field Panel.png"
+              alt="Kartik Solar Team Installation"
+              fill
+              className="object-cover"
+            />
 
-              {/* Floating Stat Card */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-                className="absolute bottom-8 left-8 bg-white/95 backdrop-blur-xl p-6 rounded-2xl shadow-xl border border-white/20 max-w-[200px]"
-              >
-                <p className="text-4xl font-bold text-green-600 mb-1">500+</p>
-                <p className="text-slate-600 font-medium text-sm">
-                  Happy Families Switched to Solar
-                </p>
-              </motion.div>
-            </div>
+            {/* Floating Stat Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="absolute bottom-6 left-6 right-6 sm:right-auto sm:bottom-8 sm:left-8 bg-white/95 backdrop-blur-xl p-5 sm:p-6 rounded-2xl shadow-xl border border-white/20 sm:max-w-[200px] flex flex-col items-center sm:items-start text-center sm:text-left"
+            >
+              <p className="text-3xl sm:text-4xl font-bold text-green-600 mb-1">
+                500+
+              </p>
+              <p className="text-slate-600 font-medium text-xs sm:text-sm">
+                Happy Families Switched to Solar
+              </p>
+            </motion.div>
+          </div>
 
-            {/* Decorative Elements */}
-            <div className="absolute -z-10 top-10 -right-10 w-24 h-24 bg-green-500/20 rounded-full blur-2xl" />
-            <div className="absolute -z-10 -bottom-10 -left-10 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
-          </motion.div>
+          {/* Decorative Elements */}
+          <div className="absolute -z-10 top-10 -right-5 sm:-right-10 w-24 h-24 bg-green-500/20 rounded-full blur-2xl" />
+          <div className="absolute -z-10 -bottom-10 -left-5 sm:-left-10 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
         </motion.div>
       </div>
     </section>

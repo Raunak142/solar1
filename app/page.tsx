@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -10,6 +11,13 @@ import CTA from "@/components/sections/CTA";
 import FAQ from "@/components/sections/FAQ";
 import Blog from "@/components/sections/Blog";
 import Footer from "@/components/sections/Footer";
+import JsonLd from "@/components/JsonLd";
+import { getHomeMetadata } from "@/lib/seo";
+import {
+  getServiceSchema,
+  getFaqSchema,
+  getBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 import {
   getHeroData,
@@ -23,6 +31,10 @@ import {
 
 // ISR: Revalidate every 1 hour
 export const revalidate = 3600;
+
+export function generateMetadata(): Metadata {
+  return getHomeMetadata();
+}
 
 export default async function Home() {
   // Fetch all CMS data server-side (at build time / ISR)
@@ -39,6 +51,14 @@ export default async function Home() {
 
   return (
     <main className="pt-20 page-bg">
+      {/* Page-specific structured data */}
+      <JsonLd
+        data={[
+          getServiceSchema(),
+          getFaqSchema(faqs),
+          getBreadcrumbSchema([{ name: "Home", path: "/" }]),
+        ]}
+      />
       <Header />
       <Hero data={heroData} />
       <About />

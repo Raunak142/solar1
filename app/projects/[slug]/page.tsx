@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { projects } from "@/components/sections/projects/projectData";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/Footer";
+import JsonLd from "@/components/JsonLd";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +18,8 @@ import {
   Clock,
   Sun,
 } from "lucide-react";
+import { getProjectMetadata } from "@/lib/seo";
+import { getProjectSchema, getBreadcrumbSchema } from "@/lib/structured-data";
 
 export function generateStaticParams() {
   return projects.map((post) => ({
@@ -24,6 +28,26 @@ export function generateStaticParams() {
 }
 
 export const dynamicParams = true;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
+  if (!project) return { title: "Project Not Found" };
+
+  return getProjectMetadata({
+    title: project.title,
+    slug: project.slug,
+    location: project.location,
+    systemSize: project.systemSize,
+    type: project.type,
+    shortDescription: project.shortDescription,
+    image: project.image,
+  });
+}
 
 export default async function ProjectPage({
   params,
@@ -39,10 +63,28 @@ export default async function ProjectPage({
 
   return (
     <main className="min-h-screen bg-slate-50">
+      <JsonLd
+        data={[
+          getProjectSchema({
+            title: project.title,
+            slug: project.slug,
+            location: project.location,
+            systemSize: project.systemSize,
+            type: project.type,
+            shortDescription: project.shortDescription,
+            image: project.image,
+          }),
+          getBreadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Projects", path: "/projects" },
+            { name: project.title, path: `/projects/${project.slug}` },
+          ]),
+        ]}
+      />
       <Header />
 
       {/* Hero Section */}
-      <div className="relative h-[65vh] min-h-[620px] w-full bg-slate-900 mt-20">
+      <div className="relative pt-24 pb-16 md:pt-32 md:pb-24 lg:pt-40 lg:pb-32 w-full bg-slate-900 overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
@@ -52,43 +94,43 @@ export default async function ProjectPage({
         />
         <div className="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/60 to-slate-900/30" />
 
-        <div className="absolute inset-0 flex items-center">
-          <div className="max-w-[1400px] mx-auto px-6 w-full pt-12">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-8 transition-colors group text-sm font-medium"
-            >
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              Back to Projects
-            </Link>
+        <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-6 md:mb-10 transition-colors group text-sm font-medium"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            Back to Projects
+          </Link>
 
-            <div className="space-y-5 max-w-4xl">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-green-500/20 backdrop-blur-md border border-green-500/30 text-green-400 text-sm font-bold uppercase tracking-wider">
+          <div className="flex flex-col gap-6 md:gap-8 max-w-4xl">
+            <div>
+              <span className="inline-block px-4 py-1.5 rounded-full bg-green-500/20 backdrop-blur-md border border-green-500/30 text-green-400 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4">
                 {project.type}
               </span>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.2] tracking-tight">
                 {project.title} —{" "}
                 <span className="text-green-400">
                   {project.tagline || "Smart Solar Solution"}
                 </span>
               </h1>
+            </div>
 
-              <p className="text-slate-300 text-lg max-w-2xl leading-relaxed">
-                {project.shortDescription ||
-                  "A customized rooftop solar system designed to reduce electricity expenses and provide reliable, clean energy for everyday household needs."}
-              </p>
+            <p className="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+              {project.shortDescription ||
+                "A customized rooftop solar system designed to reduce electricity expenses and provide reliable, clean energy for everyday household needs."}
+            </p>
 
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-slate-200 text-sm font-medium pt-2">
-                <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
-                  <MapPin className="w-4 h-4 text-green-400" />
-                  {project.location}, Uttarakhand
-                </span>
-                <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
-                  <Zap className="w-4 h-4 text-amber-400" />
-                  {project.systemSize} {project.type} Installation
-                </span>
-              </div>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-slate-200 text-xs sm:text-sm font-medium">
+              <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400" />
+                {project.location}, Uttarakhand
+              </span>
+              <span className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+                {project.systemSize} {project.type} Installation
+              </span>
             </div>
           </div>
         </div>

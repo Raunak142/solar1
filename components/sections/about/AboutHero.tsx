@@ -7,17 +7,18 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 
 const AboutHero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-32">
+    <section className="relative min-h-[70vh] md:min-h-[85vh] lg:min-h-screen flex items-center justify-center overflow-hidden py-24 sm:py-32">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/Forest Panel.png"
           alt="Kartik Solar Installation"
           fill
-          className="object-cover"
+          className="object-cover object-center scale-105"
           priority
         />
-        <div className="absolute inset-0 bg-linear-to-b from-slate-900/70 via-slate-900/50 to-slate-900/80" />
+        <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-900/40 via-transparent to-slate-900/80" />
       </div>
 
       {/* Content */}
