@@ -238,7 +238,15 @@ export default function CookieConsent() {
                 </label>
 
                 {/* Analytics */}
-                <label className="flex items-center justify-between cursor-pointer group">
+                <div
+                  className="flex items-center justify-between cursor-pointer group"
+                  onClick={() =>
+                    setCategories((c) => ({
+                      ...c,
+                      analytics: !c.analytics,
+                    }))
+                  }
+                >
                   <div>
                     <span className="text-sm font-semibold text-slate-800 group-hover:text-green-700 transition-colors">
                       Analytics
@@ -247,31 +255,30 @@ export default function CookieConsent() {
                       Help us understand traffic and usage
                     </p>
                   </div>
-                  <button
-                    role="switch"
-                    aria-checked={categories.analytics}
-                    onClick={() =>
-                      setCategories((c) => ({
-                        ...c,
-                        analytics: !c.analytics,
-                      }))
-                    }
-                    className={`relative w-10 h-5 rounded-full transition-colors ${
-                      categories.analytics ? "bg-green-500" : "bg-slate-300"
-                    }`}
-                  >
-                    <span
-                      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
-                        categories.analytics
-                          ? "translate-x-5"
-                          : "translate-x-0.5"
+                  <div className="relative w-10 h-5">
+                    <div
+                      className={`w-full h-full rounded-full transition-colors duration-200 ${
+                        categories.analytics ? "bg-green-500" : "bg-slate-300"
                       }`}
                     />
-                  </button>
-                </label>
+                    <div
+                      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${
+                        categories.analytics ? "left-5" : "left-0.5"
+                      }`}
+                    />
+                  </div>
+                </div>
 
                 {/* Marketing */}
-                <label className="flex items-center justify-between cursor-pointer group">
+                <div
+                  className="flex items-center justify-between cursor-pointer group"
+                  onClick={() =>
+                    setCategories((c) => ({
+                      ...c,
+                      marketing: !c.marketing,
+                    }))
+                  }
+                >
                   <div>
                     <span className="text-sm font-semibold text-slate-800 group-hover:text-green-700 transition-colors">
                       Marketing
@@ -280,31 +287,30 @@ export default function CookieConsent() {
                       Personalized ads and promotions
                     </p>
                   </div>
-                  <button
-                    role="switch"
-                    aria-checked={categories.marketing}
-                    onClick={() =>
-                      setCategories((c) => ({
-                        ...c,
-                        marketing: !c.marketing,
-                      }))
-                    }
-                    className={`relative w-10 h-5 rounded-full transition-colors ${
-                      categories.marketing ? "bg-green-500" : "bg-slate-300"
-                    }`}
-                  >
-                    <span
-                      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
-                        categories.marketing
-                          ? "translate-x-5"
-                          : "translate-x-0.5"
+                  <div className="relative w-10 h-5">
+                    <div
+                      className={`w-full h-full rounded-full transition-colors duration-200 ${
+                        categories.marketing ? "bg-green-500" : "bg-slate-300"
                       }`}
                     />
-                  </button>
-                </label>
+                    <div
+                      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${
+                        categories.marketing ? "left-5" : "left-0.5"
+                      }`}
+                    />
+                  </div>
+                </div>
 
                 {/* Preferences */}
-                <label className="flex items-center justify-between cursor-pointer group">
+                <div
+                  className="flex items-center justify-between cursor-pointer group"
+                  onClick={() =>
+                    setCategories((c) => ({
+                      ...c,
+                      preferences: !c.preferences,
+                    }))
+                  }
+                >
                   <div>
                     <span className="text-sm font-semibold text-slate-800 group-hover:text-green-700 transition-colors">
                       Preferences
@@ -313,28 +319,19 @@ export default function CookieConsent() {
                       Remember your settings and choices
                     </p>
                   </div>
-                  <button
-                    role="switch"
-                    aria-checked={categories.preferences}
-                    onClick={() =>
-                      setCategories((c) => ({
-                        ...c,
-                        preferences: !c.preferences,
-                      }))
-                    }
-                    className={`relative w-10 h-5 rounded-full transition-colors ${
-                      categories.preferences ? "bg-green-500" : "bg-slate-300"
-                    }`}
-                  >
-                    <span
-                      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
-                        categories.preferences
-                          ? "translate-x-5"
-                          : "translate-x-0.5"
+                  <div className="relative w-10 h-5">
+                    <div
+                      className={`w-full h-full rounded-full transition-colors duration-200 ${
+                        categories.preferences ? "bg-green-500" : "bg-slate-300"
                       }`}
                     />
-                  </button>
-                </label>
+                    <div
+                      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${
+                        categories.preferences ? "left-5" : "left-0.5"
+                      }`}
+                    />
+                  </div>
+                </div>
               </div>
             )}
           </div>
