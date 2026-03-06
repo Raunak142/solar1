@@ -175,37 +175,6 @@ const Benefits = ({ benefits: propBenefits }: { benefits: BenefitItem[] }) => {
           </motion.div>
         </div>
 
-        {/* BENEFITS LIST — Two-column with icon + text rows */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid sm:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-5 mb-20 lg:mb-24 max-w-5xl mx-auto"
-        >
-          {benefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-300"
-            >
-              <div
-                className={`shrink-0 w-10 h-10 rounded-lg ${benefit.color} flex items-center justify-center text-white`}
-              >
-                {iconMap[benefit.icon] || <Zap className="w-5 h-5" />}
-              </div>
-              <div>
-                <h4 className="text-base font-bold text-white mb-1">
-                  {benefit.title}
-                </h4>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  {benefit.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
         {/* COMPARISON TABLE */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

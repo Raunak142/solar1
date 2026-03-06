@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type { SanityHomePage } from "@/lib/sanity-types";
+import { urlFor } from "@/lib/sanity";
 
 // Feature Data
 const features = [
@@ -56,7 +58,40 @@ const features = [
   },
 ];
 
-const Features = () => {
+const iconMap: Record<string, React.ElementType> = {
+  Zap,
+  Settings,
+  Handshake,
+  ShieldCheck,
+};
+
+interface FeaturesProps {
+  data?: SanityHomePage["featuresSection"];
+}
+
+const Features = ({ data }: FeaturesProps) => {
+  // Map CMS data to unified structure or use defaults
+  const displayFeatures = data?.features?.length
+    ? data.features.map((f, idx) => {
+        // Fallback matched on index to maintain UI colors and structure
+        const fallback = features[idx % features.length];
+
+        let IconComponent: React.ElementType = Home;
+        if (f.icon && iconMap[f.icon]) {
+          IconComponent = iconMap[f.icon] as React.ElementType;
+        }
+
+        return {
+          id: idx,
+          icon: <IconComponent className="w-6 h-6" />,
+          title: f.title || fallback.title,
+          description: f.description || fallback.description,
+          image: f.image ? urlFor(f.image).url() : fallback.image,
+          color: fallback.color, // CMS doesn't send gradient tailwind classes
+        };
+      })
+    : features;
+
   return (
     <section className="page-bg relative">
       {/* Header Section */}
@@ -69,7 +104,7 @@ const Features = () => {
             viewport={{ once: true }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tighter mb-6"
           >
-            Why Kartik Solar Panels Are a Smarter Choice
+            {data?.heading || "Why Kartik Solar Panels Are a Smarter Choice"}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -78,10 +113,8 @@ const Features = () => {
             viewport={{ once: true }}
             className="text-lg sm:text-lg text-slate-600 max-w-2xl mx-auto"
           >
-            Many companies only install solar panels. Kartik Solar Enterprises
-            delivers complete energy solutions carefully designed for Indian
-            homes, Indian weather conditions, and practical household budgets —
-            ensuring real savings and reliable performance for years to come.
+            {data?.subheading ||
+              "Many companies only install solar panels. Kartik Solar Enterprises delivers complete energy solutions carefully designed for Indian homes, Indian weather conditions, and practical household budgets — ensuring real savings and reliable performance for years to come."}
           </motion.p>
         </div>
       </div>
@@ -93,7 +126,7 @@ const Features = () => {
             {/* Spacer to align first item with sticky image */}
             <div className="hidden lg:block h-[10vh]" />
 
-            {features.map((feature, index) => (
+            {displayFeatures.map((feature, index) => (
               <FeatureBlock key={feature.id} feature={feature} index={index} />
             ))}
 
@@ -104,12 +137,12 @@ const Features = () => {
           {/* Right Column: Sticky Image Stack (Desktop) */}
           <div className="hidden lg:block lg:order-2 h-[calc(100vh-100px)] sticky top-24 self-start">
             <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 aspect-square lg:aspect-auto ring-1 ring-slate-900/5 bg-white">
-              {features.map((feature, index) => (
+              {displayFeatures.map((feature, index) => (
                 <ScrollLinkedImage
                   key={feature.id}
                   feature={feature}
                   index={index}
-                  total={features.length}
+                  total={displayFeatures.length}
                 />
               ))}
             </div>

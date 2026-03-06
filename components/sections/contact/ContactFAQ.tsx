@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
+import type { SanityContactPage } from "@/lib/sanity-types";
 
-const faqs = [
+// Fallback FAQS
+const defaultFaqs = [
   {
     question: "Is the site survey and solar consultation really free?",
     answer:
@@ -37,8 +39,14 @@ const faqs = [
   },
 ];
 
-const ContactFAQ = () => {
+interface ContactFAQProps {
+  data?: SanityContactPage["faqSection"];
+}
+
+const ContactFAQ = ({ data }: ContactFAQProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const displayFaqs = data?.faqs?.length ? data.faqs : defaultFaqs;
 
   return (
     <section className="py-20 page-bg">
@@ -51,15 +59,15 @@ const ContactFAQ = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold text-slate-900 mb-4">
-            Common Questions
+            {data?.heading || "Common Questions"}
           </h2>
           <p className="text-lg text-slate-600">
-            Quick answers to help you decide.
+            {data?.subheading || "Quick answers to help you decide."}
           </p>
         </motion.div>
 
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
+          {displayFaqs.map((faq: any, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 10 }}

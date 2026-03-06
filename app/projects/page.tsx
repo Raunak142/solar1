@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Header from "@/components/sections/Header";
 import ProjectsMain from "@/components/sections/projects/ProjectsMain";
-import Footer from "@/components/sections/Footer";
+import FooterServer from "@/components/sections/FooterServer";
 import JsonLd from "@/components/JsonLd";
 import { getProjects } from "@/lib/data";
 import { getProjectsMetadata } from "@/lib/seo";
 import { getBreadcrumbSchema } from "@/lib/structured-data";
 
 // ISR: Revalidate every 1 hour
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export function generateMetadata(): Metadata {
   return getProjectsMetadata();
@@ -27,7 +27,7 @@ export default async function ProjectsPage() {
       />
       <Header />
       <ProjectsMain projects={projects} />
-      <Footer />
+      <FooterServer />
     </main>
   );
 }

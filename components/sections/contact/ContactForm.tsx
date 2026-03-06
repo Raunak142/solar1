@@ -15,6 +15,7 @@ import {
   MapPinned,
   AlertCircle,
 } from "lucide-react";
+import type { SanityContactPage } from "@/lib/sanity-types";
 
 // Validation Regex Patterns (Must match backend)
 const PATTERNS = {
@@ -23,7 +24,11 @@ const PATTERNS = {
   phone: /^\+?[0-9]{10,15}$/, // Digits only, 10-15 chars
 };
 
-const ContactForm = () => {
+interface ContactFormProps {
+  data?: SanityContactPage["formSection"];
+}
+
+const ContactForm = ({ data }: ContactFormProps) => {
   const router = useRouter(); // Initialize router;
 
   const [formData, setFormData] = useState({
@@ -173,33 +178,6 @@ const ContactForm = () => {
     }
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail className="w-5 h-5" />,
-      label: "Email Support",
-      value: "connect@kartiksolar.in",
-      subtext: "For quotes & subsidy inquiries",
-    },
-    {
-      icon: <Phone className="w-5 h-5" />,
-      label: "Speak to an Expert",
-      value: "+91 98970 12345",
-      subtext: "Mon-Sat from 9am to 7pm",
-    },
-    {
-      icon: <MapPin className="w-5 h-5" />,
-      label: "Visit Our Office",
-      value: "25/4, Rajpur Road",
-      subtext: "Dehradun, Uttarakhand 248001",
-    },
-    {
-      icon: <Clock className="w-5 h-5" />,
-      label: "Working Hours",
-      value: "Mon - Sat: 9am - 7pm",
-      subtext: "Sunday: Closed",
-    },
-  ];
-
   return (
     <section className="py-20 lg:py-28">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -212,15 +190,14 @@ const ContactForm = () => {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-2 bg-green-100 text-green-600 font-medium rounded-full text-sm mb-4">
-            Get In Touch
+            {data?.badge || "Get In Touch"}
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-            Let&apos;s Start Your Solar Journey
+            {data?.heading || "Let's Start Your Solar Journey"}
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Share your requirements with us, and our solar experts will provide
-            a personalized solution tailored to your home, budget, and energy
-            needs.
+            {data?.subheading ||
+              "Share your requirements with us, and our solar experts will provide a personalized solution tailored to your home, budget, and energy needs."}
           </p>
         </motion.div>
 
@@ -233,39 +210,104 @@ const ContactForm = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-2 space-y-6"
           >
-            <div className="bg-linear-to-br from-green-500 to-green-600 rounded-3xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-2">Talk to Our Team</h3>
-              <p className="text-green-100 mb-8">
-                Get expert advice on solar installation, subsidies, and savings.
-              </p>
+            {/* Left Column: Context & Direct Info */}
+            <div className="bg-[#00B44B] p-8 sm:p-10 text-white flex flex-col justify-between rounded-3xl shadow-xl">
+              <div>
+                <h3 className="text-2xl font-bold mb-2">Talk to Our Team</h3>
+                <p className="text-green-50 text-sm mb-10 leading-relaxed font-medium">
+                  Get expert advice on solar installation, subsidies, and
+                  savings.
+                </p>
 
-              <div className="flex-1 flex flex-col justify-between">
-                <div className="space-y-6">
-                  {contactInfo.map((item, index) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-                        {item.icon}
-                      </div>
-                      <div>
-                        <p className="text-green-100 text-sm">{item.label}</p>
-                        <p className="font-semibold">{item.value}</p>
-                        <p className="text-green-200 text-sm">{item.subtext}</p>
-                      </div>
+                <div className="space-y-8">
+                  {/* Email Support */}
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                      <Mail className="w-5 h-5 text-white" />
                     </div>
-                  ))}
+                    <div>
+                      <p className="text-green-100 text-xs font-medium mb-0.5">
+                        Email Support
+                      </p>
+                      <h4 className="font-bold text-sm text-white mb-0.5">
+                        connect@kartiksolar.in
+                      </h4>
+                      <p className="text-green-100 text-[11px] text-opacity-80">
+                        For quotes & subsidy inquiries
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Speak to an Expert */}
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                      <Phone className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-green-100 text-xs font-medium mb-0.5">
+                        Speak to an Expert
+                      </p>
+                      <h4 className="font-bold text-sm text-white mb-0.5">
+                        +91 98970 12345
+                      </h4>
+                      <p className="text-green-100 text-[11px] text-opacity-80">
+                        Mon-Sat from 9am to 7pm
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Visit Our Office */}
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                      <MapPin className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-green-100 text-xs font-medium mb-0.5">
+                        Visit Our Office
+                      </p>
+                      <h4 className="font-bold text-sm text-white mb-0.5 leading-tight">
+                        25/4, Rajpur Road
+                        <br />
+                        Dehradun, Uttarakhand 248001
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Working Hours */}
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                      <Clock className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-green-100 text-xs font-medium mb-0.5">
+                        Working Hours
+                      </p>
+                      <h4 className="font-bold text-sm text-white mb-0.5 leading-tight">
+                        Mon - Sat: 9am - 7pm
+                        <br />
+                        <span className="font-normal text-[11px] text-green-100">
+                          Sunday: Closed
+                        </span>
+                      </h4>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
-                <p className="text-3xl font-bold text-green-500">500+</p>
-                <p className="text-slate-600 text-sm">Projects Completed</p>
+              <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-50">
+                <p className="text-2xl font-bold text-[#00B44B] mb-1">500+</p>
+                <p className="text-slate-500 text-xs font-medium">
+                  Projects Completed
+                </p>
               </div>
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
-                <p className="text-3xl font-bold text-green-500">98%</p>
-                <p className="text-slate-600 text-sm">Customer Satisfaction</p>
+              <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-50">
+                <p className="text-2xl font-bold text-[#00B44B] mb-1">98%</p>
+                <p className="text-slate-500 text-xs font-medium">
+                  Customer Satisfaction
+                </p>
               </div>
             </div>
           </motion.div>
@@ -289,11 +331,11 @@ const ContactForm = () => {
                     <CheckCircle2 className="w-10 h-10 text-green-500" />
                   </div>
                   <h3 className="text-2xl font-bold text-slate-800 mb-2">
-                    Message Sent Successfully!
+                    {data?.heading || "Message Sent Successfully!"}
                   </h3>
                   <p className="text-slate-600">
-                    Thank you for reaching out. We&apos;ll get back to you
-                    within 24 hours.
+                    {data?.subheading ||
+                      "Thank you for reaching out. We'll get back to you within 24 hours."}
                   </p>
                 </motion.div>
               ) : (
@@ -470,7 +512,7 @@ const ContactForm = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 disabled:cursor-not-allowed"
+                    className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-[#00B44B] hover:bg-[#009b40] disabled:bg-green-400 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <>
@@ -479,14 +521,15 @@ const ContactForm = () => {
                       </>
                     ) : (
                       <>
-                        <span>Send Message</span>
+                        <span>{data?.submitButtonText || "Send Message"}</span>
                         <Send className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                       </>
                     )}
                   </button>
 
                   <p className="text-center text-sm text-slate-500">
-                    By submitting this form, you agree to our{" "}
+                    {data?.privacyText ||
+                      "By submitting this form, you agree to our"}{" "}
                     <a
                       href="/privacy-policy"
                       className="text-green-600 hover:underline"

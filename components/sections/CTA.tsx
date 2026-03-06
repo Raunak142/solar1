@@ -11,8 +11,13 @@ import {
   Navigation,
   MapPin,
 } from "lucide-react";
+import type { SanityHomePage } from "@/lib/sanity-types";
 
-const CTA = () => {
+interface CTAProps {
+  data?: SanityHomePage["ctaSection"];
+}
+
+const CTA = ({ data }: CTAProps) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -117,11 +122,12 @@ const CTA = () => {
               className="flex flex-col justify-center"
             >
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">
-                Take the First Step Toward Lower Electricity Bills
+                {data?.heading ||
+                  "Take the First Step Toward Lower Electricity Bills"}
               </h2>
               <p className="text-slate-300 text-base lg:text-lg leading-relaxed">
-                Do not hesitate to contact us. Our team will get back to you
-                within 24 hours.
+                {data?.subheading ||
+                  "Do not hesitate to contact us. Our team will get back to you within 24 hours."}
               </p>
 
               {/* Map Section - Hidden on mobile */}
@@ -260,7 +266,7 @@ const CTA = () => {
                       </>
                     ) : (
                       <>
-                        <span>Send Now</span>
+                        <span>{data?.submitButtonText || "Send Now"}</span>
                         <Send className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                       </>
                     )}

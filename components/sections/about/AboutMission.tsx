@@ -2,8 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Target, Eye } from "lucide-react";
+import type { SanityAboutPage } from "@/lib/sanity-types";
 
-const AboutMission = () => {
+interface AboutMissionProps {
+  data?: SanityAboutPage["missionVisionSection"];
+}
+
+const AboutMission = ({ data }: AboutMissionProps) => {
   return (
     <section className="bg-slate-900 py-24 lg:py-32 text-white relative overflow-hidden">
       {/* Background ambient glow */}
@@ -23,11 +28,24 @@ const AboutMission = () => {
           className="text-center mb-16"
         >
           <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-green-300 font-semibold text-xs tracking-wide mb-4 uppercase">
-            What Drives Us
+            {data?.sectionBadge || "What Drives Us"}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-            Purpose That Powers{" "}
-            <span className="text-green-400">Every Installation</span>
+            {data?.sectionHeading ? (
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.sectionHeading.replace(
+                    "Every Installation",
+                    '<span class="text-green-400">Every Installation</span>',
+                  ),
+                }}
+              />
+            ) : (
+              <>
+                Purpose That Powers{" "}
+                <span className="text-green-400">Every Installation</span>
+              </>
+            )}
           </h2>
         </motion.div>
 
@@ -49,13 +67,12 @@ const AboutMission = () => {
               </div>
 
               <h3 className="text-2xl lg:text-3xl font-bold mb-5 tracking-tight">
-                Our Mission
+                {data?.missionHeading || "Our Mission"}
               </h3>
 
               <p className="text-slate-300 text-lg leading-relaxed">
-                To help Indian families reduce electricity expenses and achieve
-                energy independence through clean, affordable, and dependable
-                solar solutions.
+                {data?.mission ||
+                  "To help Indian families reduce electricity expenses and achieve energy independence through clean, affordable, and dependable solar solutions."}
               </p>
 
               {/* Decorative bottom line */}
@@ -80,13 +97,12 @@ const AboutMission = () => {
               </div>
 
               <h3 className="text-2xl lg:text-3xl font-bold mb-5 tracking-tight">
-                Our Vision
+                {data?.visionHeading || "Our Vision"}
               </h3>
 
               <p className="text-slate-300 text-lg leading-relaxed">
-                To become a trusted solar partner across Uttarakhand and India
-                by delivering quality installations, honest service, and
-                long-lasting customer relationships.
+                {data?.vision ||
+                  "To become a trusted solar partner across Uttarakhand and India by delivering quality installations, honest service, and long-lasting customer relationships."}
               </p>
 
               {/* Decorative bottom line */}

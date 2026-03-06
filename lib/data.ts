@@ -12,6 +12,13 @@ import {
   allServicesQuery,
   allPostsQuery,
   postBySlugQuery,
+  globalSettingsQuery,
+  aboutPageQuery,
+  contactPageQuery,
+  privacyPolicyQuery,
+  cookiesPolicyQuery,
+  termsQuery,
+  footerQuery,
 } from './queries'
 import type {
   SanityHomePage,
@@ -21,6 +28,11 @@ import type {
   SanityBenefit,
   SanityService,
   SanityPost,
+  SanityGlobalSettings,
+  SanityLegalPage,
+  SanityFooter,
+  SanityAboutPage,
+  SanityContactPage,
 } from './sanity-types'
 
 // ============================================
@@ -149,8 +161,26 @@ const fallbackTestimonials: TestimonialItem[] = [
 // ============================================
 
 export async function getHeroData(): Promise<HeroData> {
-  // TEMPORARY: bypass CMS, use local fallback data directly
-  return fallbackHero
+  try {
+    const data: SanityHomePage = await client.fetch(homePageQuery, {})
+    if (!data?.heroSection) return fallbackHero
+    const hero = data.heroSection
+    return {
+      badge: hero.badge || fallbackHero.badge,
+      heading: hero.heading || fallbackHero.heading,
+      subheading: hero.subheading || fallbackHero.subheading,
+      ctaText: hero.ctaText || fallbackHero.ctaText,
+      ctaLink: hero.ctaLink || fallbackHero.ctaLink,
+      image: hero.image ? urlFor(hero.image).width(1200).url() : fallbackHero.image,
+      annualSavings: hero.annualSavings || fallbackHero.annualSavings,
+      annualSavingsDescription: hero.annualSavingsDescription || fallbackHero.annualSavingsDescription,
+      totalClients: hero.totalClients || fallbackHero.totalClients,
+      trustLine: hero.trustLine || fallbackHero.trustLine,
+    }
+  } catch (err) {
+    console.error('getHeroData error:', err)
+    return fallbackHero
+  }
 }
 
 export async function getFaqs(): Promise<FaqItem[]> {
@@ -165,9 +195,23 @@ export async function getFaqs(): Promise<FaqItem[]> {
 }
 
 export async function getTestimonials(): Promise<TestimonialItem[]> {
-  // Use fallback data directly to ensure the exact 6 realistic testimonials requested are displayed
-  // with their unique portraits and quotes.
-  return fallbackTestimonials
+  try {
+    const data: SanityTestimonial[] = await client.fetch(allTestimonialsQuery, {})
+    if (!data || data.length === 0) return fallbackTestimonials
+    return data.map((t) => ({
+      id: t._id,
+      name: t.name,
+      location: t.location || '',
+      systemSize: t.systemSize || '',
+      rating: t.rating || 5,
+      quote: t.quote,
+      video: t.video ? getFileUrl(t.video) : '',
+      poster: t.poster ? urlFor(t.poster).width(400).url() : '/images/Testimonial1.png',
+    }))
+  } catch (err) {
+    console.error('getTestimonials error:', err)
+    return fallbackTestimonials
+  }
 }
 
 // Slugs of projects that have been removed from the site
@@ -181,9 +225,50 @@ const excludedProjectSlugs = [
 ]
 
 export async function getProjects(): Promise<ProjectItem[]> {
-  // TEMPORARY: bypass CMS
-  const { projects } = await import('@/components/sections/projects/projectData')
-  return projects
+  const { projects: localProjects } = await import('@/components/sections/projects/projectData')
+  try {
+    const data: SanityProject[] = await client.fetch(allProjectsQuery, {})
+    if (!data || data.length === 0) return localProjects
+    return data
+      .filter((p) => !excludedProjectSlugs.includes(p.slug?.current))
+      .map((p) => ({
+        id: p._id,
+        slug: p.slug?.current || '',
+        title: p.title,
+        category: p.category || 'residential',
+        location: p.location || '',
+        systemSize: p.systemSize || '',
+        type: p.type || '',
+        image: p.image ? urlFor(p.image).width(800).url() : '/images/House.png',
+        monthlySavings: p.monthlySavings,
+        yearlySavings: p.yearlySavings,
+        installationTime: p.installationTime || '',
+        panelType: p.panelType || '',
+        inverter: p.inverter,
+        battery: p.battery || '',
+        content: '',
+        shortDescription: p.shortDescription,
+        impactBefore: p.impactBefore,
+        impactAfter: p.impactAfter,
+        ctaText: p.ctaText,
+        tagline: p.tagline,
+      }))
+  } catch (err) {
+    console.error('getProjects error:', err)
+    return localProjects
+  }
+}
+// Map CMS color names to Tailwind background classes
+const colorToBgClass: Record<string, string> = {
+  green: 'bg-green-500',
+  amber: 'bg-amber-500',
+  blue: 'bg-blue-500',
+  purple: 'bg-purple-500',
+  teal: 'bg-teal-500',
+  red: 'bg-red-500',
+  indigo: 'bg-indigo-500',
+  emerald: 'bg-emerald-500',
+  orange: 'bg-orange-500',
 }
 
 export async function getBenefits(category?: string): Promise<BenefitItem[]> {
@@ -196,7 +281,7 @@ export async function getBenefits(category?: string): Promise<BenefitItem[]> {
       title: b.title,
       description: b.description,
       icon: b.icon,
-      color: b.color,
+      color: colorToBgClass[b.color] || b.color,
     }))
   } catch (err) {
     console.error('getBenefits error:', err)
@@ -365,6 +450,87 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
     }
   } catch (err) {
     console.error('getBlogPostBySlug error:', err)
+    return null
+  }
+}
+
+// ============================================
+// GLOBAL SETTINGS
+// ============================================
+
+export async function getGlobalSettings(): Promise<SanityGlobalSettings | null> {
+  try {
+    const data: SanityGlobalSettings = await client.fetch(globalSettingsQuery, {})
+    return data || null
+  } catch (err) {
+    console.error('getGlobalSettings error:', err)
+    return null
+  }
+}
+
+// ============================================
+// LEGAL PAGES
+// ============================================
+
+export async function getLegalPage(type: 'privacy' | 'cookies' | 'terms'): Promise<SanityLegalPage | null> {
+  const queryMap = {
+    privacy: privacyPolicyQuery,
+    cookies: cookiesPolicyQuery,
+    terms: termsQuery,
+  }
+  try {
+    const data: SanityLegalPage = await client.fetch(queryMap[type], {})
+    return data || null
+  } catch (err) {
+    console.error(`getLegalPage(${type}) error:`, err)
+    return null
+  }
+}
+
+// ============================================
+// FOOTER
+// ============================================
+
+export async function getFooter(): Promise<SanityFooter | null> {
+  try {
+    const data: SanityFooter = await client.fetch(footerQuery, {})
+    return data || null
+  } catch (err) {
+    console.error('getFooter error:', err)
+    return null
+  }
+}
+
+// ============================================
+// FULL PAGES
+// ============================================
+
+export async function getHomePage(): Promise<SanityHomePage | null> {
+  try {
+    const data: SanityHomePage = await client.fetch(homePageQuery, {})
+    return data || null
+  } catch (err) {
+    console.error('getHomePage error:', err)
+    return null
+  }
+}
+
+export async function getAboutPage(): Promise<SanityAboutPage | null> {
+  try {
+    const data: SanityAboutPage = await client.fetch(aboutPageQuery, {})
+    return data || null
+  } catch (err) {
+    console.error('getAboutPage error:', err)
+    return null
+  }
+}
+
+export async function getContactPage(): Promise<SanityContactPage | null> {
+  try {
+    const data: SanityContactPage = await client.fetch(contactPageQuery, {})
+    return data || null
+  } catch (err) {
+    console.error('getContactPage error:', err)
     return null
   }
 }

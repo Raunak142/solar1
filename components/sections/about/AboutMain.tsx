@@ -8,18 +8,23 @@ import AboutDifferentiators from "./AboutDifferentiators";
 import AboutMission from "./AboutMission";
 import AboutTrust from "./AboutTrust";
 import AboutCTA from "./AboutCTA";
+import type { SanityAboutPage } from "@/lib/sanity-types";
 
-const AboutMain = () => {
+interface AboutMainProps {
+  data?: SanityAboutPage | null;
+}
+
+const AboutMain = ({ data }: AboutMainProps) => {
   return (
     <div className="page-bg">
-      <AboutHero />
-      <AboutIntro />
-      <AboutFounder />
+      <AboutHero data={data?.heroSection} />
+      <AboutIntro data={data?.introSection} />
+      <AboutFounder data={data?.founderSection} />
       <AboutTeam />
-      <AboutDifferentiators />
-      <AboutMission />
-      <AboutTrust />
-      <AboutCTA />
+      <AboutDifferentiators data={data?.differentiatorsSection} />
+      <AboutMission data={data?.missionVisionSection} />
+      <AboutTrust data={data?.trustSection} />
+      <AboutCTA data={data?.ctaSection} />
     </div>
   );
 };

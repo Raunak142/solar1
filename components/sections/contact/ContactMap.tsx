@@ -11,7 +11,7 @@ import {
 
 const ContactMap = () => {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden page-bg">
+    <section className="py-12  relative overflow-hidden ">
       {/* Background Decorative Blobs */}
       <div className="absolute top-1/4 -left-20 w-80 h-80 bg-green-200/30 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-200/20 rounded-full blur-[120px] pointer-events-none" />

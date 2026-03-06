@@ -44,42 +44,71 @@ export interface SanityHomePage {
     totalClients?: string
     trustLine?: string
   }
-  partnersSection?: {
+  trustPartnersSection?: {
+    badge?: string
+    heading?: string
+    subheading?: string
     partners?: Array<{
-      name: string
-      logo: SanityImage
+      name?: string
+      color?: string
     }>
   }
   aboutSection?: {
+    badge?: string
     heading?: string
-    description?: SanityBlockContent[]
-    image?: SanityImage
+    paragraph1?: string
+    paragraph2?: string
+    backgroundImage?: SanityImage
   }
   servicesSection?: {
     badge?: string
     heading?: string
     subheading?: string
-    problemStatement?: string
-    benefitsHeading?: string
-    servicesHeading?: string
+    benefitCards?: Array<{
+      icon?: string
+      title?: string
+      description?: string
+      color?: string
+    }>
+    serviceItems?: Array<{
+      icon?: string
+      title?: string
+    }>
     ctaHeading?: string
     ctaText?: string
     ctaButtonText?: string
+    ctaButtonLink?: string
   }
   featuresSection?: {
-    enabled?: boolean
     heading?: string
     subheading?: string
+    features?: Array<{
+      icon?: string
+      title?: string
+      description?: string
+      image?: SanityImage
+    }>
   }
   benefitsSection?: {
     badge?: string
     heading?: string
     subheading?: string
+    comparisonHeading?: string
+    comparisonRows?: Array<{
+      feature?: string
+      kartikSolar?: string
+      traditional?: string
+    }>
+    trustHeading?: string
+    trustItems?: string[]
   }
   projectsSection?: {
+    badge?: string
     heading?: string
     subheading?: string
     showCount?: number
+    viewAllText?: string
+    viewAllLink?: string
   }
   testimonialsSection?: {
     badge?: string
@@ -90,80 +119,142 @@ export interface SanityHomePage {
     badge?: string
     heading?: string
     showInitially?: number
+    viewMoreText?: string
+    viewLessText?: string
     bottomText?: string
     ctaButtonText?: string
+    ctaButtonLink?: string
   }
   blogSection?: {
     badge?: string
     heading?: string
     subheading?: string
     showCount?: number
+    viewAllText?: string
+    viewAllLink?: string
   }
   ctaSection?: {
     heading?: string
-    description?: string
-    buttonText?: string
-    buttonLink?: string
+    subheading?: string
+    submitButtonText?: string
+    successMessage?: string
+    mapLocation?: string
+    mapDirectionsText?: string
   }
 }
 
 export interface SanityAboutPage {
   heroSection?: {
+    badge?: string
     heading?: string
     subheading?: string
+    ctaText?: string
+    ctaLink?: string
     backgroundImage?: SanityImage
   }
   introSection?: {
     badge?: string
     heading?: string
-    description?: SanityBlockContent[]
+    paragraph1?: string
+    paragraph2?: string
+    paragraph3?: string
+    paragraph4?: string
+    statValue?: string
+    statLabel?: string
+    highlights?: Array<{
+      title?: string
+      description?: string
+    }>
   }
   founderSection?: {
     label?: string
     heading?: string
     founderName?: string
-    bio?: SanityBlockContent[]
+    founderRole?: string
     image?: SanityImage
-    yearsExperience?: string
+    quoteParagraph1?: string
+    quoteParagraph2?: string
+    closingQuote?: string
+  }
+  teamSection?: {
+    heading?: string
+    subheading?: string
+    members?: Array<{
+      name?: string
+      role?: string
+      tagline?: string
+      image?: SanityImage
+    }>
   }
   differentiatorsSection?: {
+    badge?: string
     heading?: string
     subheading?: string
     differentiators?: Array<{
-      icon: string
-      title: string
-      description: string
+      icon?: string
+      title?: string
+      description?: string
     }>
   }
   missionVisionSection?: {
+    sectionBadge?: string
+    sectionHeading?: string
     missionHeading?: string
     mission?: string
     visionHeading?: string
     vision?: string
   }
   trustSection?: {
-    yearsExperience?: string
-    happyClients?: string
-    installations?: string
-    support?: string
+    badge?: string
+    heading?: string
+    stats?: Array<{
+      label?: string
+      value?: number
+      suffix?: string
+      icon?: string
+    }>
+  }
+  ctaSection?: {
+    heading?: string
+    description?: string
+    primaryCtaText?: string
+    primaryCtaLink?: string
+    secondaryCtaText?: string
+    secondaryCtaLink?: string
+    footnote?: string
   }
 }
 
 export interface SanityProjectsPage {
   heroSection?: {
-    heading?: string
+    headingPart1?: string
+    headingHighlight?: string
     subheading?: string
     backgroundImage?: SanityImage
   }
   filterSection?: {
-    allProjectsLabel?: string
-    residentialLabel?: string
-    commercialLabel?: string
-    industrialLabel?: string
-    offgridLabel?: string
+    categories?: Array<{
+      id?: string
+      label?: string
+    }>
   }
   gridSection?: {
+    columns?: number
     emptyStateMessage?: string
+    featuredProjects?: Array<{
+      _ref: string
+      _type: 'reference'
+    }>
+  }
+  ctaSection?: {
+    heading?: string
+    description?: string
+    ctaText?: string
+    ctaLink?: string
+    highlights?: Array<{
+      icon?: string
+      text?: string
+    }>
   }
 }
 
@@ -171,49 +262,78 @@ export interface SanityBlogsPage {
   heroSection?: {
     badge?: string
     heading?: string
+    headingHighlight?: string
+    headingTrailing?: string
     subheading?: string
+    viewAllText?: string
+    viewAllLink?: string
   }
   gridSection?: {
     postsPerPage?: number
     loadMoreText?: string
+    readMoreText?: string
+    featuredPosts?: Array<{
+      _ref: string
+      _type: 'reference'
+    }>
   }
 }
 
 export interface SanityContactPage {
   heroSection?: {
+    badge?: string
     heading?: string
+    headingHighlight?: string
     subheading?: string
     backgroundImage?: SanityImage
   }
-  contactInfoSection?: {
-    phone?: string
-    email?: string
-    address?: string
-    whatsappNumber?: string
-    facebookUrl?: string
-    instagramUrl?: string
-    linkedinUrl?: string
-  }
   formSection?: {
+    badge?: string
     heading?: string
     subheading?: string
+    sidebarHeading?: string
+    sidebarDescription?: string
+    contactInfoItems?: Array<{
+      icon?: string
+      label?: string
+      value?: string
+      subtext?: string
+    }>
+    quickStats?: Array<{
+      value?: string
+      label?: string
+    }>
     nameLabel?: string
     emailLabel?: string
     phoneLabel?: string
+    cityLabel?: string
     messageLabel?: string
     submitButtonText?: string
+    successTitle?: string
     successMessage?: string
+    privacyText?: string
   }
   mapSection?: {
-    enabled?: boolean
-    latitude?: number
-    longitude?: number
     mapEmbedUrl?: string
+    locationName?: string
+    locationTagline?: string
+    address?: string
+    addressLine2?: string
+    phone?: string
+    directionsUrl?: string
+    directionsButtonText?: string
+    chatButtonText?: string
+    mobileHeading?: string
+    mobileAddress?: string
+    mobilePhoneUrl?: string
   }
   faqSection?: {
-    enabled?: boolean
     heading?: string
-    showCount?: number
+    subheading?: string
+    faqs?: Array<{
+      question?: string
+      answer?: string
+    }>
   }
 }
 
@@ -255,6 +375,11 @@ export interface SanityProject {
   panelType: string
   inverter?: string
   battery: string
+  shortDescription?: string
+  impactBefore?: string
+  impactAfter?: string
+  ctaText?: string
+  tagline?: string
   content: SanityBlockContent[]
 }
 
@@ -322,4 +447,100 @@ export interface SanitySiteSettings {
     name: string
     logo: SanityImage
   }>
+}
+
+// ============================================
+// NEW TYPES — Global Settings, SEO, Legal
+// ============================================
+
+export interface SanitySeoFields {
+  metaTitle?: string
+  metaDescription?: string
+  ogTitle?: string
+  ogDescription?: string
+  ogImage?: SanityImage
+  twitterTitle?: string
+  twitterDescription?: string
+  twitterImage?: SanityImage
+  twitterCardType?: 'summary' | 'summary_large_image'
+  canonicalUrl?: string
+}
+
+export interface SanityGlobalSettings {
+  companyName?: string
+  phone?: string
+  email?: string
+  whatsappNumber?: string
+  address?: {
+    street?: string
+    city?: string
+    state?: string
+    postalCode?: string
+    country?: string
+  }
+  logo?: SanityImage
+  favicon?: SanityImage
+  facebookUrl?: string
+  instagramUrl?: string
+  linkedinUrl?: string
+  youtubeUrl?: string
+  twitterUrl?: string
+  // Default SEO
+  defaultMetaTitle?: string
+  defaultMetaDescription?: string
+  defaultOgImage?: SanityImage
+  defaultOgTitle?: string
+  defaultOgDescription?: string
+  defaultTwitterCardType?: string
+  defaultTwitterTitle?: string
+  defaultTwitterDescription?: string
+  defaultTwitterImage?: SanityImage
+  defaultCanonicalUrl?: string
+}
+
+export interface SanityLegalPage {
+  title?: string
+  badge?: string
+  effectiveDate?: string
+  lastUpdated?: string
+  content?: SanityBlockContent[]
+  seo?: SanitySeoFields
+}
+
+export interface SanityFooter {
+  brandSection?: {
+    logoAlt?: string
+    description?: string
+    socialLinks?: Array<{
+      name?: string
+      icon?: string
+      url?: string
+    }>
+  }
+  menuSection?: {
+    heading?: string
+    links?: Array<{
+      label?: string
+      href?: string
+    }>
+  }
+  solutionsSection?: {
+    heading?: string
+    links?: Array<{
+      label?: string
+      href?: string
+    }>
+  }
+  contactSection?: {
+    heading?: string
+    address?: string
+    email?: string
+    phone?: string
+    phoneUrl?: string
+  }
+  bottomBar?: {
+    copyrightText?: string
+    creditText?: string
+    creditHighlight?: string
+  }
 }

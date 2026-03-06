@@ -1,8 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { SanityContactPage } from "@/lib/sanity-types";
+import { urlFor } from "@/lib/sanity";
 
-const ContactHero = () => {
+interface ContactHeroProps {
+  data?: SanityContactPage["heroSection"];
+}
+
+const ContactHero = ({ data }: ContactHeroProps) => {
   return (
     <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -11,7 +17,7 @@ const ContactHero = () => {
         <div
           className="w-full h-full bg-cover bg-center bg-no-repeat scale-105"
           style={{
-            backgroundImage: "url('/images/Forest Panel.png')", // Using existing asset
+            backgroundImage: `url('${data?.backgroundImage ? urlFor(data.backgroundImage).width(1920).height(1080).url() : "/images/Forest Panel.png"}')`,
           }}
         />
       </div>
@@ -23,17 +29,28 @@ const ContactHero = () => {
           transition={{ duration: 0.6 }}
         >
           <span className="inline-block px-4 py-1.5 bg-green-500/20 border border-green-500/30 text-green-300 font-semibold rounded-full text-sm mb-6 backdrop-blur-md">
-            Contact Us
+            {data?.badge || "Contact Us"}
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
-            Let’s Power Your Home with{" "}
-            <span className="text-green-400">Solar</span>
+            {data?.heading ? (
+              <>
+                {data.heading}{" "}
+                {data.headingHighlight && (
+                  <span className="text-green-400">
+                    {data.headingHighlight}
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                Let’s Power Your Home with{" "}
+                <span className="text-green-400">Solar</span>
+              </>
+            )}
           </h1>
-          <p className="text-lg md:text-xl text-slate-200 leading-relaxed max-w-3xl mx-auto font-medium">
-            Have questions about solar installation, savings, or government
-            subsidies? Our Dehradun-based team is here to guide you with expert
-            advice and personalized solutions designed for Indian homes and
-            climate conditions.
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+            {data?.subheading ||
+              "Get in touch with our Dehradun team for a free consultation, site visit, or any queries about your solar journey."}
           </p>
         </motion.div>
       </div>

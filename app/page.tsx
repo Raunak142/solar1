@@ -10,7 +10,7 @@ import Testimonials from "@/components/sections/Testimonials";
 import CTA from "@/components/sections/CTA";
 import FAQ from "@/components/sections/FAQ";
 import Blog from "@/components/sections/Blog";
-import Footer from "@/components/sections/Footer";
+import FooterServer from "@/components/sections/FooterServer";
 import JsonLd from "@/components/JsonLd";
 import { getHomeMetadata } from "@/lib/seo";
 import {
@@ -27,10 +27,14 @@ import {
   getBenefits,
   getServices,
   getBlogPosts,
+  getHomePage,
 } from "@/lib/data";
 
-// ISR: Revalidate every 1 hour
-export const revalidate = 3600;
+// ISR Revalidation:
+// - Development: revalidate = 0 → always fetch fresh CMS data on every request
+// - Production: revalidate = 86400 → revalidate once per day (24 hours)
+// - On redeploy: Next.js rebuilds all pages with fresh CMS data automatically
+export const revalidate = 86400;
 
 export function generateMetadata(): Metadata {
   return getHomeMetadata();
@@ -38,16 +42,25 @@ export function generateMetadata(): Metadata {
 
 export default async function Home() {
   // Fetch all CMS data server-side (at build time / ISR)
-  const [heroData, faqs, testimonials, projects, benefits, services, posts] =
-    await Promise.all([
-      getHeroData(),
-      getFaqs(),
-      getTestimonials(),
-      getProjects(),
-      getBenefits(),
-      getServices(),
-      getBlogPosts(),
-    ]);
+  const [
+    heroData,
+    faqs,
+    testimonials,
+    projects,
+    benefits,
+    services,
+    posts,
+    homeData,
+  ] = await Promise.all([
+    getHeroData(),
+    getFaqs(),
+    getTestimonials(),
+    getProjects(),
+    getBenefits(),
+    getServices(),
+    getBlogPosts(),
+    getHomePage(),
+  ]);
 
   return (
     <main className="pt-20 page-bg">
@@ -61,7 +74,7 @@ export default async function Home() {
       />
       <Header />
       <Hero data={heroData} />
-      <About />
+      <About data={homeData?.aboutSection} />
       <Services benefits={benefits} services={services} />
       <Features />
       <Benefits benefits={benefits} />
@@ -69,8 +82,8 @@ export default async function Home() {
       <Testimonials testimonials={testimonials} />
       <FAQ faqs={faqs} />
       <Blog posts={posts} limit={3} />
-      <CTA />
-      <Footer />
+      <CTA data={homeData?.ctaSection} />
+      <FooterServer />
     </main>
   );
 }

@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Star, Home, Zap, Phone } from "lucide-react";
+import type { SanityAboutPage } from "@/lib/sanity-types";
 
 // Animated counter hook
 const useCountUp = (
@@ -75,13 +76,25 @@ const stats = [
   },
 ];
 
-const StatCard = ({
-  stat,
-  index,
-}: {
-  stat: (typeof stats)[0];
-  index: number;
-}) => {
+const iconMap: Record<string, React.ElementType> = {
+  Star,
+  Home,
+  Zap,
+  Phone,
+};
+
+// Represents either a local stat or a CMS stat
+type UnifiedStat = {
+  label: string;
+  value: number;
+  suffix: string;
+  icon: React.ElementType; // Unified to concrete component type
+  color: string;
+  glow: string;
+  bg: string;
+};
+
+const StatCard = ({ stat, index }: { stat: UnifiedStat; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const count = useCountUp(stat.value, 2000, isInView);
@@ -126,7 +139,34 @@ const StatCard = ({
   );
 };
 
-const AboutTrust = () => {
+interface AboutTrustProps {
+  data?: SanityAboutPage["trustSection"];
+}
+
+const AboutTrust = ({ data }: AboutTrustProps) => {
+  // Map CMS data back into our stat format
+  const displayStats = data?.stats?.length
+    ? data.stats.map((s, idx) => {
+        // Fallback to our existing aesthetics by index matching
+        const fallbackTheme = stats[idx % stats.length];
+
+        let IconComponent = Home as any;
+        if (s.icon && iconMap[s.icon]) {
+          IconComponent = iconMap[s.icon];
+        }
+
+        return {
+          label: s.label || "",
+          value: s.value || 0,
+          suffix: s.suffix || "",
+          icon: IconComponent as React.ElementType,
+          color: fallbackTheme.color,
+          glow: fallbackTheme.glow,
+          bg: fallbackTheme.bg,
+        };
+      })
+    : stats;
+
   return (
     <section className="py-24 lg:py-32 page-bg overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -139,16 +179,29 @@ const AboutTrust = () => {
           className="text-center mb-16"
         >
           <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-700 font-semibold text-xs tracking-wide mb-4 uppercase">
-            Our Impact
+            {data?.badge || "Our Impact"}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
-            Our Impact <span className="text-green-600">So Far</span>
+            {data?.heading ? (
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.heading.replace(
+                    "So Far",
+                    '<span class="text-green-600">So Far</span>',
+                  ),
+                }}
+              />
+            ) : (
+              <>
+                Our Impact <span className="text-green-600">So Far</span>
+              </>
+            )}
           </h2>
         </motion.div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {stats.map((stat, index) => (
+          {displayStats.map((stat, index) => (
             <StatCard key={index} stat={stat} index={index} />
           ))}
         </div>

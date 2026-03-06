@@ -4,8 +4,14 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { Quote } from "lucide-react";
+import type { SanityAboutPage } from "@/lib/sanity-types";
+import { urlFor } from "@/lib/sanity";
 
-const AboutFounder = () => {
+interface AboutFounderProps {
+  data?: SanityAboutPage["founderSection"];
+}
+
+const AboutFounder = ({ data }: AboutFounderProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -31,10 +37,24 @@ const AboutFounder = () => {
           className="text-center mb-16"
         >
           <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-700 font-semibold text-xs tracking-wide mb-4 uppercase">
-            From the Founder
+            {data?.label || "From the Founder"}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
-            It&apos;s About <span className="text-green-600">Empowerment</span>
+            {data?.heading ? (
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.heading.replace(
+                    "Empowerment",
+                    '<span class="text-green-600">Empowerment</span>',
+                  ),
+                }}
+              />
+            ) : (
+              <>
+                It&apos;s About{" "}
+                <span className="text-green-600">Empowerment</span>
+              </>
+            )}
           </h2>
         </motion.div>
 
@@ -53,8 +73,16 @@ const AboutFounder = () => {
             >
               <div className="aspect-square relative">
                 <Image
-                  src="/images/Team.png"
-                  alt="Raunak — Founder, Kartik Solar Enterprises"
+                  src={
+                    data?.image
+                      ? urlFor(data.image).width(800).height(800).url()
+                      : "/images/Team.png"
+                  }
+                  alt={
+                    data?.founderName
+                      ? `${data.founderName} — ${data.founderRole}`
+                      : "Raunak — Founder, Kartik Solar Enterprises"
+                  }
                   fill
                   className="object-cover"
                 />
@@ -64,9 +92,12 @@ const AboutFounder = () => {
 
               {/* Founder name overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-white font-bold text-xl">Raunak</p>
+                <p className="text-white font-bold text-xl">
+                  {data?.founderName || "Raunak"}
+                </p>
                 <p className="text-green-300 text-sm font-medium">
-                  Founder &amp; CEO, Kartik Solar Enterprises
+                  {data?.founderRole ||
+                    "Founder & CEO, Kartik Solar Enterprises"}
                 </p>
               </div>
             </motion.div>
@@ -91,23 +122,16 @@ const AboutFounder = () => {
 
             <div className="space-y-6 text-base lg:text-lg text-slate-600 leading-relaxed">
               <p>
-                The journey of establishing Kartik Solar Enterprises went beyond
-                simply being able to point out solar panels on a building. It
-                was about giving families the peace of mind with respect to
-                their electricity situation. Lessening the monthly burden that
-                stems from the uncertainty of and the value of their
-                electricity, the cuts, and the bills.
+                {data?.quoteParagraph1 ||
+                  "The journey of establishing Kartik Solar Enterprises went beyond simply being able to point out solar panels on a building. It was about giving families the peace of mind with respect to their electricity situation. Lessening the monthly burden that stems from the uncertainty of and the value of their electricity, the cuts, and the bills."}
               </p>
               <p>
-                In a state that is as naturally beautiful as Uttarakhand, it is
-                also our responsibility to choose the clean energy option. Every
-                rooftop that turns to solar is, not only, saving themselves some
-                money, but also, paving the way for a healthier and more
-                sustainable future for all of us.
+                {data?.quoteParagraph2 ||
+                  "In a state that is as naturally beautiful as Uttarakhand, it is also our responsibility to choose the clean energy option. Every rooftop that turns to solar is, not only, saving themselves some money, but also, paving the way for a healthier and more sustainable future for all of us."}
               </p>
               <p className="font-semibold text-slate-800 text-lg lg:text-xl italic">
-                We are privileged to extend our families, one home and one
-                rooftop at a time.
+                {data?.closingQuote ||
+                  "We are privileged to extend our families, one home and one rooftop at a time."}
               </p>
             </div>
 
@@ -115,9 +139,12 @@ const AboutFounder = () => {
             <div className="mt-10 pt-8 border-t border-slate-200 flex items-center gap-4">
               <div className="w-12 h-1 bg-green-500 rounded-full" />
               <div>
-                <p className="font-bold text-slate-900 text-lg">Raunak</p>
+                <p className="font-bold text-slate-900 text-lg">
+                  {data?.founderName || "Raunak"}
+                </p>
                 <p className="text-slate-500 text-sm">
-                  Founder &amp; CEO, Kartik Solar Enterprises
+                  {data?.founderRole ||
+                    "Founder & CEO, Kartik Solar Enterprises"}
                 </p>
               </div>
             </div>

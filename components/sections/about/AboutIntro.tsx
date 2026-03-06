@@ -4,8 +4,13 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { CheckCircle, Globe } from "lucide-react";
+import type { SanityAboutPage } from "@/lib/sanity-types";
 
-const AboutIntro = () => {
+interface AboutIntroProps {
+  data?: SanityAboutPage["introSection"];
+}
+
+const AboutIntro = ({ data }: AboutIntroProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -30,36 +35,40 @@ const AboutIntro = () => {
           transition={{ duration: 0.8 }}
         >
           <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-700 font-semibold text-xs tracking-wide mb-6 uppercase">
-            Our Story
+            {data?.badge || "Our Story"}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-8 leading-tight">
-            Sunshine to <span className="text-green-600">Savings</span> —
-            Beginning Our Journey
+            {data?.heading ? (
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.heading.replace(
+                    "Savings",
+                    '<span class="text-green-600">Savings</span>',
+                  ),
+                }}
+              />
+            ) : (
+              <>
+                Sunshine to <span className="text-green-600">Savings</span> —
+                Beginning Our Journey
+              </>
+            )}
           </h2>
           <div className="space-y-5 text-base lg:text-lg text-slate-600 leading-relaxed">
             <p>
-              Kartik Solar Enterprises started in Dehradun with the belief that
-              clean energy should not be a luxury. They believed that energy
-              should be accessible to every Indian family.
+              {data?.paragraph1 ||
+                "Kartik Solar Enterprises started in Dehradun with the belief that clean energy should not be a luxury. They believed that energy should be accessible to every Indian family."}
             </p>
             <p>
-              As residents of Uttarakhand, we noticed an anomaly. There was an
-              abundance of sunlight, yet, many homes were still struggling with
-              rising electricity bills. Because of frequent power-cuts, families
-              were forced to rely on expensive grid electricity. Year after year
-              families were spending more money, but were receiving less
-              reliability in return.
+              {data?.paragraph2 ||
+                "As residents of Uttarakhand, we noticed an anomaly. There was an abundance of sunlight, yet, many homes were still struggling with rising electricity bills. Because of frequent power-cuts, families were forced to rely on expensive grid electricity. Year after year families were spending more money, but were receiving less reliability in return."}
             </p>
             <p className="font-semibold text-slate-800 text-lg lg:text-xl">
-              That&apos;s where our journey began.
+              {data?.paragraph3 || "That's where our journey began."}
             </p>
             <p>
-              We started Kartik Solar Enterprises with the purpose of bringing
-              simple and affordable solar solutions to the community. We build
-              solar solutions meant for Indian rooftops, for mountain regions,
-              and for all kinds of weather. Every installation democratizes
-              energy for the family and is an investment towards a more
-              sustainable future.
+              {data?.paragraph4 ||
+                "We started Kartik Solar Enterprises with the purpose of bringing simple and affordable solar solutions to the community. We build solar solutions meant for Indian rooftops, for mountain regions, and for all kinds of weather. Every installation democratizes energy for the family and is an investment towards a more sustainable future."}
             </p>
           </div>
 
@@ -128,10 +137,10 @@ const AboutIntro = () => {
               className="absolute bottom-6 left-6 right-6 sm:right-auto sm:bottom-8 sm:left-8 bg-white/95 backdrop-blur-xl p-5 sm:p-6 rounded-2xl shadow-xl border border-white/20 sm:max-w-[200px] flex flex-col items-center sm:items-start text-center sm:text-left"
             >
               <p className="text-3xl sm:text-4xl font-bold text-green-600 mb-1">
-                500+
+                {data?.statValue || "500+"}
               </p>
               <p className="text-slate-600 font-medium text-xs sm:text-sm">
-                Happy Families Switched to Solar
+                {data?.statLabel || "Happy Families Switched to Solar"}
               </p>
             </motion.div>
           </div>

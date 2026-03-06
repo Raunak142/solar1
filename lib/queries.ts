@@ -33,7 +33,8 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
 export const projectsPageQuery = `*[_type == "projectsPage"][0] {
   heroSection,
   filterSection,
-  gridSection
+  gridSection,
+  ctaSection
 }`
 
 // Blogs Page
@@ -49,6 +50,15 @@ export const contactPageQuery = `*[_type == "contactPage"][0] {
   formSection,
   mapSection,
   faqSection
+}`
+
+// Footer
+export const footerQuery = `*[_type == "footer"][0] {
+  brandSection,
+  menuSection,
+  solutionsSection,
+  contactSection,
+  bottomBar
 }`
 
 // ============================================
@@ -242,4 +252,60 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   instagramUrl,
   linkedinUrl,
   partners
+}`
+
+// ============================================
+// GLOBAL SETTINGS & LEGAL PAGES
+// ============================================
+
+export const globalSettingsQuery = `*[_type == "globalSettings"][0] {
+  companyName,
+  phone,
+  email,
+  whatsappNumber,
+  address,
+  logo,
+  favicon,
+  facebookUrl,
+  instagramUrl,
+  linkedinUrl,
+  youtubeUrl,
+  twitterUrl,
+  defaultMetaTitle,
+  defaultMetaDescription,
+  defaultOgImage,
+  defaultOgTitle,
+  defaultOgDescription,
+  defaultTwitterCardType,
+  defaultTwitterTitle,
+  defaultTwitterDescription,
+  defaultTwitterImage,
+  defaultCanonicalUrl
+}`
+
+export const privacyPolicyQuery = `*[_type == "privacyPolicy"][0] {
+  title,
+  badge,
+  effectiveDate,
+  lastUpdated,
+  content,
+  seo
+}`
+
+export const cookiesPolicyQuery = `*[_type == "cookiesPolicy"][0] {
+  title,
+  badge,
+  effectiveDate,
+  lastUpdated,
+  content,
+  seo
+}`
+
+export const termsQuery = `*[_type == "termsAndConditions"][0] {
+  title,
+  badge,
+  effectiveDate,
+  lastUpdated,
+  content,
+  seo
 }`

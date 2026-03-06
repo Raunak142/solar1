@@ -9,7 +9,9 @@ import {
   Wrench,
   MapPin,
 } from "lucide-react";
+import type { SanityAboutPage } from "@/lib/sanity-types";
 
+// Fallback Data
 const differentiators = [
   {
     icon: Home,
@@ -97,7 +99,25 @@ const accentMap: Record<
   },
 };
 
-const AboutDifferentiators = () => {
+// Map string icon names to Lucide icons
+const iconMap: Record<string, React.ElementType> = {
+  Home,
+  Headphones,
+  ShieldCheck,
+  BadgeCheck,
+  Wrench,
+  MapPin,
+};
+
+interface AboutDifferentiatorsProps {
+  data?: SanityAboutPage["differentiatorsSection"];
+}
+
+const AboutDifferentiators = ({ data }: AboutDifferentiatorsProps) => {
+  const displayItems = data?.differentiators?.length
+    ? data.differentiators
+    : differentiators;
+
   return (
     <section className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 page-bg overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
@@ -110,23 +130,54 @@ const AboutDifferentiators = () => {
           className="text-center mb-16"
         >
           <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-700 font-semibold text-xs tracking-wide mb-4 uppercase">
-            Why Us
+            {data?.badge || "Why Us"}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
-            Why Choose <span className="text-green-600">Kartik Solar</span>?
+            {data?.heading ? (
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.heading.replace(
+                    "Kartik Solar",
+                    '<span class="text-green-600">Kartik Solar</span>',
+                  ),
+                }}
+              />
+            ) : (
+              <>
+                Why Choose <span className="text-green-600">Kartik Solar</span>?
+              </>
+            )}
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            We don&apos;t only install solar panels. We assist families in
-            making the switch to an energy solution that is created specifically
-            for Indian homes and the climate.
+            {data?.subheading ||
+              "We don't only install solar panels. We assist families in making the switch to an energy solution that is created specifically for Indian homes and the climate."}
           </p>
         </motion.div>
 
         {/* Cards Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {differentiators.map((item, index) => {
-            const colors = accentMap[item.accent];
-            const Icon = item.icon;
+          {displayItems.map((item, index) => {
+            // Determine accent color and icon
+            let accentKey = "green";
+            let IconComponent: React.ElementType = Home;
+
+            if ("accent" in item) {
+              // Local fallback data item
+              accentKey = item.accent;
+              IconComponent = item.icon as React.ElementType;
+            } else {
+              // CMS data item
+              // Map index to a color sequentially since CMS doesn't send accent colors yet
+              const colorKeys = Object.keys(accentMap);
+              accentKey = colorKeys[index % colorKeys.length];
+
+              if (item.icon && iconMap[item.icon]) {
+                IconComponent = iconMap[item.icon];
+              }
+            }
+
+            const colors = accentMap[accentKey];
+            const Icon = IconComponent;
 
             return (
               <motion.div

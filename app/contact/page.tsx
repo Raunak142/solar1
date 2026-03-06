@@ -4,32 +4,44 @@ import ContactHero from "@/components/sections/contact/ContactHero";
 import ContactForm from "@/components/sections/contact/ContactForm";
 import ContactMap from "@/components/sections/contact/ContactMap";
 import ContactFAQ from "@/components/sections/contact/ContactFAQ";
-import Footer from "@/components/sections/Footer";
+import FooterServer from "@/components/sections/FooterServer";
 import JsonLd from "@/components/JsonLd";
 import { getContactMetadata } from "@/lib/seo";
 import { getBreadcrumbSchema } from "@/lib/structured-data";
+import { getContactPage } from "@/lib/data";
+
+// ISR Revalidation
+export const revalidate = 86400;
 
 export function generateMetadata(): Metadata {
   return getContactMetadata();
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const contactData = await getContactPage();
+
   return (
-    <main className="pt-20 page-bg min-h-screen">
+    <main className="min-h-screen bg-[#F3F8F5] pt-24 font-sans selection:bg-green-500/30">
       <JsonLd
         data={getBreadcrumbSchema([
           { name: "Home", path: "/" },
-          { name: "Contact", path: "/contact" },
+          { name: "Contact Us", path: "/contact" },
         ])}
       />
       <Header />
-      <ContactHero />
-      <div className="relative z-10 -mt-8">
-        <ContactForm />
+      <ContactHero data={contactData?.heroSection} />
+
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-16 lg:-mt-24 relative z-10 mb-20 lg:mb-32">
+
+        <div className="flex flex-col gap-8 lg:gap-12">
+          <ContactForm data={contactData?.formSection} />
+          <ContactMap />
+        </div>
+
       </div>
-      <ContactMap />
-      <ContactFAQ />
-      <Footer />
+
+      <ContactFAQ data={contactData?.faqSection} />
+      <FooterServer />
     </main>
   );
 }
